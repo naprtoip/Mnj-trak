@@ -34,10 +34,10 @@
   --rsm:     8px;
   --sh:      0 2px 10px rgba(30,26,20,0.08);
 }
- 
+
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior:smooth; }
- 
+
 body {
   font-family:'DM Sans', sans-serif;
   background:var(--paper);
@@ -47,7 +47,7 @@ body {
   /* safe area for notched phones */
   padding-bottom:env(safe-area-inset-bottom);
 }
- 
+
 /* ── TOP HEADER ── */
 .top-bar {
   position:sticky; top:0; z-index:200;
@@ -72,7 +72,7 @@ body {
   color:var(--ink2);
 }
 .icon-btn:active { background:var(--paper3); transform:scale(.93); }
- 
+
 /* ── DATE NAV ── */
 .date-nav {
   display:flex; align-items:center; gap:0;
@@ -102,7 +102,7 @@ body {
   transition:all .15s; margin-left:8px; flex-shrink:0;
 }
 .date-today-pill:active { opacity:.75; }
- 
+
 /* ── STATS ROW ── */
 .stats-row {
   display:grid; grid-template-columns:repeat(4,1fr);
@@ -123,7 +123,7 @@ body {
 .stat-d { font-size:11px; margin-top:2px; font-weight:500; }
 .stat-d.pos { color:var(--teal); }
 .stat-d.neg { color:var(--rose); }
- 
+
 /* ── TAB BAR (bottom nav style) ── */
 .tab-bar {
   position:fixed; bottom:0; left:0; right:0; z-index:200;
@@ -146,7 +146,7 @@ body {
 .tab-item .t-label { font-size:9px; margin-top:3px; letter-spacing:.5px; text-transform:uppercase; font-weight:500; }
 .tab-item.active { color:var(--gold); }
 .tab-item.active .t-icon { transform:scale(1.1); }
- 
+
 /* ── MAIN CONTENT ── */
 #app {
   padding:0 0 84px; /* space for tab bar */
@@ -154,7 +154,7 @@ body {
 .panel { display:none; }
 .panel.active { display:block; animation:fadeUp .22s ease; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
- 
+
 /* ── SECTION HEADER ── */
 .sec-header {
   display:flex; align-items:center; justify-content:space-between;
@@ -172,7 +172,7 @@ body {
 .tag-pm  { background:rgba(107,91,158,.12); color:var(--violet); }
 .tag-wk  { background:rgba(107,91,158,.12); color:var(--violet); }
 .tag-mo  { background:var(--gold-pl); color:var(--gold); }
- 
+
 /* ── CARD ── */
 .card {
   margin:0 12px 12px;
@@ -191,7 +191,7 @@ body {
   display:flex; align-items:center; gap:7px;
 }
 .card-body { padding:12px 14px 14px; }
- 
+
 /* ── CHECKLIST ── */
 .checklist { display:flex; flex-direction:column; gap:5px; }
 .check-item {
@@ -216,7 +216,7 @@ body {
   font-size:0.66rem; padding:2px 7px; border-radius:20px; flex-shrink:0;
   background:var(--paper3); color:var(--ink3); border:1px solid var(--border);
 }
- 
+
 /* ── INPUTS ── */
 .input-group { margin-bottom:14px; }
 .input-group:last-child { margin-bottom:0; }
@@ -247,10 +247,10 @@ body {
   accent-color:var(--gold); height:32px;
 }
 .range-val { font-family:'DM Mono', monospace; font-size:0.95rem; color:var(--gold); font-weight:400; }
- 
+
 /* ── 2-COL GRID ── */
 .g2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
- 
+
 /* ── SYMPTOM CHIPS ── */
 .chip-wrap { display:flex; flex-wrap:wrap; gap:7px; }
 .chip {
@@ -261,7 +261,7 @@ body {
 }
 .chip:active { background:var(--paper3); }
 .chip.active { background:var(--rose-pl); border-color:var(--rose); color:var(--rose); }
- 
+
 /* ── BUTTONS ── */
 .btn {
   display:inline-flex; align-items:center; justify-content:center; gap:6px;
@@ -283,7 +283,7 @@ body {
   border:1px solid rgba(184,145,42,.3); flex:1;
 }
 .btn-danger { background:var(--rose-pl); color:var(--rose); border:1px solid rgba(192,80,80,.25); }
- 
+
 /* ── NOTICE / ALERT ── */
 .notice {
   margin:0 12px 12px; padding:11px 14px;
@@ -293,7 +293,7 @@ body {
   line-height:1.5;
 }
 .notice.warn { border-color:var(--rose); background:var(--rose-pl); color:var(--rose); }
- 
+
 /* ── DRUG ENTRY ── */
 .drug-row {
   display:flex; gap:8px; align-items:flex-end;
@@ -302,7 +302,7 @@ body {
 .drug-row:last-child { border-bottom:none; }
 .drug-row .input-group { margin:0; flex:1; }
 .drug-row .input-group input { padding:10px 12px; font-size:14px; }
- 
+
 /* ── CALENDAR ── */
 .cal-header-row { display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:4px; }
 .cal-header-row span { text-align:center; font-size:9px; color:var(--ink3); padding:4px 0; text-transform:uppercase; letter-spacing:.08em; font-weight:600; }
@@ -319,10 +319,10 @@ body {
 .cal-day.today { border-color:var(--ink); color:var(--ink); font-weight:600; }
 .cal-day.has-data::after { content:''; position:absolute; bottom:4px; width:4px; height:4px; border-radius:50%; background:var(--teal); }
 .cal-day.selected { background:var(--ink); color:var(--gold-lt); border-color:var(--ink); }
- 
+
 /* ── REPORT CHARTS ── */
 .chart-wrap { position:relative; height:200px; }
- 
+
 /* ── STAT MINI CARD ── */
 .mini-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
 .mini-stat {
@@ -331,7 +331,7 @@ body {
 }
 .mini-stat-v { font-family:'Cormorant Garamond', serif; font-size:1.6rem; color:var(--ink); }
 .mini-stat-l { font-size:9px; color:var(--ink3); text-transform:uppercase; letter-spacing:.06em; margin-top:3px; }
- 
+
 /* ── SAVE BAR ── */
 .save-bar {
   position:fixed; bottom:64px; left:0; right:0; z-index:150;
@@ -343,7 +343,7 @@ body {
 }
 .save-info { font-size:11px; color:var(--ink3); }
 .save-actions { display:flex; gap:8px; }
- 
+
 /* ── TOAST ── */
 .toast {
   position:fixed; top:16px; left:50%; transform:translateX(-50%) translateY(-80px);
@@ -355,7 +355,7 @@ body {
 .toast.show { transform:translateX(-50%) translateY(0); }
 .toast.success { background:var(--teal); color:#fff; }
 .toast.error   { background:var(--rose); color:#fff; }
- 
+
 /* ── MODAL ── */
 .modal-overlay {
   display:none; position:fixed; inset:0; z-index:600;
@@ -380,14 +380,14 @@ body {
   font-family:'DM Mono',monospace; font-size:12px; resize:none;
 }
 .modal-actions { display:flex; gap:8px; margin-top:14px; }
- 
+
 /* ── PROGRESS BAR ── */
 .progress-wrap { background:var(--paper3); border-radius:20px; height:6px; overflow:hidden; margin-top:6px; }
 .progress-bar { height:100%; background:linear-gradient(90deg,var(--gold),var(--teal)); border-radius:20px; transition:width .5s; }
- 
+
 /* ── DIVIDER ── */
 .divider { height:1px; background:var(--border); margin:14px 0; }
- 
+
 /* ── SKIN RATING ── */
 .skin-rating-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .skin-rating-cell {
@@ -398,7 +398,7 @@ body {
 .skin-rating-row { display:flex; align-items:center; gap:8px; }
 .skin-rating-row input[type=range] { flex:1; accent-color:var(--rose); padding:0; border:none; background:transparent; height:28px; }
 .skin-rating-val { font-family:'DM Mono',monospace; font-size:0.9rem; color:var(--rose); min-width:16px; text-align:right; }
- 
+
 /* Ozempic face card */
 .oze-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
 .oze-cell {
@@ -410,10 +410,10 @@ body {
 .oze-cell-icon { font-size:1.3rem; line-height:1; }
 .oze-cell-label { font-size:10px; color:var(--ink3); margin-top:4px; text-transform:uppercase; letter-spacing:.05em; }
 .oze-cell.active .oze-cell-label { color:var(--rose); }
- 
+
 /* Skin concern chips — use rose palette */
 .chip.skin-active { background:rgba(107,91,158,.12); border-color:var(--violet); color:var(--violet); }
- 
+
 /* AI analysis result */
 @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 .ai-section { margin-bottom:14px; }
@@ -435,11 +435,11 @@ body {
 }
 .ai-pill.warn { background:var(--rose-pl); color:var(--rose); border-color:rgba(192,80,80,.3); }
 .ai-pill.ok   { background:var(--teal-pl); color:var(--teal); border-color:rgba(58,125,110,.3); }
- 
+
 /* scrollbar */
 ::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
- 
+
 /* ── DESKTOP ENHANCEMENTS ── */
 @media(min-width:600px) {
   #app { max-width:540px; margin:0 auto; }
@@ -481,7 +481,7 @@ body {
 .apikey-hint { font-size:11px; color:var(--ink3); margin-bottom:20px; line-height:1.6; }
 .apikey-hint a { color:var(--gold); text-decoration:none; }
 @media(min-width:600px){.apikey-sheet{max-width:540px;margin:0 auto;border-radius:20px;}}
- 
+
 /* ── SUPABASE MODAL ── */
 .sb-status { display:flex; align-items:center; gap:8px; padding:10px 14px;
   border-radius:var(--rsm); font-size:12px; margin-bottom:14px; }
@@ -489,10 +489,10 @@ body {
 .sb-status.err { background:var(--rose-pl); color:var(--rose); border:1px solid rgba(192,80,80,.2); }
 .sb-status.off { background:var(--paper3); color:var(--ink3); border:1px solid var(--border); }
 .sb-dot { width:8px; height:8px; border-radius:50%; background:currentColor; flex-shrink:0; }
- 
+
 </style>
 <body>
- 
+
 <!-- TOP BAR -->
 <div class="top-bar">
   <div class="top-bar-title">Mounjaro <em>Tracker</em></div>
@@ -503,7 +503,7 @@ body {
     <button class="icon-btn" onclick="openDriveModal('restore')" title="Ripristina">↩</button>
   </div>
 </div>
- 
+
 <!-- DATE NAV -->
 <div class="date-nav">
   <button class="date-nav-btn" onclick="changeDay(-1)">‹</button>
@@ -511,7 +511,7 @@ body {
   <button class="date-nav-btn" id="btnNext" onclick="changeDay(1)">›</button>
   <div class="date-today-pill" onclick="goToday()">Oggi</div>
 </div>
- 
+
 <!-- STATS -->
 <div class="stats-row">
   <div class="stat-cell">
@@ -532,12 +532,12 @@ body {
     <div class="stat-l">mg Tirz.</div>
   </div>
 </div>
- 
+
 <div id="app">
- 
+
   <!-- ══ PANEL: DAILY ══ -->
   <div class="panel active" id="panel-daily">
- 
+
     <!-- Skincare AM -->
     <div class="sec-header">
       <div class="sec-title">✨ Skincare Viso</div>
@@ -548,7 +548,7 @@ body {
         <div class="checklist" id="checklist-viso-am"></div>
       </div>
     </div>
- 
+
     <!-- Skincare PM -->
     <div class="sec-header">
       <div class="sec-title">🌙 Skincare Viso</div>
@@ -559,7 +559,7 @@ body {
         <div class="checklist" id="checklist-viso-pm"></div>
       </div>
     </div>
- 
+
     <!-- Body -->
     <div class="sec-header">
       <div class="sec-title">💆 Body Care</div>
@@ -569,7 +569,7 @@ body {
         <div class="checklist" id="checklist-body"></div>
       </div>
     </div>
- 
+
     <!-- Integratori -->
     <div class="sec-header">
       <div class="sec-title">💊 Integratori</div>
@@ -579,7 +579,7 @@ body {
         <div class="checklist" id="checklist-integratori"></div>
       </div>
     </div>
- 
+
     <!-- Alimentazione -->
     <div class="sec-header">
       <div class="sec-title">🥗 Alimentazione</div>
@@ -604,14 +604,14 @@ body {
         </div>
       </div>
     </div>
- 
+
   </div><!-- /panel-daily -->
- 
+
   <!-- ══ PANEL: MEASUREMENTS ══ -->
   <div class="panel" id="panel-measurements">
- 
+
     <div class="notice">⚡ Pesati a digiuno, alla stessa ora, in biancheria.</div>
- 
+
     <div class="card">
       <div class="card-head">
         <div class="card-title">📏 Misurazioni giornaliere</div>
@@ -659,7 +659,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="notice">📅 Misura corpo ogni lunedì mattina.</div>
     <div class="card">
       <div class="card-head">
@@ -679,7 +679,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="notice">🩸 Ricorda: sospendere Biotina 72h prima dell'HbA1c.</div>
     <div class="card">
       <div class="card-head">
@@ -704,7 +704,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="card">
       <div class="card-head"><div class="card-title">📊 Dati base</div></div>
       <div class="card-body">
@@ -716,19 +716,19 @@ body {
         <div id="goalProgressWrap" style="margin-top:10px;"></div>
       </div>
     </div>
- 
+
   </div><!-- /panel-measurements -->
- 
+
   <!-- ══ PANEL: SYMPTOMS ══ -->
   <div class="panel" id="panel-symptoms">
- 
+
     <div class="sec-header"><div class="sec-title">🩺 Sintomi GI</div></div>
     <div class="card">
       <div class="card-body">
         <div class="chip-wrap" id="symptomsGI"></div>
       </div>
     </div>
- 
+
     <div class="sec-header"><div class="sec-title">⚡ Altri sintomi</div></div>
     <div class="card">
       <div class="card-body">
@@ -744,7 +744,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="sec-header"><div class="sec-title">💉 Mounjaro</div></div>
     <div class="card">
       <div class="card-body">
@@ -773,7 +773,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="sec-header"><div class="sec-title">💊 Farmaci</div></div>
     <div class="card">
       <div id="drugsList"></div>
@@ -781,7 +781,7 @@ body {
         <button class="btn btn-secondary" onclick="addDrug()">+ Aggiungi farmaco</button>
       </div>
     </div>
- 
+
     <div class="sec-header"><div class="sec-title">🏋️ Allenamento</div></div>
     <div class="card">
       <div class="card-body">
@@ -805,7 +805,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="sec-header"><div class="sec-title">🧠 Benessere</div></div>
     <div class="card">
       <div class="card-body">
@@ -827,9 +827,9 @@ body {
         </div>
       </div>
     </div>
- 
+
   </div><!-- /panel-symptoms -->
- 
+
   <!-- ══ PANEL: CALENDAR ══ -->
   <div class="panel" id="panel-calendar">
     <div class="card" style="margin:12px;">
@@ -855,7 +855,7 @@ body {
       </div>
     </div>
   </div>
- 
+
   <!-- ══ PANEL: REPORT ══ -->
   <div class="panel" id="panel-report">
     <div style="padding:12px;display:flex;flex-direction:column;gap:8px;">
@@ -874,12 +874,12 @@ body {
       </div>
     </div>
   </div>
- 
+
   <!-- ══ PANEL: SKINCARE ══ -->
   <div class="panel" id="panel-skincare">
- 
+
     <div class="notice">🧴 Traccia lo stato della pelle ogni sera — il dimagrimento rapido richiede monitoraggio costante.</div>
- 
+
     <!-- ✨ AI FACE ANALYSIS -->
     <div class="sec-header">
       <div class="sec-title">✨ Analisi Viso AI</div>
@@ -890,7 +890,7 @@ body {
         <div style="font-size:11px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">
           Fotografa il viso in buona luce naturale. L'AI analizza idratazione, tono, rughe, lassità e volume loss da tirzepatide — e suggerisce aggiustamenti alla routine.
         </div>
- 
+
         <!-- Photo area -->
         <div id="aiPhotoArea" style="position:relative;width:100%;aspect-ratio:4/3;border-radius:var(--rsm);overflow:hidden;background:var(--paper3);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;cursor:pointer;margin-bottom:12px;" onclick="document.getElementById('aiPhotoInput').click()">
           <div style="font-size:2.5rem;opacity:.4;">📸</div>
@@ -898,7 +898,7 @@ body {
           <img id="aiPhotoPreview" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         </div>
         <input type="file" id="aiPhotoInput" accept="image/*" capture="user" style="display:none" onchange="onPhotoSelected(this)">
- 
+
         <!-- Context toggles -->
         <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:7px;">Contesto per l'analisi</div>
         <div class="chip-wrap" style="margin-bottom:12px;" id="aiContextChips">
@@ -909,23 +909,23 @@ body {
           <span class="chip" data-ctx="sole">Esposta al sole</span>
           <span class="chip" data-ctx="stress">Periodo stressante</span>
         </div>
- 
+
         <button class="btn btn-primary" id="aiAnalyzeBtn" onclick="analyzeWithAI()" style="gap:8px;">
           <span>🔬</span> Analizza con AI
         </button>
- 
+
         <!-- Results area -->
         <div id="aiResultArea" style="display:none;margin-top:14px;">
           <div style="height:1px;background:var(--border);margin-bottom:14px;"></div>
           <div id="aiResultContent"></div>
         </div>
- 
+
         <!-- Loading -->
         <div id="aiLoadingArea" style="display:none;margin-top:14px;text-align:center;padding:20px 0;">
           <div style="font-size:1.8rem;animation:spin 1.5s linear infinite;display:inline-block;">⟳</div>
           <div style="font-size:12px;color:var(--ink3);margin-top:8px;">Claude sta analizzando il viso...</div>
         </div>
- 
+
         <div style="font-size:10px;color:var(--ink3);margin-top:12px;line-height:1.5;text-align:center;">
           🔒 La foto viene inviata ad Anthropic solo per l'analisi e non viene conservata
         </div>
@@ -977,7 +977,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <!-- Ozempic Face -->
     <div class="sec-header">
       <div class="sec-title">⚠️ Volume Loss</div>
@@ -1018,7 +1018,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <!-- Preoccupazioni -->
     <div class="sec-header">
       <div class="sec-title">💬 Preoccupazioni</div>
@@ -1028,7 +1028,7 @@ body {
         <div class="chip-wrap" id="skinConcerns"></div>
       </div>
     </div>
- 
+
     <!-- Reazioni prodotti -->
     <div class="sec-header">
       <div class="sec-title">🧪 Reazioni Prodotti</div>
@@ -1045,7 +1045,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <!-- Integratori pelle -->
     <div class="sec-header">
       <div class="sec-title">💊 Integrazione Anti-Age</div>
@@ -1056,7 +1056,7 @@ body {
         <div class="checklist" id="checklist-skincare-int"></div>
       </div>
     </div>
- 
+
     <!-- Note libere -->
     <div class="sec-header">
       <div class="sec-title">📝 Diario Pelle</div>
@@ -1069,11 +1069,11 @@ body {
         </div>
       </div>
     </div>
- 
+
   </div><!-- /panel-skincare -->
- 
+
 </div><!-- /app -->
- 
+
 <!-- SAVE BAR -->
 <div class="save-bar">
   <div class="save-info" id="lastSaved">Nessun salvataggio</div>
@@ -1082,7 +1082,7 @@ body {
     <button class="btn btn-primary" onclick="saveDay()" style="padding:10px 18px;font-size:0.82rem;width:auto;">💾 Salva</button>
   </div>
 </div>
- 
+
 <!-- TAB BAR -->
 <nav class="tab-bar">
   <button class="tab-item active" onclick="switchTab('daily',this)">
@@ -1110,10 +1110,10 @@ body {
     <span class="t-label">Report</span>
   </button>
 </nav>
- 
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
- 
+
 <!-- MODAL (bottom sheet) -->
 <div class="modal-overlay" id="driveModal" onclick="if(event.target===this)closeDriveModal()">
   <div class="modal">
@@ -1127,7 +1127,7 @@ body {
     </div>
   </div>
 </div>
- 
+
 <!-- API KEY MODAL -->
 <div class="apikey-overlay" id="apikeyModal">
   <div class="apikey-sheet">
@@ -1146,19 +1146,19 @@ body {
     <button class="btn btn-secondary" onclick="closeApikeyModal()" style="width:100%;">Salta per ora</button>
   </div>
 </div>
- 
+
 <!-- SUPABASE MODAL -->
 <div class="apikey-overlay" id="supabaseModal">
   <div class="apikey-sheet">
     <div class="modal-handle"></div>
     <div class="apikey-logo">☁ <em>Supabase</em></div>
     <p class="apikey-sub">Collega il tuo database Supabase per sincronizzare i dati su tutti i dispositivi. I dati vengono salvati in tempo reale ad ogni modifica.</p>
- 
+
     <div id="sbStatusBar" class="sb-status off">
       <div class="sb-dot"></div>
       <span id="sbStatusText">Non configurato</span>
     </div>
- 
+
     <div class="input-group">
       <label>Project URL</label>
       <input type="url" id="sbUrlInput" placeholder="https://xxxxxxxxxxxx.supabase.co" autocomplete="off" autocorrect="off" spellcheck="false" style="font-family:'DM Mono',monospace;font-size:12px;">
@@ -1184,16 +1184,16 @@ body {
     <button class="btn btn-secondary" onclick="closeSupabaseModal()" style="width:100%;">Chiudi</button>
   </div>
 </div>
- 
+
 <script>
 // ── DATA ──
 let currentDate = new Date(); currentDate.setHours(0,0,0,0);
 let calViewDate = new Date();
- 
+
 const SKIN_CONCERNS = ['Rughe più visibili','Lassità viso','Macchie solari','Pori dilatati','Rossore','Bruciore/reazione','Secchezza','Occhiaie','Cedimento collo','Texture irregolare'];
- 
+
 const OZE_FLAGS = ['guance','tempie','occhi','rughe','lassita','collo'];
- 
+
 const CHECKLISTS = {
   'viso-am': [
     { id:'detergente_am', label:'CeraVe Hydrating Cleanser', badge:'Detersione' },
@@ -1245,16 +1245,16 @@ const CHECKLISTS = {
     { id:'acqua_target', label:'Raggiunto 2.5L acqua', badge:'Idr.' },
   ]
 };
- 
+
 const SYMPTOMS_GI    = ['Nausea','Vomito','Diarrea','Costipazione','Reflusso','Gonfiore','Dolore add.','No appetito','Salivazione','Eruttazioni'];
 const SYMPTOMS_OTHER = ['Stanchezza','Cefalea','Capogiri','Ipoglicemia','Reaz. iniezion.','Palpitazioni','Insonnia','Ansia','Alopecia','Secchezza bocca'];
- 
+
 let drugs = [];
- 
+
 // ── AI FACE ANALYSIS ──
 let aiImageBase64 = null;
 let aiImageType = 'image/jpeg';
- 
+
 // ── API KEY ──
 function getApiKey() { return localStorage.getItem('mj_apikey') || ''; }
 function saveApiKey() {
@@ -1282,7 +1282,7 @@ function checkApiKeyOnLoad() {
     setTimeout(() => document.getElementById('apikeyModal').classList.add('open'), 600);
   }
 }
- 
+
 function onPhotoSelected(input) {
   const file = input.files[0];
   if(!file) return;
@@ -1299,19 +1299,19 @@ function onPhotoSelected(input) {
   };
   reader.readAsDataURL(file);
 }
- 
+
 async function analyzeWithAI() {
   const apiKey = getApiKey();
   if(!apiKey) { openApikeyModal(); return; }
   if(!aiImageBase64) { showToast('Carica prima una foto','error'); return; }
- 
+
   const activeCtx = [...document.querySelectorAll('#aiContextChips .chip.skin-active')]
     .map(e => e.dataset.ctx).join(', ');
- 
+
   const prompt = `Sei un dermatologo esperto in skincare anti-age. Analizza questa foto del viso e fornisci una valutazione dettagliata in italiano.
- 
+
 Contesto del paziente: ${activeCtx || 'donna adulta'}.
- 
+
 Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa struttura esatta:
 {
   "stato_generale": "frase di 1-2 righe sullo stato globale della pelle",
@@ -1323,11 +1323,11 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
   "ingredienti_da_evitare": ["da evitare 1"],
   "priorita": "l'unica cosa più urgente da fare subito"
 }`;
- 
+
   document.getElementById('aiLoadingArea').style.display = 'block';
   document.getElementById('aiResultArea').style.display = 'none';
   document.getElementById('aiAnalyzeBtn').disabled = true;
- 
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -1349,9 +1349,9 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
         }]
       })
     });
- 
+
     if(response.status === 401) { showToast('Chiave API non valida','error'); openApikeyModal(); return; }
- 
+
     const data = await response.json();
     const raw = data.content?.map(i => i.text || '').join('');
     const clean = raw.replace(/```json|```/g, '').trim();
@@ -1367,7 +1367,7 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
     document.getElementById('aiAnalyzeBtn').disabled = false;
   }
 }
- 
+
 function renderAIResult(r) {
   const el = document.getElementById('aiResultContent');
   el.innerHTML = `
@@ -1375,16 +1375,16 @@ function renderAIResult(r) {
       <div class="ai-section-title">🌿 Stato generale</div>
       <div class="ai-section-body">${r.stato_generale || ''}</div>
     </div>
- 
+
     ${r.priorita ? `<div class="notice" style="margin:0 0 14px;border-color:var(--rose);background:var(--rose-pl);color:var(--rose);">
       ⚡ <strong>Priorità:</strong> ${r.priorita}
     </div>` : ''}
- 
+
     ${r.osservazioni?.length ? `<div class="ai-section">
       <div class="ai-section-title">🔍 Osservazioni</div>
       <div class="ai-section-body">${r.osservazioni.map(o=>`• ${o}`).join('<br>')}</div>
     </div>` : ''}
- 
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
       ${r.punti_forza?.length ? `<div>
         <div class="ai-section-title" style="font-size:0.85rem;">✅ Punti forza</div>
@@ -1395,17 +1395,17 @@ function renderAIResult(r) {
         ${r.criticita.map(c=>`<div class="ai-pill warn" style="margin-bottom:5px;display:block;">${c}</div>`).join('')}
       </div>` : ''}
     </div>
- 
+
     ${r.suggerimenti_routine?.length ? `<div class="ai-section">
       <div class="ai-section-title">💡 Suggerimenti routine</div>
       <div class="ai-section-body">${r.suggerimenti_routine.map((s,i)=>`<strong>${i+1}.</strong> ${s}`).join('<br><br>')}</div>
     </div>` : ''}
- 
+
     ${r.ingredienti_consigliati?.length ? `<div class="ai-section">
       <div class="ai-section-title">🧪 Ingredienti consigliati</div>
       <div class="ai-pill-row">${r.ingredienti_consigliati.map(i=>`<span class="ai-pill">${i}</span>`).join('')}</div>
     </div>` : ''}
- 
+
     ${r.ingredienti_da_evitare?.length ? `<div class="ai-section">
       <div class="ai-section-title">🚫 Da evitare ora</div>
       <div class="ai-pill-row">${r.ingredienti_da_evitare.map(i=>`<span class="ai-pill warn">${i}</span>`).join('')}</div>
@@ -1413,17 +1413,17 @@ function renderAIResult(r) {
   `;
   document.getElementById('aiResultArea').style.display = 'block';
 }
- 
+
 // ── SUPABASE ──
 let sbClient = null;
- 
+
 function getSbConfig() {
   return {
     url: localStorage.getItem('mj_sb_url') || '',
     key: localStorage.getItem('mj_sb_key') || ''
   };
 }
- 
+
 function initSupabase() {
   const { url, key } = getSbConfig();
   if(!url || !key) return false;
@@ -1432,47 +1432,50 @@ function initSupabase() {
     return true;
   } catch(e) { sbClient = null; return false; }
 }
- 
+
 function generateConfigLink() {
-  const { url, key } = getSbConfig();
-  const apiKey = getApiKey();
-  if(!url || !key) { showToast('Configura prima Supabase', 'error'); return; }
-  const params = new URLSearchParams();
-  if(url)    params.set('sb_url', url);
-  if(key)    params.set('sb_key', key);
-  if(apiKey) params.set('ai_key', apiKey);
-  const base = window.location.href.split('#')[0].split('?')[0];
-  const link = base + '#cfg=' + btoa(params.toString());
-  document.getElementById('configLinkText').textContent = link;
-  document.getElementById('configLinkArea').style.display = 'block';
+  const sbUrl = document.getElementById('sbUrlInput')?.value.trim() || getSbConfig().url || '';
+  const sbKey = document.getElementById('sbKeyInput')?.value.trim() || getSbConfig().key || '';
+  const aiKey = getApiKey() || '';
+  if(!sbUrl || !sbKey) {
+    showToast('Inserisci URL e chiave Supabase', 'error');
+    return;
+  }
+  try {
+    const cfg = JSON.stringify({ sb_url: sbUrl, sb_key: sbKey, ai_key: aiKey });
+    const encoded = btoa(unescape(encodeURIComponent(cfg)));
+    const base = window.location.href.split('#')[0].split('?')[0];
+    const link = base + '#cfg=' + encoded;
+    document.getElementById('configLinkText').textContent = link;
+    document.getElementById('configLinkArea').style.display = 'block';
+    showToast('Link generato ✓', 'success');
+  } catch(e) {
+    showToast('Errore: ' + e.message, 'error');
+  }
 }
- 
+
 function copyConfigLink() {
   const txt = document.getElementById('configLinkText').textContent;
   navigator.clipboard.writeText(txt).then(() => showToast('Link copiato ✓', 'success'));
 }
- 
+
 function autoConfigFromUrl() {
   const hash = window.location.hash;
   if(!hash.startsWith('#cfg=')) return;
   try {
-    const decoded = atob(hash.slice(5));
-    const params = new URLSearchParams(decoded);
-    const sbUrl  = params.get('sb_url');
-    const sbKey  = params.get('sb_key');
-    const aiKey  = params.get('ai_key');
-    if(sbUrl) localStorage.setItem('mj_sb_url', sbUrl);
-    if(sbKey) localStorage.setItem('mj_sb_key', sbKey);
-    if(aiKey) localStorage.setItem('mj_apikey', aiKey);
-    // pulisce l'hash dall'URL senza ricaricare
+    const decoded = decodeURIComponent(escape(atob(hash.slice(5))));
+    const cfg = JSON.parse(decoded);
+    if(cfg.sb_url) localStorage.setItem('mj_sb_url', cfg.sb_url);
+    if(cfg.sb_key) localStorage.setItem('mj_sb_key', cfg.sb_key);
+    if(cfg.ai_key) localStorage.setItem('mj_apikey', cfg.ai_key);
     history.replaceState(null, '', window.location.pathname + window.location.search);
-    if(sbUrl && sbKey) {
+    if(cfg.sb_url && cfg.sb_key) {
       initSupabase();
       showToast('Configurazione applicata ✓', 'success');
     }
   } catch(e) { console.warn('Config URL non valido', e); }
 }
- 
+
 function openSupabaseModal() {
   const { url, key } = getSbConfig();
   if(url) document.getElementById('sbUrlInput').value = url;
@@ -1485,7 +1488,7 @@ function toggleSbKey() {
   const inp = document.getElementById('sbKeyInput');
   inp.type = inp.type === 'password' ? 'text' : 'password';
 }
- 
+
 function updateSbStatusBar() {
   const bar = document.getElementById('sbStatusBar');
   const txt = document.getElementById('sbStatusText');
@@ -1498,7 +1501,7 @@ function updateSbStatusBar() {
     bar.className = 'sb-status err'; txt.textContent = 'Errore connessione';
   }
 }
- 
+
 async function saveSupabaseConfig() {
   let url = document.getElementById('sbUrlInput').value.trim();
   const key = document.getElementById('sbKeyInput').value.trim();
@@ -1506,12 +1509,12 @@ async function saveSupabaseConfig() {
   if(!url.startsWith('https://')) { showToast('URL non valido', 'error'); return; }
   // strip any accidental trailing path
   url = url.replace(/\/(rest\/v1|auth\/v1|storage\/v1)\/?.*$/, '').replace(/\/$/, '');
- 
+
   localStorage.setItem('mj_sb_url', url);
   localStorage.setItem('mj_sb_key', key);
   const ok = initSupabase();
   if(!ok) { showToast('Errore configurazione', 'error'); return; }
- 
+
   // Test connection + sync all local data
   showToast('Connessione in corso...', 'success');
   try {
@@ -1526,7 +1529,7 @@ async function saveSupabaseConfig() {
     sbClient = null; updateSbStatusBar();
   }
 }
- 
+
 async function syncAllLocalToSupabase() {
   if(!sbClient) return;
   const rows = [];
@@ -1545,7 +1548,7 @@ async function syncAllLocalToSupabase() {
   if(error) console.error('Sync error:', error);
   else showToast(`${rows.length} giorni sincronizzati ✓`, 'success');
 }
- 
+
 async function sbSaveDay(date, data) {
   if(!sbClient) return;
   try {
@@ -1554,7 +1557,7 @@ async function sbSaveDay(date, data) {
     if(error) throw error;
   } catch(e) { console.warn('Supabase save failed, using localStorage only:', e.message); }
 }
- 
+
 async function sbLoadDay(date) {
   if(!sbClient) return null;
   try {
@@ -1564,7 +1567,7 @@ async function sbLoadDay(date) {
     return data.data;
   } catch(e) { return null; }
 }
- 
+
 // ── INIT ──
 function init() {
   autoConfigFromUrl();
@@ -1573,7 +1576,7 @@ function init() {
   updateDateDisplay(); loadDay(); renderCalendar(); loadBaseSettings();
   checkApiKeyOnLoad();
 }
- 
+
 function renderChecklists() {
   Object.keys(CHECKLISTS).forEach(key => {
     const el = document.getElementById('checklist-' + key);
@@ -1588,7 +1591,7 @@ function renderChecklists() {
     });
   });
 }
- 
+
 function renderSymptoms() {
   const gi = document.getElementById('symptomsGI');
   const ot = document.getElementById('symptomsOther');
@@ -1601,7 +1604,7 @@ function renderSymptoms() {
     sp.onclick = () => sp.classList.toggle('active'); ot.appendChild(sp);
   });
 }
- 
+
 function renderSkinConcerns() {
   const el = document.getElementById('skinConcerns');
   if(el) {
@@ -1617,12 +1620,12 @@ function renderSkinConcerns() {
     c.onclick = () => c.classList.toggle('skin-active');
   });
 }
- 
+
 function toggleOze(key) {
   const el = document.getElementById('oze-'+key);
   if(el) el.classList.toggle('active');
 }
- 
+
 function getActiveSkinConcerns() {
   return [...document.querySelectorAll('#skinConcerns .chip.skin-active')].map(e=>e.textContent);
 }
@@ -1648,26 +1651,26 @@ function setSkinRating(id, valId, val) {
   if(el&&val!=null&&val!==''){el.value=val;if(vEl)vEl.textContent=val;}
 }
 function dateKey(d) { return d.toISOString().split('T')[0]; }
- 
+
 function updateDateDisplay() {
   const opts = { weekday:'long', day:'numeric', month:'long' };
   document.getElementById('currentDateDisplay').textContent = currentDate.toLocaleDateString('it-IT', opts);
   const today = new Date(); today.setHours(0,0,0,0);
   document.getElementById('btnNext').disabled = currentDate >= today;
 }
- 
+
 function changeDay(delta) {
   const nd = new Date(currentDate); nd.setDate(nd.getDate() + delta);
   const today = new Date(); today.setHours(0,0,0,0);
   if(nd > today) return;
   saveDay(true); currentDate = nd; updateDateDisplay(); loadDay();
 }
- 
+
 function goToday() {
   saveDay(true); currentDate = new Date(); currentDate.setHours(0,0,0,0);
   updateDateDisplay(); loadDay();
 }
- 
+
 // ── CHECKLIST ──
 function toggleCheck(id) {
   const ci = document.getElementById('ci-'+id);
@@ -1687,7 +1690,7 @@ function getChecks() {
 }
 function getActiveSymptoms() { return [...document.querySelectorAll('.chip.active')].map(e=>e.textContent); }
 function setActiveSymptoms(arr) { document.querySelectorAll('.chip').forEach(e => { e.classList.toggle('active', !!(arr&&arr.includes(e.textContent))); }); }
- 
+
 // ── DRUGS ──
 function renderDrugs() {
   const el = document.getElementById('drugsList'); el.innerHTML='';
@@ -1703,7 +1706,7 @@ function renderDrugs() {
 }
 function addDrug()     { drugs.push({name:'',dose:'',time:''}); renderDrugs(); }
 function removeDrug(i) { drugs.splice(i,1); renderDrugs(); }
- 
+
 // ── SAVE / LOAD ──
 function collectData() {
   const v = id => { const e=document.getElementById(id); return e?e.value:''; };
@@ -1744,7 +1747,7 @@ function collectData() {
     }
   };
 }
- 
+
 function saveDay(silent=false) {
   const data = collectData();
   const dateStr = dateKey(currentDate);
@@ -1755,11 +1758,11 @@ function saveDay(silent=false) {
     showToast('Salvato ✓','success'); updateStats();
   }
 }
- 
+
 async function loadDay() {
   const dateStr = dateKey(currentDate);
   let data = null;
- 
+
   // Try Supabase first
   const sbData = await sbLoadDay(dateStr);
   if(sbData) {
@@ -1770,13 +1773,13 @@ async function loadDay() {
     const raw = localStorage.getItem('mj_day_'+dateStr);
     if(raw) data = JSON.parse(raw);
   }
- 
+
   if(!data) { clearForm(); updateStats(); return; }
   const sv = (id,v) => { const e=document.getElementById(id); if(e&&v!=null&&v!=='') e.value=v; };
- 
+
   if(data.checks) Object.keys(data.checks).forEach(k => setCheck(k, data.checks[k]));
   sv('waterInput',data.water); sv('proteinInput',data.protein); sv('foodNotes',data.foodNotes);
- 
+
   if(data.measurements) {
     const m=data.measurements;
     Object.keys(m).forEach(k=>sv('m_'+k,m[k]));
@@ -1811,7 +1814,7 @@ async function loadDay() {
   document.getElementById('lastSaved').textContent = data.savedAt ? 'Salvato '+new Date(data.savedAt).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) : '';
   updateStats(); updateBMI();
 }
- 
+
 function clearForm() {
   document.querySelectorAll('.check-item').forEach(e=>e.classList.remove('checked'));
   document.querySelectorAll('.check-box').forEach(e=>e.innerHTML='');
@@ -1826,7 +1829,7 @@ function clearForm() {
   OZE_FLAGS.forEach(k=>{const el=document.getElementById('oze-'+k);if(el)el.classList.remove('active');});;
   ['m_peso','m_press_sist','m_press_diast','m_bpm','m_glicemia','m_temp','m_vita','m_fianchi','m_coscia','m_braccio','m_torace','m_collo','m_grassoperc','m_muscoli','m_hba1c','m_colest','m_ldl','m_hdl','m_trig','m_creat','m_alt','m_tsh','m_vitd','mounjaroDose','injSite','workoutType'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
 }
- 
+
 // ── STATS ──
 function updateStats() {
   const today=collectData();
@@ -1840,7 +1843,7 @@ function updateStats() {
   document.getElementById('statBMI').textContent=(peso&&h)?(parseFloat(peso)/((h/100)*(h/100))).toFixed(1):'--';
   if(prevPeso&&peso){const delta=(parseFloat(peso)-prevPeso).toFixed(1);const el=document.getElementById('statPesoDelta');el.textContent=(delta>0?'+':'')+delta+' kg';el.className='stat-d '+(delta>0?'neg':'pos');}
 }
- 
+
 function updateBMI() {
   const h=parseFloat(document.getElementById('m_altezza')?.value||localStorage.getItem('mj_height')||0);
   const p=parseFloat(document.getElementById('m_peso')?.value||0);
@@ -1864,7 +1867,7 @@ function loadBaseSettings(){
   if(h&&document.getElementById('m_altezza'))document.getElementById('m_altezza').value=h;
   if(g&&document.getElementById('m_obpeso'))document.getElementById('m_obpeso').value=g;
 }
- 
+
 // ── TABS ──
 function switchTab(name, tabEl) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -1874,7 +1877,7 @@ function switchTab(name, tabEl) {
   if(name==='calendar') renderCalendar();
   window.scrollTo({top:0,behavior:'smooth'});
 }
- 
+
 // ── CALENDAR ──
 function renderCalendar() {
   const y=calViewDate.getFullYear(),m=calViewDate.getMonth();
@@ -1892,7 +1895,7 @@ function renderCalendar() {
     div.textContent=d;div.onclick=()=>selectCalDay(date);grid.appendChild(div);
   }
 }
- 
+
 function selectCalDay(date) {
   const today=new Date();today.setHours(0,0,0,0);
   if(date>today)return;
@@ -1913,12 +1916,12 @@ function selectCalDay(date) {
   } else { contentEl.innerHTML='<div style="color:var(--ink3);font-size:0.83rem;">Nessun dato per questo giorno.</div>'; }
   det.style.display='block';
 }
- 
+
 function changeMonth(delta){calViewDate.setMonth(calViewDate.getMonth()+delta);renderCalendar();}
- 
+
 // ── REPORT ──
 function getAllDayData(){const r=[];Object.keys(localStorage).filter(k=>k.startsWith('mj_day_')).sort().forEach(k=>{try{r.push(JSON.parse(localStorage.getItem(k)));}catch(e){}});return r;}
- 
+
 let rCharts=[];
 function generateReport(){
   rCharts.forEach(c=>c.destroy());rCharts=[];
@@ -1956,7 +1959,7 @@ function generateReport(){
   },100);
   showToast('Report generato ✓','success');
 }
- 
+
 // ── EXPORT ──
 function exportJSON(){
   const all=getAllDayData();
@@ -1973,7 +1976,7 @@ function exportCSV(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mounjaro_'+dateKey(new Date())+'.csv';a.click();
   showToast('CSV esportato ✓','success');
 }
- 
+
 // ── MODAL ──
 function openDriveModal(type){
   const m=document.getElementById('driveModal'),title=document.getElementById('modalTitle'),desc=document.getElementById('modalDesc'),body=document.getElementById('modalBody'),btn=document.getElementById('modalActionBtn');
@@ -1995,15 +1998,15 @@ function openDriveModal(type){
   m.classList.add('open');
 }
 function closeDriveModal(){document.getElementById('driveModal').classList.remove('open');}
- 
+
 // ── TOAST ──
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';
   setTimeout(()=>t.classList.remove('show'),2500);
 }
- 
+
 init();
- 
+
 // ── PWA SETUP ──
 (function() {
   // Generate inline SVG icon (gold "M" on dark background)
@@ -2015,7 +2018,7 @@ init();
     </svg>`;
     return 'data:image/svg+xml;base64,' + btoa(svg);
   }
- 
+
   // Inject Web App Manifest as blob URL
   const manifest = {
     name: 'Mounjaro Tracker',
@@ -2033,19 +2036,19 @@ init();
   };
   const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
   document.getElementById('pwaManifest').href = URL.createObjectURL(blob);
- 
+
   // Apple touch icon
   const link = document.createElement('link');
   link.rel = 'apple-touch-icon';
   link.href = makeIcon(180);
   document.head.appendChild(link);
- 
+
   // Service Worker — cache-first per uso offline
   if('serviceWorker' in navigator) {
     const swCode = `
 const CACHE = 'mj-tracker-v1';
 const URLS = [self.location.href];
- 
+
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(URLS)));
   self.skipWaiting();
@@ -2065,7 +2068,7 @@ self.addEventListener('fetch', e => {
     const swUrl  = URL.createObjectURL(swBlob);
     navigator.serviceWorker.register(swUrl).catch(()=>{});
   }
- 
+
   // ── INSTALL BANNER ──
   let deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', e => {
@@ -2073,7 +2076,7 @@ self.addEventListener('fetch', e => {
     deferredPrompt = e;
     showInstallBanner();
   });
- 
+
   function showInstallBanner() {
     if(localStorage.getItem('mj_pwa_installed')) return;
     const banner = document.createElement('div');
@@ -2095,7 +2098,7 @@ self.addEventListener('fetch', e => {
       </div>`;
     document.body.appendChild(banner);
   }
- 
+
   window.installPWA = async function() {
     if(!deferredPrompt) return;
     deferredPrompt.prompt();
@@ -2110,7 +2113,7 @@ self.addEventListener('fetch', e => {
     document.getElementById('installBanner')?.remove();
     localStorage.setItem('mj_pwa_installed','1');
   };
- 
+
   // iOS: mostra istruzioni manuali se non già installata
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const isStandalone = window.navigator.standalone;
