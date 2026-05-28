@@ -385,6 +385,10 @@ body {
 .progress-wrap { background:var(--paper3); border-radius:20px; height:6px; overflow:hidden; margin-top:6px; }
 .progress-bar { height:100%; background:linear-gradient(90deg,var(--gold),var(--teal)); border-radius:20px; transition:width .5s; }
 
+/* ── BODY COMP TABLE ── */
+#bodyCompTable { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+#bodyCompTable table { border-collapse:collapse; width:100%; }
+
 /* ── DIVIDER ── */
 .divider { height:1px; background:var(--border); margin:14px 0; }
 
@@ -522,10 +526,12 @@ body {
   <div class="stat-cell">
     <div class="stat-v" id="statBMI">--</div>
     <div class="stat-l">BMI</div>
+    <div class="stat-d" id="statBMIDelta"></div>
   </div>
   <div class="stat-cell">
     <div class="stat-v" id="statVita">--</div>
     <div class="stat-l">Vita cm</div>
+    <div class="stat-d" id="statVitaDelta"></div>
   </div>
   <div class="stat-cell">
     <div class="stat-v" id="statDose">--</div>
@@ -621,7 +627,7 @@ body {
         <div class="g2">
           <div class="input-group">
             <label>Peso (kg)</label>
-            <input type="number" id="m_peso" inputmode="decimal" step="0.1" placeholder="75.0">
+            <input type="number" id="m_peso" inputmode="decimal" step="0.1" placeholder="75.0" oninput="updateBMI();autoCalcBodyComp()">
           </div>
           <div class="input-group">
             <label>Glicemia (mg/dL)</label>
@@ -660,23 +666,49 @@ body {
       </div>
     </div>
 
-    <div class="notice">📅 Misura corpo ogni lunedì mattina.</div>
+    <div class="notice">📅 Misura corpo ogni lunedì mattina a digiuno.</div>
     <div class="card">
       <div class="card-head">
         <div class="card-title">📐 Misurazioni corpo</div>
-        <div class="sec-tag tag-wk">Sett.</div>
+        <button onclick="openMeasureGuide()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;color:var(--ink2);cursor:pointer;display:flex;align-items:center;gap:4px;">
+          <span style="font-size:13px;">📏</span> Come misurare
+        </button>
       </div>
       <div class="card-body">
         <div class="g2">
-          <div class="input-group"><label>Vita (cm)</label><input type="number" id="m_vita" inputmode="decimal" step="0.5" placeholder="85.0"></div>
-          <div class="input-group"><label>Fianchi (cm)</label><input type="number" id="m_fianchi" inputmode="decimal" step="0.5" placeholder="100.0"></div>
+          <div class="input-group"><label>Vita (cm)</label><input type="number" id="m_vita" inputmode="decimal" step="0.5" placeholder="85.0" oninput="autoCalcBodyComp()"></div>
+          <div class="input-group"><label>Fianchi (cm)</label><input type="number" id="m_fianchi" inputmode="decimal" step="0.5" placeholder="100.0" oninput="autoCalcBodyComp()"></div>
           <div class="input-group"><label>Coscia sx</label><input type="number" id="m_coscia" inputmode="decimal" step="0.5" placeholder="60.0"></div>
           <div class="input-group"><label>Braccio sx</label><input type="number" id="m_braccio" inputmode="decimal" step="0.5" placeholder="32.0"></div>
           <div class="input-group"><label>Torace</label><input type="number" id="m_torace" inputmode="decimal" step="0.5" placeholder="95.0"></div>
-          <div class="input-group"><label>Collo</label><input type="number" id="m_collo" inputmode="decimal" step="0.5" placeholder="38.0"></div>
-          <div class="input-group"><label>% Grasso</label><input type="number" id="m_grassoperc" inputmode="decimal" step="0.1" placeholder="25.0"></div>
-          <div class="input-group"><label>Massa Musc. kg</label><input type="number" id="m_muscoli" inputmode="decimal" step="0.1" placeholder="45.0"></div>
+          <div class="input-group"><label>Collo</label><input type="number" id="m_collo" inputmode="decimal" step="0.5" placeholder="38.0" oninput="autoCalcBodyComp()"></div>
         </div>
+        <!-- Composizione calcolata automaticamente -->
+        <div id="bodyCompCalc" style="display:none;margin-top:4px;padding:12px 14px;background:var(--gold-pl);border-radius:10px;border:1px solid rgba(184,145,42,.25);">
+          <div style="font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:10px;">⚡ Composizione calcolata · Formula US Navy</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+            <div>
+              <div id="calcBF" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);line-height:1;">—</div>
+              <div style="font-size:9px;color:var(--ink3);margin-top:2px;text-transform:uppercase;">% Grasso</div>
+            </div>
+            <div>
+              <div id="calcFatMass" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--rose);line-height:1;">—</div>
+              <div style="font-size:9px;color:var(--ink3);margin-top:2px;text-transform:uppercase;">Massa grassa</div>
+            </div>
+            <div>
+              <div id="calcLeanMass" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--teal);line-height:1;">—</div>
+              <div style="font-size:9px;color:var(--ink3);margin-top:2px;text-transform:uppercase;">Massa magra</div>
+            </div>
+          </div>
+          <div id="calcBFBar" style="margin-top:10px;"></div>
+          <div id="calcBFCategory" style="font-size:11px;color:var(--ink2);margin-top:6px;text-align:center;"></div>
+        </div>
+        <div id="bodyCompHint" style="font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.55;padding:0 2px;">
+          Inserisci vita · fianchi · collo per il calcolo automatico della composizione corporea.
+        </div>
+        <!-- campi nascosti per compatibilità salvataggio -->
+        <input type="hidden" id="m_grassoperc">
+        <input type="hidden" id="m_muscoli">
       </div>
     </div>
 
@@ -711,6 +743,13 @@ body {
         <div class="g2">
           <div class="input-group"><label>Altezza (cm)</label><input type="number" id="m_altezza" inputmode="numeric" placeholder="170" onchange="saveHeight()"></div>
           <div class="input-group"><label>Obiettivo (kg)</label><input type="number" id="m_obpeso" inputmode="decimal" step="0.5" placeholder="65.0" onchange="saveGoal()"></div>
+          <div class="input-group"><label>Sesso biologico</label>
+            <select id="m_sesso" onchange="saveSesso()" style="font-size:16px;">
+              <option value="F">Femmina</option>
+              <option value="M">Maschio</option>
+            </select>
+          </div>
+          <div class="input-group"><label>Età</label><input type="number" id="m_eta" inputmode="numeric" placeholder="45" onchange="saveEta()"></div>
         </div>
         <div id="bmiDisplay" style="font-size:0.85rem;color:var(--ink2);margin-top:2px;"></div>
         <div id="goalProgressWrap" style="margin-top:10px;"></div>
@@ -855,6 +894,83 @@ body {
       </div>
     </div>
   </div>
+
+  <!-- ══ PANEL: ANALISI ══ -->
+  <div class="panel" id="panel-analisi">
+
+    <!-- Watch Summary -->
+    <div class="sec-header">
+      <div class="sec-title">⌚ Riepilogo al polso</div>
+      <div class="sec-tag" style="background:rgba(58,125,110,.1);color:var(--teal);">Wear OS</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.65;">
+          Invia una notifica con il riepilogo di oggi. Su Android la notifica appare automaticamente anche sullo smartwatch Wear OS.
+        </div>
+        <button class="btn btn-secondary" onclick="sendWatchSummary()" style="width:100%;gap:8px;">
+          <span>⌚</span> Invia riepilogo al polso
+        </button>
+        <div style="font-size:10px;color:var(--ink3);margin-top:10px;line-height:1.6;text-align:center;">
+          Prima volta: concedi i permessi notifica · L'app deve essere installata come PWA
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Coach -->
+    <div class="sec-header">
+      <div class="sec-title">🤖 Coach AI</div>
+      <div class="sec-tag" style="background:rgba(107,91,158,.12);color:var(--violet);">Claude</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.65;">
+          Claude legge tutti i tuoi dati — peso, misure, composizione corporea, sintomi, energia, umore — e ti dà un giudizio onesto sull'andamento con consigli concreti.
+        </div>
+        <button class="btn btn-primary" id="btnAIAnalysis" onclick="generateAIAnalysis()" style="gap:8px;">
+          <span>⚡</span> Analizza andamento completo
+        </button>
+        <div id="aiAnalysisLoading" style="display:none;text-align:center;padding:24px 0;">
+          <div style="font-size:2rem;animation:spin 1.4s linear infinite;display:inline-block;">⟳</div>
+          <div style="font-size:12px;color:var(--ink3);margin-top:10px;">Claude sta elaborando i tuoi dati...</div>
+        </div>
+        <div id="aiAnalysisResult" style="display:none;margin-top:14px;"></div>
+      </div>
+    </div>
+
+    <!-- Composizione corporea lunedì -->
+    <div class="sec-header">
+      <div class="sec-title">⚖️ Composizione Corporea</div>
+      <div class="sec-tag tag-wk">Lunedì</div>
+    </div>
+    <div class="card">
+      <div class="card-body" style="padding:10px 10px 12px;">
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;line-height:1.55;">
+          Calcolata con la formula US Navy da vita · fianchi · collo · altezza. Se inserisci % grasso da bilancia smart, viene usato quello.
+        </div>
+        <div id="bodyCompTable">
+          <div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">
+            Nessuna misurazione del lunedì trovata.<br>
+            <span style="font-size:10px;margin-top:4px;display:block;">Inserisci vita, fianchi e collo ogni lunedì mattina.</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="renderBodyComp()" style="width:100%;margin-top:10px;font-size:0.82rem;">↺ Aggiorna tabella</button>
+      </div>
+    </div>
+
+    <!-- Trend settimanale rapido -->
+    <div class="sec-header">
+      <div class="sec-title">📈 Trend Settimanale</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="trendSummary">
+        <div style="text-align:center;padding:16px;color:var(--ink3);font-size:12px;">
+          Tocca "Analizza" per generare i trend.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-analisi -->
 
   <!-- ══ PANEL: REPORT ══ -->
   <div class="panel" id="panel-report">
@@ -1101,6 +1217,10 @@ body {
     <span class="t-icon">🩺</span>
     <span class="t-label">Sintomi</span>
   </button>
+  <button class="tab-item" onclick="switchTab('analisi',this);renderBodyComp();">
+    <span class="t-icon">🧠</span>
+    <span class="t-label">Analisi</span>
+  </button>
   <button class="tab-item" onclick="switchTab('calendar',this)">
     <span class="t-icon">📆</span>
     <span class="t-label">Agenda</span>
@@ -1175,12 +1295,6 @@ body {
       Crea prima la tabella con: <code style="background:var(--paper3);padding:2px 5px;border-radius:4px;font-size:10px;">create table tracker_days (date text primary key, data jsonb not null, updated_at timestamptz default now());</code>
     </p>
     <button class="btn btn-primary" onclick="saveSupabaseConfig()" style="margin-bottom:10px;">🔗 Connetti e sincronizza</button>
-    <button class="btn btn-secondary" onclick="generateConfigLink()" style="width:100%;margin-bottom:10px;">🔗 Genera link configurazione</button>
-    <div id="configLinkArea" style="display:none;margin-bottom:10px;">
-      <div style="font-size:11px;color:var(--ink3);margin-bottom:6px;">Salva questo link nei preferiti o mandatelo su WhatsApp — aprendolo configura tutto automaticamente:</div>
-      <div style="background:var(--paper3);border-radius:var(--rsm);padding:10px;font-family:'DM Mono',monospace;font-size:10px;word-break:break-all;color:var(--ink2);margin-bottom:8px;" id="configLinkText"></div>
-      <button class="btn btn-secondary" onclick="copyConfigLink()" style="width:100%;">📋 Copia link</button>
-    </div>
     <button class="btn btn-secondary" onclick="closeSupabaseModal()" style="width:100%;">Chiudi</button>
   </div>
 </div>
@@ -1433,49 +1547,6 @@ function initSupabase() {
   } catch(e) { sbClient = null; return false; }
 }
 
-function generateConfigLink() {
-  const sbUrl = document.getElementById('sbUrlInput')?.value.trim() || getSbConfig().url || '';
-  const sbKey = document.getElementById('sbKeyInput')?.value.trim() || getSbConfig().key || '';
-  const aiKey = getApiKey() || '';
-  if(!sbUrl || !sbKey) {
-    showToast('Inserisci URL e chiave Supabase', 'error');
-    return;
-  }
-  try {
-    const cfg = JSON.stringify({ sb_url: sbUrl, sb_key: sbKey, ai_key: aiKey });
-    const encoded = btoa(unescape(encodeURIComponent(cfg)));
-    const base = window.location.href.split('#')[0].split('?')[0];
-    const link = base + '#cfg=' + encoded;
-    document.getElementById('configLinkText').textContent = link;
-    document.getElementById('configLinkArea').style.display = 'block';
-    showToast('Link generato ✓', 'success');
-  } catch(e) {
-    showToast('Errore: ' + e.message, 'error');
-  }
-}
-
-function copyConfigLink() {
-  const txt = document.getElementById('configLinkText').textContent;
-  navigator.clipboard.writeText(txt).then(() => showToast('Link copiato ✓', 'success'));
-}
-
-function autoConfigFromUrl() {
-  const hash = window.location.hash;
-  if(!hash.startsWith('#cfg=')) return;
-  try {
-    const decoded = decodeURIComponent(escape(atob(hash.slice(5))));
-    const cfg = JSON.parse(decoded);
-    if(cfg.sb_url) localStorage.setItem('mj_sb_url', cfg.sb_url);
-    if(cfg.sb_key) localStorage.setItem('mj_sb_key', cfg.sb_key);
-    if(cfg.ai_key) localStorage.setItem('mj_apikey', cfg.ai_key);
-    history.replaceState(null, '', window.location.pathname + window.location.search);
-    if(cfg.sb_url && cfg.sb_key) {
-      initSupabase();
-      showToast('Configurazione applicata ✓', 'success');
-    }
-  } catch(e) { console.warn('Config URL non valido', e); }
-}
-
 function openSupabaseModal() {
   const { url, key } = getSbConfig();
   if(url) document.getElementById('sbUrlInput').value = url;
@@ -1503,12 +1574,10 @@ function updateSbStatusBar() {
 }
 
 async function saveSupabaseConfig() {
-  let url = document.getElementById('sbUrlInput').value.trim();
+  const url = document.getElementById('sbUrlInput').value.trim();
   const key = document.getElementById('sbKeyInput').value.trim();
   if(!url || !key) { showToast('Compila entrambi i campi', 'error'); return; }
   if(!url.startsWith('https://')) { showToast('URL non valido', 'error'); return; }
-  // strip any accidental trailing path
-  url = url.replace(/\/(rest\/v1|auth\/v1|storage\/v1)\/?.*$/, '').replace(/\/$/, '');
 
   localStorage.setItem('mj_sb_url', url);
   localStorage.setItem('mj_sb_key', key);
@@ -1570,7 +1639,6 @@ async function sbLoadDay(date) {
 
 // ── INIT ──
 function init() {
-  autoConfigFromUrl();
   initSupabase();
   renderChecklists(); renderSymptoms(); renderSkinConcerns(); renderDrugs();
   updateDateDisplay(); loadDay(); renderCalendar(); loadBaseSettings();
@@ -1774,7 +1842,7 @@ async function loadDay() {
     if(raw) data = JSON.parse(raw);
   }
 
-  if(!data) { clearForm(); updateStats(); return; }
+  if(!data) { clearForm(); updateStats(); autoCalcBodyComp(); return; }
   const sv = (id,v) => { const e=document.getElementById(id); if(e&&v!=null&&v!=='') e.value=v; };
 
   if(data.checks) Object.keys(data.checks).forEach(k => setCheck(k, data.checks[k]));
@@ -1812,7 +1880,7 @@ async function loadDay() {
     sv('sk_react_pm',sk.reactPM); sv('sk_diary',sk.diary);
   }
   document.getElementById('lastSaved').textContent = data.savedAt ? 'Salvato '+new Date(data.savedAt).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) : '';
-  updateStats(); updateBMI();
+  updateStats(); updateBMI(); autoCalcBodyComp();
 }
 
 function clearForm() {
@@ -1834,14 +1902,34 @@ function clearForm() {
 function updateStats() {
   const today=collectData();
   const peso=today.measurements?.peso, vita=today.measurements?.vita, dose=today.mounjaro?.dose;
-  let prevPeso=null;
-  for(let i=1;i<=30;i++){const d=new Date(currentDate);d.setDate(d.getDate()-i);const p=localStorage.getItem('mj_day_'+dateKey(d));if(p){const pd=JSON.parse(p);if(pd.measurements?.peso){prevPeso=parseFloat(pd.measurements.peso);break;}}}
+  let prevPeso=null, prevVita=null;
+  for(let i=1;i<=30;i++){
+    const d=new Date(currentDate);d.setDate(d.getDate()-i);
+    const p=localStorage.getItem('mj_day_'+dateKey(d));
+    if(p){const pd=JSON.parse(p);
+      if(pd.measurements?.peso&&prevPeso===null) prevPeso=parseFloat(pd.measurements.peso);
+      if(pd.measurements?.vita&&prevVita===null) prevVita=parseFloat(pd.measurements.vita);
+      if(prevPeso!==null&&prevVita!==null) break;
+    }
+  }
   document.getElementById('statPeso').textContent=peso?parseFloat(peso).toFixed(1):'--';
   document.getElementById('statVita').textContent=vita?parseFloat(vita).toFixed(1):'--';
   document.getElementById('statDose').textContent=dose?dose:'--';
   const h=parseFloat(localStorage.getItem('mj_height')||'0');
-  document.getElementById('statBMI').textContent=(peso&&h)?(parseFloat(peso)/((h/100)*(h/100))).toFixed(1):'--';
-  if(prevPeso&&peso){const delta=(parseFloat(peso)-prevPeso).toFixed(1);const el=document.getElementById('statPesoDelta');el.textContent=(delta>0?'+':'')+delta+' kg';el.className='stat-d '+(delta>0?'neg':'pos');}
+  const bmi=(peso&&h)?parseFloat(peso)/((h/100)*(h/100)):null;
+  document.getElementById('statBMI').textContent=bmi?bmi.toFixed(1):'--';
+
+  const elPD=document.getElementById('statPesoDelta');
+  if(prevPeso!==null&&peso){const dP=parseFloat((parseFloat(peso)-prevPeso).toFixed(1));elPD.textContent=(dP>0?'+':'')+dP.toFixed(1)+' kg';elPD.className='stat-d '+(dP>0?'neg':dP<0?'pos':'');}
+  else{elPD.textContent='';elPD.className='stat-d';}
+
+  const elVD=document.getElementById('statVitaDelta');
+  if(elVD){if(prevVita!==null&&vita){const dV=parseFloat((parseFloat(vita)-prevVita).toFixed(1));elVD.textContent=(dV>0?'+':'')+dV.toFixed(1)+' cm';elVD.className='stat-d '+(dV>0?'neg':dV<0?'pos':'');}
+  else{elVD.textContent='';elVD.className='stat-d';}}
+
+  const elBD=document.getElementById('statBMIDelta');
+  if(elBD){if(prevPeso!==null&&bmi&&h){const prevBMI=prevPeso/((h/100)*(h/100));const dB=parseFloat((bmi-prevBMI).toFixed(1));elBD.textContent=(dB>0?'+':'')+dB.toFixed(1);elBD.className='stat-d '+(dB>0?'neg':dB<0?'pos':'');}
+  else{elBD.textContent='';elBD.className='stat-d';}}
 }
 
 function updateBMI() {
@@ -1862,10 +1950,428 @@ function updateBMI() {
 }
 function saveHeight(){const h=document.getElementById('m_altezza')?.value;if(h)localStorage.setItem('mj_height',h);updateBMI();}
 function saveGoal(){const g=document.getElementById('m_obpeso')?.value;if(g)localStorage.setItem('mj_goal',g);}
+function saveSesso(){const s=document.getElementById('m_sesso')?.value;if(s)localStorage.setItem('mj_sesso',s);}
+function saveEta(){const e=document.getElementById('m_eta')?.value;if(e)localStorage.setItem('mj_eta',e);}
 function loadBaseSettings(){
   const h=localStorage.getItem('mj_height'),g=localStorage.getItem('mj_goal');
+  const s=localStorage.getItem('mj_sesso')||'F',e=localStorage.getItem('mj_eta');
   if(h&&document.getElementById('m_altezza'))document.getElementById('m_altezza').value=h;
   if(g&&document.getElementById('m_obpeso'))document.getElementById('m_obpeso').value=g;
+  if(document.getElementById('m_sesso'))document.getElementById('m_sesso').value=s;
+  if(e&&document.getElementById('m_eta'))document.getElementById('m_eta').value=e;
+}
+
+// ── WATCH / NOTIFICATION SUMMARY ──
+async function requestNotificationPermission() {
+  if(!('Notification' in window)) return false;
+  if(Notification.permission === 'granted') return true;
+  const perm = await Notification.requestPermission();
+  return perm === 'granted';
+}
+
+function buildWatchSummary() {
+  const all = getAllDayData();
+  const today = all.find(d => d.date === dateKey(new Date())) || {};
+  const m = today.measurements || {};
+  const w = today.wellbeing || {};
+  const mj = today.mounjaro || {};
+
+  // Peso e delta
+  const peso = m.peso ? parseFloat(m.peso) : null;
+  let prevPeso = null;
+  for(let i=1;i<=30;i++){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const p=localStorage.getItem('mj_day_'+dateKey(d));
+    if(p){const pd=JSON.parse(p);if(pd.measurements?.peso){prevPeso=parseFloat(pd.measurements.peso);break;}}
+  }
+  const deltaPeso = (peso && prevPeso) ? +(peso - prevPeso).toFixed(1) : null;
+
+  // BMI
+  const h = parseFloat(localStorage.getItem('mj_height') || '0');
+  const bmi = (peso && h) ? +(peso / ((h/100)*(h/100))).toFixed(1) : null;
+
+  // Composizione
+  const bf = m.grassoperc ? parseFloat(m.grassoperc) : null;
+  const leanMass = (peso && bf) ? +(peso - peso*bf/100).toFixed(1) : null;
+
+  // Goal
+  const goal = parseFloat(localStorage.getItem('mj_goal') || '0');
+  const toGoal = (peso && goal) ? +(peso - goal).toFixed(1) : null;
+
+  // Linee notifica
+  const lines = [];
+
+  if(peso) {
+    const deltaStr = deltaPeso !== null ? ` (${deltaPeso > 0 ? '+' : ''}${deltaPeso} kg)` : '';
+    lines.push(`⚖️ Peso: ${peso} kg${deltaStr}`);
+  }
+  if(bmi) lines.push(`📊 BMI: ${bmi}`);
+  if(leanMass) lines.push(`💪 Massa magra: ${leanMass} kg`);
+  if(bf) lines.push(`🔥 Grasso: ${bf.toFixed(1)}%`);
+  if(m.vita) lines.push(`📏 Vita: ${m.vita} cm`);
+  if(toGoal !== null) lines.push(`🎯 All'obiettivo: ${toGoal > 0 ? '+' : ''}${toGoal} kg`);
+  if(m.energia) lines.push(`⚡ Energia: ${m.energia}/10`);
+  if(w.umore) lines.push(`😊 Umore: ${w.umore}/10`);
+  if(mj.dose) lines.push(`💉 Dose: ${mj.dose} mg Tirz.`);
+
+  const body = lines.length ? lines.join('\n') : 'Nessun dato inserito per oggi. Apri l\'app e compila la routine!';
+
+  const dateLabel = new Date().toLocaleDateString('it-IT', {weekday:'long', day:'numeric', month:'long'});
+  return { title: `Mounjaro · ${dateLabel}`, body };
+}
+
+async function sendWatchSummary() {
+  const granted = await requestNotificationPermission();
+  if(!granted) {
+    showToast('Permesso notifiche negato. Abilitalo nelle impostazioni.', 'error');
+    return;
+  }
+  const { title, body } = buildWatchSummary();
+  try {
+    if('serviceWorker' in navigator) {
+      const reg = await navigator.serviceWorker.ready;
+      if(reg.active) {
+        // Usa il canale message → SW (funziona su GitHub Pages e telefono)
+        reg.active.postMessage({ type: 'SEND_NOW', title, body });
+        showToast('Riepilogo inviato al polso ✓', 'success');
+        return;
+      }
+      // Fallback: showNotification diretto
+      await reg.showNotification(title, { body, tag: 'mj-summary', vibrate: [100,50,100] });
+    } else {
+      new Notification(title, { body, tag: 'mj-summary' });
+    }
+    showToast('Riepilogo inviato ✓', 'success');
+  } catch(e) {
+    showToast('Errore: ' + e.message, 'error');
+  }
+}
+
+// ── REMINDER AUTOMATICO MATTUTINO ──
+function scheduleWatchReminder() {
+  const hour = parseInt(localStorage.getItem('mj_reminder_hour') || '8');
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(reg => {
+      if(reg.active) {
+        reg.active.postMessage({ type: 'SCHEDULE_REMINDER', hour, minute: 0 });
+      }
+    });
+  }
+}
+
+// Avvia reminder se permesso già concesso
+if(Notification.permission === 'granted') scheduleWatchReminder();
+function calcBodyFat(sesso, vita, fianchi, collo, altezza) {
+  // US Navy Formula
+  if(!vita||!collo||!altezza) return null;
+  const s=sesso||localStorage.getItem('mj_sesso')||'F';
+  if(s==='F') {
+    if(!fianchi) return null;
+    const bf=163.205*Math.log10(vita+fianchi-collo)-97.684*Math.log10(altezza)-78.387;
+    return Math.min(70,Math.max(5,bf));
+  } else {
+    const bf=86.010*Math.log10(vita-collo)-70.041*Math.log10(altezza)+36.76;
+    return Math.min(70,Math.max(2,bf));
+  }
+}
+
+function autoCalcBodyComp() {
+  const vita=parseFloat(document.getElementById('m_vita')?.value)||null;
+  const fianchi=parseFloat(document.getElementById('m_fianchi')?.value)||null;
+  const collo=parseFloat(document.getElementById('m_collo')?.value)||null;
+  const peso=parseFloat(document.getElementById('m_peso')?.value)||null;
+  const h=parseFloat(localStorage.getItem('mj_height')||document.getElementById('m_altezza')?.value||'0');
+  const sesso=localStorage.getItem('mj_sesso')||'F';
+  const box=document.getElementById('bodyCompCalc');
+  const hint=document.getElementById('bodyCompHint');
+
+  const bf=calcBodyFat(sesso,vita,fianchi,collo,h);
+  if(bf===null){
+    if(box) box.style.display='none';
+    if(hint) hint.style.display='block';
+    return;
+  }
+  const fatMass=peso?+(peso*bf/100).toFixed(1):null;
+  const leanMass=(peso&&fatMass!==null)?+(peso-fatMass).toFixed(1):null;
+
+  // Update hidden fields for saving
+  const gEl=document.getElementById('m_grassoperc');
+  const mEl=document.getElementById('m_muscoli');
+  if(gEl) gEl.value=bf.toFixed(1);
+  if(mEl&&leanMass) mEl.value=leanMass;
+
+  // Update display
+  document.getElementById('calcBF').textContent=bf.toFixed(1)+'%';
+  document.getElementById('calcFatMass').textContent=fatMass!==null?fatMass+' kg':'—';
+  document.getElementById('calcLeanMass').textContent=leanMass!==null?leanMass+' kg':'—';
+
+  // Category label
+  const s=sesso==='F';
+  let cat='',catCol='var(--ink2)';
+  if(s){ if(bf<14)cat='Atletico';else if(bf<21)cat='Ottimale';else if(bf<25)cat='Nella norma';else if(bf<32)cat='In eccesso';else{cat='Alto';catCol='var(--rose)';} }
+  else { if(bf<6)cat='Atletico';else if(bf<14)cat='Ottimale';else if(bf<18)cat='Nella norma';else if(bf<25)cat='In eccesso';else{cat='Alto';catCol='var(--rose)';} }
+  document.getElementById('calcBFCategory').innerHTML=`<span style="color:${catCol};">${cat}</span>`;
+
+  // Progress bar showing fat% vs lean%
+  const fatPct=Math.round(bf);
+  document.getElementById('calcBFBar').innerHTML=`
+    <div style="height:6px;border-radius:3px;overflow:hidden;display:flex;gap:2px;">
+      <div style="width:${fatPct}%;background:var(--rose);border-radius:3px 0 0 3px;transition:width .4s;"></div>
+      <div style="flex:1;background:var(--teal);border-radius:0 3px 3px 0;transition:width .4s;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--ink3);margin-top:3px;">
+      <span>Grasso ${fatPct}%</span><span>Magra ${100-fatPct}%</span>
+    </div>`;
+
+  if(box) box.style.display='block';
+  if(hint) hint.style.display='none';
+}
+
+function getMondayData() {
+  const all=getAllDayData();
+  const h=parseFloat(localStorage.getItem('mj_height')||'0');
+  const sesso=localStorage.getItem('mj_sesso')||'F';
+  const mondays=all.filter(d=>{
+    const dt=new Date(d.date+'T12:00:00');
+    if(dt.getDay()!==1) return false;
+    const m=d.measurements||{};
+    return m.vita||m.collo||m.peso; // only Mondays with at least some body data
+  });
+  return mondays.map(d=>{
+    const m=d.measurements||{};
+    const peso=parseFloat(m.peso)||null;
+    // BF%: use manual value if present, else calc from Navy
+    let bf=null;
+    if(m.grassoperc&&parseFloat(m.grassoperc)>0){
+      bf=parseFloat(m.grassoperc);
+    } else if(h&&m.vita&&m.collo) {
+      bf=calcBodyFat(sesso,parseFloat(m.vita),parseFloat(m.fianchi)||null,parseFloat(m.collo),h);
+    }
+    const massaGrassa=(peso&&bf!==null)?+(peso*bf/100).toFixed(1):null;
+    const massaMagra=(peso&&massaGrassa!==null)?+(peso-massaGrassa).toFixed(1):null;
+    return {date:d.date,peso,bf:bf!==null?+bf.toFixed(1):null,massaGrassa,massaMagra,
+      vita:parseFloat(m.vita)||null,muscoli:parseFloat(m.muscoli)||null};
+  });
+}
+
+function renderBodyComp() {
+  const rows=getMondayData();
+  const el=document.getElementById('bodyCompTable');
+  if(!rows.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">Nessun lunedì con misurazioni trovato.<br><span style="font-size:10px;display:block;margin-top:4px;">Inserisci vita, fianchi e collo ogni lunedì mattina.</span></div>';
+    return;
+  }
+  const lastN=rows.slice(-8);
+  let html=`<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+  <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:340px;">
+    <thead>
+      <tr style="background:var(--paper3);">
+        <th style="padding:7px 6px;text-align:left;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;white-space:nowrap;">Lunedì</th>
+        <th style="padding:7px 4px;text-align:right;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;">Peso</th>
+        <th style="padding:7px 4px;text-align:right;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;">%Grass.</th>
+        <th style="padding:7px 4px;text-align:right;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;">M.Grassa</th>
+        <th style="padding:7px 4px;text-align:right;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;color:var(--teal);">M.Magra</th>
+        <th style="padding:7px 4px;text-align:right;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;">Vita</th>
+      </tr>
+    </thead><tbody>`;
+  lastN.forEach((r,i)=>{
+    const prev=i>0?lastN[i-1]:null;
+    const dtLabel=new Date(r.date+'T12:00:00').toLocaleDateString('it-IT',{day:'numeric',month:'short'});
+    const dMagra=prev&&prev.massaMagra&&r.massaMagra?+(r.massaMagra-prev.massaMagra).toFixed(1):null;
+    const dGrassa=prev&&prev.massaGrassa&&r.massaGrassa?+(r.massaGrassa-prev.massaGrassa).toFixed(1):null;
+    const magraArrow=dMagra===null?'':dMagra>0.2?`<span style="color:var(--teal);font-size:10px;"> ↑</span>`:dMagra<-0.2?`<span style="color:var(--rose);font-size:10px;"> ↓</span>`:'';
+    const grassaArrow=dGrassa===null?'':dGrassa<-0.2?`<span style="color:var(--teal);font-size:10px;"> ↓</span>`:dGrassa>0.2?`<span style="color:var(--rose);font-size:10px;"> ↑</span>`:'';
+    html+=`<tr style="border-bottom:1px solid var(--border);${i===lastN.length-1?'font-weight:600;background:var(--gold-pl);':''}">
+      <td style="padding:8px 6px;color:var(--ink2);white-space:nowrap;">${dtLabel}</td>
+      <td style="padding:8px 4px;text-align:right;">${r.peso??'—'}</td>
+      <td style="padding:8px 4px;text-align:right;">${r.bf!==null?r.bf+'%':'—'}</td>
+      <td style="padding:8px 4px;text-align:right;">${r.massaGrassa!==null?r.massaGrassa+' kg':'—'}${grassaArrow}</td>
+      <td style="padding:8px 4px;text-align:right;color:var(--teal);">${r.massaMagra!==null?r.massaMagra+' kg':'—'}${magraArrow}</td>
+      <td style="padding:8px 4px;text-align:right;">${r.vita??'—'}</td>
+    </tr>`;
+  });
+  html+='</tbody></table></div>';
+  if(rows.length>=2){
+    const first=rows[0],last=rows[rows.length-1];
+    const dPeso=first.peso&&last.peso?+(last.peso-first.peso).toFixed(1):null;
+    const dMagra=first.massaMagra&&last.massaMagra?+(last.massaMagra-first.massaMagra).toFixed(1):null;
+    const dGrassa=first.massaGrassa&&last.massaGrassa?+(last.massaGrassa-first.massaGrassa).toFixed(1):null;
+    if(dPeso!==null){
+      const icon=dPeso<0?'✅':'⚠️';      const magraMsg=dMagra!==null?(dMagra>=-0.5?`<span style="color:var(--teal);">💪 Massa magra preservata (${dMagra>0?'+':''}${dMagra} kg)</span>`:`<span style="color:var(--rose);">⚠️ Massa magra persa: ${dMagra} kg</span>`):'';
+      html+=`<div style="margin-top:12px;padding:10px 12px;background:var(--paper3);border-radius:8px;font-size:11px;color:var(--ink2);line-height:1.8;">
+        ${icon} Dall'inizio: peso ${dPeso>0?'+':''}${dPeso} kg ${dGrassa!==null?`· grasso ${dGrassa>0?'+':''}${dGrassa} kg`:''}
+        ${magraMsg?`<br>${magraMsg}`:''}
+      </div>`;
+    }
+  }
+  el.innerHTML=html;
+}
+
+// ── AI ANALYSIS ──
+async function generateAIAnalysis() {
+  const apiKey=localStorage.getItem('mj_apikey');
+  if(!apiKey){showToast('Serve la chiave API (🔑)','error');openApikeyModal();return;}
+  const all=getAllDayData();
+  if(!all.length){showToast('Nessun dato da analizzare','error');return;}
+  document.getElementById('aiAnalysisLoading').style.display='block';
+  document.getElementById('aiAnalysisResult').style.display='none';
+  document.getElementById('btnAIAnalysis').disabled=true;
+
+  const h=parseFloat(localStorage.getItem('mj_height')||'0');
+  const sesso=localStorage.getItem('mj_sesso')||'F';
+  const eta=localStorage.getItem('mj_eta')||'';
+  const goal=localStorage.getItem('mj_goal')||'';
+  const mondays=getMondayData();
+  const last30=all.slice(-30);
+
+  // Averages
+  const avg=(arr,fn)=>{const v=arr.map(fn).filter(x=>x!==null&&!isNaN(x));return v.length?+(v.reduce((a,b)=>a+b)/v.length).toFixed(1):null;};
+  const avgEnergia=avg(last30,d=>parseFloat(d.measurements?.energia)||null);
+  const avgFame=avg(last30,d=>parseFloat(d.measurements?.fame)||null);
+  const avgSonno=avg(last30,d=>parseFloat(d.measurements?.sonno)||null);
+  const avgUmore=avg(last30,d=>parseFloat(d.wellbeing?.umore)||null);
+  const avgStress=avg(last30,d=>parseFloat(d.wellbeing?.stress)||null);
+
+  // Symptom frequency
+  const sf={};last30.forEach(d=>(d.symptoms||[]).forEach(s=>{sf[s]=(sf[s]||0)+1;}));
+  const topSymp=Object.entries(sf).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([s,n])=>`${s}(${n}v)`).join(', ');
+
+  // Weight trend
+  const pesi=all.filter(d=>d.measurements?.peso).map(d=>({date:d.date,val:parseFloat(d.measurements.peso)}));
+  const firstPeso=pesi[0],lastPeso=pesi[pesi.length-1];
+  const deltaPeso=firstPeso&&lastPeso?+(lastPeso.val-firstPeso.val).toFixed(1):null;
+  const daysTracked=all.length;
+
+  // Body comp summary
+  const mondaySummary=mondays.slice(-4).map(r=>`${r.date}: peso=${r.peso??'?'}kg, grasso=${r.bf??'?'}%, M.grassa=${r.massaGrassa??'?'}kg, M.magra=${r.massaMagra??'?'}kg, vita=${r.vita??'?'}cm`).join('\n');
+
+  // Lab values (most recent)
+  const lastLab=all.slice().reverse().find(d=>d.measurements?.hba1c||d.measurements?.colest);
+  const labStr=lastLab?`HbA1c=${lastLab.measurements?.hba1c??'—'}%, Colest.=${lastLab.measurements?.colest??'—'}, LDL=${lastLab.measurements?.ldl??'—'}, HDL=${lastLab.measurements?.hdl??'—'}, Trig.=${lastLab.measurements?.trig??'—'}`:'nessun valore ematico inserito';
+
+  // Current dose
+  const lastDose=all.slice().reverse().find(d=>d.mounjaro?.dose);
+  const dose=lastDose?.mounjaro?.dose||'non specificata';
+
+  // Workout frequency
+  const workouts=last30.filter(d=>d.workout?.type&&d.workout.type!=='').length;
+
+  // Skin concerns
+  const skinConcerns=last30.flatMap(d=>d.skincare?.ozeFace||[]);
+  const skinFreq={};skinConcerns.forEach(s=>{skinFreq[s]=(skinFreq[s]||0)+1;});
+  const skinStr=Object.entries(skinFreq).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,n])=>`${k}(${n}v)`).join(', ')||'nessuno';
+
+  const currentBMI=lastPeso&&h?+(lastPeso.val/((h/100)*(h/100))).toFixed(1):null;
+
+  const prompt=`Sei un coach esperto in dimagrimento con tirzepatide (Mounjaro), composizione corporea e benessere. Analizza i seguenti dati di tracking di una persona reale e fornisci una risposta strutturata IN ITALIANO.
+
+PROFILO UTENTE:
+- Sesso: ${sesso==='F'?'Femmina':'Maschio'} | Età: ${eta||'non specificata'} | Altezza: ${h||'?'}cm
+- Peso iniziale: ${firstPeso?.val??'?'}kg | Peso attuale: ${lastPeso?.val??'?'}kg | Obiettivo: ${goal||'non specificato'}kg
+- Delta peso totale: ${deltaPeso!==null?(deltaPeso>0?'+':'')+deltaPeso+' kg':'?'} | BMI attuale: ${currentBMI??'?'}
+- Giorni di tracking: ${daysTracked} | Dose Mounjaro: ${dose}mg
+
+COMPOSIZIONE CORPOREA (ultimi 4 lunedì):
+${mondaySummary||'nessun dato disponibile'}
+
+MEDIE ULTIME 4 SETTIMANE:
+- Energia: ${avgEnergia??'?'}/10 | Fame: ${avgFame??'?'}/10 | Sonno: ${avgSonno??'?'}/10
+- Umore: ${avgUmore??'?'}/10 | Stress: ${avgStress??'?'}/10
+- Allenamenti: ${workouts}/30 giorni
+
+SINTOMI PIÙ FREQUENTI: ${topSymp||'nessuno'}
+ESAMI EMATICI: ${labStr}
+VOLUME LOSS VISO: ${skinStr}
+
+Rispondi in questo formato esatto — usa emoji, sii diretto e concreto, non vago:
+
+🎯 VALUTAZIONE ANDAMENTO
+[2-3 righe: giudizio complessivo su progressi, composizione corporea, ritmo di dimagrimento]
+
+📊 COSA DICONO I DATI
+[3 insight specifici numerici dai dati forniti, con frecce ↑↓ per indicare se è buono o cattivo]
+
+💡 CONSIGLI PRIORITARI
+[Esattamente 4 consigli numerati, concreti e specifici basati sui dati mancanti o critici]
+
+⚕️ DA DISCUTERE COL MEDICO
+[1-3 segnali che meritano attenzione medica, o "Nessun segnale critico rilevato" se tutto ok]`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await resp.json();
+    if(data.error){showToast('Errore API: '+data.error.message,'error');return;}
+    const text=data.content[0]?.text||'';
+
+    // Render sections
+    const sections=text.split(/(?=🎯|📊|💡|⚕️)/);
+    let html='';
+    const colors={'🎯':'var(--gold)','📊':'var(--teal)','💡':'var(--violet)','⚕️':'var(--rose)'};
+    const bgs={'🎯':'var(--gold-pl)','📊':'var(--teal-pl)','💡':'rgba(107,91,158,.08)','⚕️':'var(--rose-pl)'};
+    sections.forEach(sec=>{
+      if(!sec.trim())return;
+      const emoji=sec.match(/^(🎯|📊|💡|⚕️)/)?.[1]||'';
+      const col=colors[emoji]||'var(--ink)';
+      const bg=bgs[emoji]||'var(--paper)';
+      const lines=sec.trim().split('\n').filter(l=>l.trim());
+      const title=lines[0]||'';
+      const body=lines.slice(1).join('\n').trim();
+      html+=`<div style="margin-bottom:12px;background:${bg};border-radius:10px;padding:13px 14px;border:1px solid rgba(0,0,0,0.06);">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:${col};margin-bottom:7px;">${title}</div>
+        <div style="font-size:0.83rem;color:var(--ink2);line-height:1.7;white-space:pre-wrap;">${body}</div>
+      </div>`;
+    });
+    html+=`<div style="font-size:10px;color:var(--ink3);text-align:center;margin-top:8px;">Analisi generata il ${new Date().toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})}</div>`;
+    document.getElementById('aiAnalysisResult').innerHTML=html;
+    document.getElementById('aiAnalysisResult').style.display='block';
+    renderTrendSummary(all,mondays);
+    showToast('Analisi completata ✓','success');
+  }catch(e){
+    showToast('Errore: '+e.message,'error');
+  }finally{
+    document.getElementById('aiAnalysisLoading').style.display='none';
+    document.getElementById('btnAIAnalysis').disabled=false;
+  }
+}
+
+function renderTrendSummary(all, mondays){
+  const el=document.getElementById('trendSummary');
+  if(!el)return;
+  const last7=all.slice(-7);
+  const pesi=all.filter(d=>d.measurements?.peso).map(d=>parseFloat(d.measurements.peso));
+  const avg=(arr)=>arr.length?+(arr.reduce((a,b)=>a+b)/arr.length).toFixed(1):null;
+  const trendLine=(arr)=>{
+    if(arr.length<2)return 0;
+    const n=arr.length,xs=[...Array(n).keys()],ys=arr;
+    const xm=avg(xs),ym=avg(ys);
+    const num=xs.reduce((s,x,i)=>s+(x-xm)*(ys[i]-ym),0);
+    const den=xs.reduce((s,x)=>s+(x-xm)**2,0);
+    return den?num/den:0;
+  };
+  const pesosWeek=last7.map(d=>parseFloat(d.measurements?.peso)||null).filter(x=>x);
+  const energiaWeek=last7.map(d=>parseFloat(d.measurements?.energia)||null).filter(x=>x);
+  const sRate=trendLine(pesosWeek);
+  const avgEn=avg(energiaWeek);
+  const lastMon=mondays.length>=2?mondays[mondays.length-1]:null;
+  const prevMon=mondays.length>=2?mondays[mondays.length-2]:null;
+  const dMagraVal=(lastMon?.massaMagra!=null&&prevMon?.massaMagra!=null)?+(lastMon.massaMagra-prevMon.massaMagra).toFixed(1):null;
+  const items=[
+    {label:'Ritmo dimagrimento',val:pesi.length>=2?+(pesi[pesi.length-1]-pesi[0]).toFixed(1)+'kg totali':null,icon:'⚖️',good:sRate<0},
+    {label:'Energia media (7gg)',val:avgEn!==null?avgEn+'/10':null,icon:'⚡',good:avgEn!==null&&avgEn>=6},
+    {label:'Massa magra trend',val:dMagraVal!==null?(dMagraVal>0?'+':'')+dMagraVal+'kg':null,icon:'💪',good:dMagraVal!==null&&dMagraVal>=-0.5},
+    {label:'Allenamenti (30gg)',val:all.slice(-30).filter(d=>d.workout?.type).length+'g/30',icon:'🏃',good:all.slice(-30).filter(d=>d.workout?.type).length>=8},
+  ];
+  el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    ${items.map(it=>`<div style="background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:11px 10px;text-align:center;">
+      <div style="font-size:1.3rem;">${it.icon}</div>
+      <div style="font-size:10px;color:var(--ink3);margin:3px 0;text-transform:uppercase;letter-spacing:.05em;">${it.label}</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:${it.val!==null?(it.good?'var(--teal)':'var(--rose)'):'var(--ink3)'};">${it.val??'—'}</div>
+    </div>`).join('')}
+  </div>`;
 }
 
 // ── TABS ──
@@ -2045,28 +2551,7 @@ init();
 
   // Service Worker — cache-first per uso offline
   if('serviceWorker' in navigator) {
-    const swCode = `
-const CACHE = 'mj-tracker-v1';
-const URLS = [self.location.href];
-
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(URLS)));
-  self.skipWaiting();
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))
-  ));
-  self.clients.claim();
-});
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
-  );
-});`;
-    const swBlob = new Blob([swCode], {type:'text/javascript'});
-    const swUrl  = URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).catch(()=>{});
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
   }
 
   // ── INSTALL BANNER ──
@@ -2143,5 +2628,159 @@ self.addEventListener('fetch', e => {
   }
 })();
 </script>
+<!-- ══ MODAL: GUIDA MISURAZIONI ══ -->
+<div id="measureGuideModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);overflow-y:auto;">
+  <div style="background:var(--paper);border-radius:18px 18px 0 0;margin-top:48px;min-height:calc(100vh - 48px);padding:0 0 40px;">
+
+    <!-- Header -->
+    <div style="position:sticky;top:0;background:var(--paper);padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;z-index:2;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--ink);">Guida alle misurazioni</div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:1px;">Sempre a digiuno · Stesso orario · Stessa posizione</div>
+      </div>
+      <button onclick="closeMeasureGuide()" style="background:var(--paper3);border:none;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;color:var(--ink2);display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+
+    <div style="padding:16px 18px 0;">
+
+      <!-- Regole generali -->
+      <div style="background:var(--gold-pl);border-radius:10px;padding:12px 14px;margin-bottom:18px;border:1px solid rgba(184,145,42,.2);">
+        <div style="font-size:11px;font-weight:600;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.07em;">⚠️ Prima di misurare</div>
+        <div style="font-size:12px;color:var(--ink2);line-height:1.8;">
+          · Lunedì mattina appena alzata, dopo aver urinato<br>
+          · A digiuno, prima di bere o mangiare<br>
+          · In piedi, rilassata, peso distribuito sui due piedi<br>
+          · Nastro centimetrico parallelo al suolo, non inclinato<br>
+          · Tirare il nastro finché è a contatto con la pelle, senza stringere
+        </div>
+      </div>
+
+      <!-- VITA -->
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span style="background:var(--rose-pl);color:var(--rose);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">1</span>
+          Vita
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <!-- SVG torso vista frontale -->
+          <svg width="90" height="140" viewBox="0 0 90 140" style="flex-shrink:0;">
+            <!-- corpo silhouette -->
+            <ellipse cx="45" cy="22" rx="16" ry="18" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <path d="M20 40 Q15 60 18 90 Q22 120 30 135 L60 135 Q68 120 72 90 Q75 60 70 40 Q60 35 45 36 Q30 35 20 40Z" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <!-- linea vita - all'ombelico -->
+            <line x1="8" y1="78" x2="82" y2="78" stroke="var(--rose)" stroke-width="2" stroke-dasharray="4,3"/>
+            <circle cx="45" cy="78" r="3.5" fill="var(--rose)" opacity=".9"/>
+            <!-- label -->
+            <text x="45" y="73" text-anchor="middle" font-size="8" fill="var(--rose)" font-weight="600">OMBELICO</text>
+            <!-- frecce -->
+            <text x="5" y="81" font-size="11" fill="var(--rose)">←</text>
+            <text x="78" y="81" font-size="11" fill="var(--rose)">→</text>
+          </svg>
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.8;margin-bottom:8px;">
+              Misura <strong>esattamente all'altezza dell'ombelico</strong>, non al punto più stretto della vita.
+            </div>
+            <div style="background:var(--rose-pl);border-radius:8px;padding:9px 11px;font-size:11px;color:var(--ink2);line-height:1.7;">
+              ✓ Espira normalmente<br>
+              ✓ Non trattenere il respiro<br>
+              ✗ Non misurare dopo i pasti
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIANCHI -->
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span style="background:var(--violet-pl,rgba(107,91,158,.1));color:var(--violet);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">2</span>
+          Fianchi
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <svg width="90" height="140" viewBox="0 0 90 140" style="flex-shrink:0;">
+            <ellipse cx="45" cy="22" rx="16" ry="18" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <path d="M20 40 Q15 60 18 90 Q22 120 30 135 L60 135 Q68 120 72 90 Q75 60 70 40 Q60 35 45 36 Q30 35 20 40Z" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <!-- punto massima sporgenza glutei - più in basso -->
+            <line x1="8" y1="102" x2="82" y2="102" stroke="var(--violet)" stroke-width="2" stroke-dasharray="4,3"/>
+            <circle cx="45" cy="102" r="3.5" fill="var(--violet)" opacity=".9"/>
+            <text x="45" y="97" text-anchor="middle" font-size="8" fill="var(--violet)" font-weight="600">MAX SPORGENZA</text>
+            <text x="5" y="105" font-size="11" fill="var(--violet)">←</text>
+            <text x="78" y="105" font-size="11" fill="var(--violet)">→</text>
+          </svg>
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.8;margin-bottom:8px;">
+              Misura <strong>al punto di massima sporgenza</strong> dei glutei, non sulla cresta iliaca.
+            </div>
+            <div style="background:rgba(107,91,158,.08);border-radius:8px;padding:9px 11px;font-size:11px;color:var(--ink2);line-height:1.7;">
+              ✓ Vista laterale per trovare il punto<br>
+              ✓ Talloni uniti, peso equidistribuito<br>
+              ✗ Non scivolare verso il basso
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLLO -->
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span style="background:var(--teal-pl);color:var(--teal);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;">3</span>
+          Collo
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <svg width="90" height="100" viewBox="0 0 90 100" style="flex-shrink:0;">
+            <ellipse cx="45" cy="65" rx="20" ry="22" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <!-- collo -->
+            <rect x="33" y="20" width="24" height="38" rx="10" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <!-- testa -->
+            <ellipse cx="45" cy="15" rx="14" ry="13" fill="#e8e0d8" stroke="#c9b99a" stroke-width="1.5"/>
+            <!-- linea misura collo - sotto la laringe -->
+            <line x1="8" y1="44" x2="82" y2="44" stroke="var(--teal)" stroke-width="2" stroke-dasharray="4,3"/>
+            <circle cx="45" cy="44" r="3" fill="var(--teal)" opacity=".9"/>
+            <text x="45" y="39" text-anchor="middle" font-size="8" fill="var(--teal)" font-weight="600">SOTTO LARINGE</text>
+            <text x="5" y="47" font-size="11" fill="var(--teal)">←</text>
+            <text x="78" y="47" font-size="11" fill="var(--teal)">→</text>
+          </svg>
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--ink2);line-height:1.8;margin-bottom:8px;">
+              Misura <strong>appena sotto la laringe</strong> (il pomo d'Adamo nelle donne è meno visibile — cerca il punto più stretto del collo).
+            </div>
+            <div style="background:var(--teal-pl);border-radius:8px;padding:9px 11px;font-size:11px;color:var(--ink2);line-height:1.7;">
+              ✓ Testa diritta, sguardo in avanti<br>
+              ✓ Nastro orizzontale, non inclinato<br>
+              ✗ Non deglutire durante la misura
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Altre misure -->
+      <div style="background:var(--paper3);border-radius:10px;padding:12px 14px;margin-bottom:4px;">
+        <div style="font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.07em;">Altre misure</div>
+        <div style="display:grid;gap:9px;">
+          <div style="display:flex;align-items:baseline;gap:8px;font-size:12px;">
+            <span style="font-weight:600;color:var(--ink);min-width:70px;">Coscia sx</span>
+            <span style="color:var(--ink2);">A metà tra inguine e rotula, coscia orizzontale (seduta sul bordo della sedia)</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:8px;font-size:12px;">
+            <span style="font-weight:600;color:var(--ink);min-width:70px;">Braccio sx</span>
+            <span style="color:var(--ink2);">A metà tra spalla e gomito, braccio disteso lungo il fianco</span>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:8px;font-size:12px;">
+            <span style="font-weight:600;color:var(--ink);min-width:70px;">Torace</span>
+            <span style="color:var(--ink2);">Sotto le ascelle, all'altezza della punta del seno, dopo un'espirazione normale</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function openMeasureGuide(){document.getElementById('measureGuideModal').style.display='block';document.body.style.overflow='hidden';}
+function closeMeasureGuide(){document.getElementById('measureGuideModal').style.display='none';document.body.style.overflow='';}
+// close on backdrop tap
+document.getElementById('measureGuideModal').addEventListener('click',function(e){if(e.target===this)closeMeasureGuide();});
+</script>
+
 </body>
 </html>
