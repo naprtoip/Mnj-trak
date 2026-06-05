@@ -29,6 +29,7 @@
   --rose:    #C05050;
   --rose-pl: #F9ECEC;
   --violet:  #6B5B9E;
+  --violet-pl: rgba(107,91,158,.10);
   --border:  #DDD8CE;
   --radius:  14px;
   --rsm:     8px;
@@ -443,6 +444,123 @@ body {
 /* scrollbar */
 ::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+/* ── LUMINARE DELLA PELLE ── */
+.luminare-card {
+  margin:0 12px 12px;
+  background:linear-gradient(145deg,#1E1A14,#2a2218);
+  border:1px solid rgba(184,145,42,.25);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(30,26,20,0.22);
+}
+.luminare-header {
+  padding:16px 16px 12px;
+  border-bottom:1px solid rgba(184,145,42,.15);
+  display:flex; align-items:flex-start; gap:12px;
+}
+.luminare-avatar {
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  background:radial-gradient(circle at 35% 35%, #d4a853, #8b6520);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem;
+  box-shadow:0 2px 10px rgba(184,145,42,.4);
+}
+.luminare-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem; font-weight:600; color:#E8D5A0;
+  line-height:1.2;
+}
+.luminare-title {
+  font-size:9px; color:rgba(232,213,160,.5);
+  text-transform:uppercase; letter-spacing:.1em; margin-top:2px;
+}
+.luminare-body { padding:14px 16px; }
+.luminare-intro {
+  font-size:11px; color:rgba(232,213,160,.55);
+  line-height:1.7; margin-bottom:14px;
+}
+.luminare-btn {
+  width:100%; padding:13px; border:none;
+  background:linear-gradient(135deg,rgba(184,145,42,.18),rgba(184,145,42,.08));
+  border:1px solid rgba(184,145,42,.35); border-radius:var(--rsm);
+  color:#E8D5A0; font-family:'DM Sans',sans-serif;
+  font-size:0.88rem; font-weight:600; cursor:pointer;
+  letter-spacing:.3px; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  min-height:48px;
+}
+.luminare-btn:active { background:rgba(184,145,42,.28); transform:scale(.98); }
+.luminare-btn:disabled { opacity:.45; cursor:not-allowed; }
+.luminare-loading {
+  display:none; text-align:center; padding:20px 0;
+}
+.luminare-dots {
+  display:inline-flex; gap:5px; align-items:center;
+}
+.luminare-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:#B8912A; opacity:.3;
+  animation:lumDot 1.4s infinite ease-in-out;
+}
+.luminare-dot:nth-child(2) { animation-delay:.2s; }
+.luminare-dot:nth-child(3) { animation-delay:.4s; }
+@keyframes lumDot { 0%,80%,100%{opacity:.3;transform:scale(1)} 40%{opacity:1;transform:scale(1.3)} }
+.luminare-result {
+  display:none; margin-top:14px;
+}
+.lum-section {
+  margin-bottom:14px;
+  border-radius:var(--rsm); overflow:hidden;
+  border:1px solid rgba(184,145,42,.12);
+}
+.lum-section-head {
+  padding:10px 13px;
+  background:rgba(184,145,42,.1);
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem; font-weight:600;
+  color:#E8D5A0; display:flex; align-items:center; gap:7px;
+}
+.lum-section-body {
+  padding:11px 13px;
+  background:rgba(30,26,20,.5);
+  font-size:0.82rem; color:rgba(232,213,160,.75);
+  line-height:1.75;
+}
+.lum-pill-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.lum-pill {
+  font-size:10px; padding:4px 10px; border-radius:20px; font-weight:500;
+  background:rgba(184,145,42,.15); color:#E8D5A0;
+  border:1px solid rgba(184,145,42,.25);
+}
+.lum-pill.green { background:rgba(58,125,110,.2); color:#7ecfc2; border-color:rgba(58,125,110,.3); }
+.lum-pill.rose  { background:rgba(192,80,80,.15); color:#e8a0a0; border-color:rgba(192,80,80,.25); }
+.lum-evidence {
+  margin-top:8px; padding:8px 11px;
+  background:rgba(107,91,158,.12);
+  border-left:2px solid rgba(107,91,158,.5);
+  border-radius:0 var(--rsm) var(--rsm) 0;
+  font-size:10px; color:rgba(180,170,220,.7);
+  line-height:1.6; font-style:italic;
+}
+.lum-timestamp {
+  font-size:9px; color:rgba(232,213,160,.3);
+  text-align:center; margin-top:12px;
+  letter-spacing:.06em; text-transform:uppercase;
+}
+.luminare-photo-row {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 0; margin-bottom:10px;
+  border-bottom:1px solid rgba(184,145,42,.1);
+}
+.lum-photo-thumb {
+  width:48px; height:48px; border-radius:8px; object-fit:cover;
+  border:1px solid rgba(184,145,42,.25); flex-shrink:0;
+}
+.lum-photo-label {
+  font-size:11px; color:rgba(232,213,160,.5); line-height:1.5;
+}
+
 
 /* ── DESKTOP ENHANCEMENTS ── */
 @media(min-width:600px) {
@@ -898,25 +1016,6 @@ body {
   <!-- ══ PANEL: ANALISI ══ -->
   <div class="panel" id="panel-analisi">
 
-    <!-- Watch Summary -->
-    <div class="sec-header">
-      <div class="sec-title">⌚ Riepilogo al polso</div>
-      <div class="sec-tag" style="background:rgba(58,125,110,.1);color:var(--teal);">Wear OS</div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <div style="font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.65;">
-          Invia una notifica con il riepilogo di oggi. Su Android la notifica appare automaticamente anche sullo smartwatch Wear OS.
-        </div>
-        <button class="btn btn-secondary" onclick="sendWatchSummary()" style="width:100%;gap:8px;">
-          <span>⌚</span> Invia riepilogo al polso
-        </button>
-        <div style="font-size:10px;color:var(--ink3);margin-top:10px;line-height:1.6;text-align:center;">
-          Prima volta: concedi i permessi notifica · L'app deve essere installata come PWA
-        </div>
-      </div>
-    </div>
-
     <!-- AI Coach -->
     <div class="sec-header">
       <div class="sec-title">🤖 Coach AI</div>
@@ -981,6 +1080,37 @@ body {
         <button class="btn btn-secondary" onclick="exportCSV()">⬇ CSV</button>
         <button class="btn btn-ghost" onclick="openDriveModal('backup')">☁ Backup</button>
       </div>
+
+      <!-- BRIDGE HEALTH MONITOR -->
+      <div style="margin-top:4px;background:var(--paper2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+        <div style="padding:12px 14px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px;">
+            🔗 Health Monitor Pro
+          </div>
+          <div id="bridgeStatusPill" style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--paper3);color:var(--ink3);">
+            Non connesso
+          </div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:11px;color:var(--ink3);line-height:1.6;margin-bottom:12px;">
+            Importa i vitali registrati in Health Monitor Pro — peso, pressione, glicemia, giro vita — nei giorni in cui non hai ancora inserito i dati qui.
+          </div>
+          <div id="bridgePreview" style="display:none;margin-bottom:10px;"></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary" onclick="scanBridge()" style="flex:1;font-size:0.8rem;padding:10px;">
+              🔍 Scansiona
+            </button>
+            <button class="btn btn-ghost" id="bridgeImportBtn" onclick="executeBridge()" style="flex:1;font-size:0.8rem;padding:10px;display:none;">
+              ↓ Importa
+            </button>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <button class="btn btn-secondary" onclick="exportToHealthMonitor()" style="flex:1;font-size:0.8rem;padding:10px;">
+              ↑ Invia a HM
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="reportContent">
       <div style="text-align:center;padding:50px 20px;color:var(--ink3);">
@@ -995,6 +1125,56 @@ body {
   <div class="panel" id="panel-skincare">
 
     <div class="notice">🧴 Traccia lo stato della pelle ogni sera — il dimagrimento rapido richiede monitoraggio costante.</div>
+
+    <!-- ⚗️ LUMINARE DELLA PELLE -->
+    <div class="sec-header">
+      <div class="sec-title">⚗️ Protocollo Integrato</div>
+      <div class="sec-tag" style="background:rgba(184,145,42,.15);color:var(--gold);">Luminare</div>
+    </div>
+
+    <div class="luminare-card">
+      <div class="luminare-header">
+        <div class="luminare-avatar">🔬</div>
+        <div>
+          <div class="luminare-name">Prof.ssa Elena Marchetti</div>
+          <div class="luminare-title">Dermatologia · Endocrinologia Metabolica · Nutraceutica</div>
+          <div style="font-size:10px;color:rgba(184,145,42,.55);margin-top:5px;line-height:1.5;">
+            Analisi integrata pelle + corpo + micronutrienti<br>basata su evidenze scientifiche peer-reviewed
+          </div>
+        </div>
+      </div>
+      <div class="luminare-body">
+        <div class="luminare-intro">
+          La Prof.ssa Marchetti legge <em>tutti</em> i tuoi dati — composizione corporea, esami ematici, 
+          valutazione quotidiana della pelle, volume loss, reazioni ai prodotti — e integra la foto del viso 
+          se disponibile. Il protocollo che ricevi è calibrato sulle ultime evidenze in materia di 
+          skin aging da perdita di peso rapida e tirzepatide.
+        </div>
+
+        <!-- Foto opzionale (riusa la stessa dell'analisi viso) -->
+        <div class="luminare-photo-row" id="lumPhotoRow" style="display:none;">
+          <img id="lumPhotoThumb" class="lum-photo-thumb" src="" alt="foto viso">
+          <div class="lum-photo-label">Foto inclusa nell'analisi ✓<br><span style="color:rgba(184,145,42,.4);">stessa immagine dell'Analisi Viso</span></div>
+        </div>
+
+        <button class="luminare-btn" id="lumBtn" onclick="generateLuminareProtocol()">
+          <span>⚗️</span> Genera Protocollo Integrato
+        </button>
+
+        <div class="luminare-loading" id="lumLoading">
+          <div class="luminare-dots">
+            <div class="luminare-dot"></div>
+            <div class="luminare-dot"></div>
+            <div class="luminare-dot"></div>
+          </div>
+          <div style="font-size:11px;color:rgba(232,213,160,.45);margin-top:10px;letter-spacing:.04em;">
+            La Prof.ssa Marchetti sta elaborando il tuo profilo completo…
+          </div>
+        </div>
+
+        <div class="luminare-result" id="lumResult"></div>
+      </div>
+    </div>
 
     <!-- ✨ AI FACE ANALYSIS -->
     <div class="sec-header">
@@ -1200,6 +1380,12 @@ body {
 </div>
 
 <!-- TAB BAR -->
+<div style="position:fixed;bottom:58px;left:0;right:0;text-align:center;z-index:99;pointer-events:none;">
+  <span style="font-size:9px;color:rgba(184,145,42,.35);font-family:'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;">
+    v2.0 · agg. 01 giu 2026
+  </span>
+</div>
+
 <nav class="tab-bar">
   <button class="tab-item active" onclick="switchTab('daily',this)">
     <span class="t-icon">📅</span>
@@ -1410,6 +1596,11 @@ function onPhotoSelected(input) {
     preview.style.display = 'block';
     area.style.border = '2px solid var(--gold)';
     document.getElementById('aiResultArea').style.display = 'none';
+    // Aggiorna thumbnail luminare
+    const thumb = document.getElementById('lumPhotoThumb');
+    const row   = document.getElementById('lumPhotoRow');
+    if (thumb) thumb.src = e.target.result;
+    if (row)   row.style.display = 'flex';
   };
   reader.readAsDataURL(file);
 }
@@ -1527,6 +1718,332 @@ function renderAIResult(r) {
   `;
   document.getElementById('aiResultArea').style.display = 'block';
 }
+
+// ══════════════════════════════════════════════════════
+// LUMINARE DELLA PELLE — Prof.ssa Elena Marchetti
+// ══════════════════════════════════════════════════════
+let lumAnalysisRunning = false;
+
+async function generateLuminareProtocol() {
+  if (lumAnalysisRunning) return;
+  const apiKey = getApiKey();
+  if (!apiKey) { openApikeyModal(); return; }
+
+  lumAnalysisRunning = true;
+  document.getElementById('lumBtn').disabled = true;
+  document.getElementById('lumLoading').style.display = 'block';
+  document.getElementById('lumResult').style.display = 'none';
+
+  // ── 1. RACCOLTA DATI COMPLETA ──────────────────────────────
+
+  const all = getAllDayData();
+  const h   = parseFloat(localStorage.getItem('mj_height') || '0');
+  const sesso = localStorage.getItem('mj_sesso') || 'F';
+  const eta   = localStorage.getItem('mj_eta') || '';
+  const last30 = all.slice(-30);
+  const last7  = all.slice(-7);
+
+  // Peso e composizione
+  const pesi = all.filter(d => d.measurements?.peso).map(d => parseFloat(d.measurements.peso));
+  const pesoAttuale = pesi.length ? pesi[pesi.length - 1] : null;
+  const pesoInizio  = pesi.length ? pesi[0] : null;
+  const deltaPeso   = pesoAttuale && pesoInizio ? +(pesoAttuale - pesoInizio).toFixed(1) : null;
+  const mondays = getMondayData();
+  const lastMon = mondays.length ? mondays[mondays.length - 1] : null;
+
+  // Dose tirzepatide
+  const lastDoseEntry = all.slice().reverse().find(d => d.mounjaro?.dose);
+  const dose = lastDoseEntry?.mounjaro?.dose || null;
+
+  // Esami ematici più recenti
+  const lastLab = all.slice().reverse().find(d =>
+    d.measurements?.hba1c || d.measurements?.vitd || d.measurements?.tsh ||
+    d.measurements?.ldl   || d.measurements?.zinco || d.measurements?.colest
+  );
+  const lab = lastLab?.measurements || {};
+
+  // Skin ratings — media ultimi 30 gg
+  const avg = (arr, fn) => {
+    const v = arr.map(fn).filter(x => x !== null && !isNaN(x) && x > 0);
+    return v.length ? +(v.reduce((a, b) => a + b) / v.length).toFixed(1) : null;
+  };
+  const avgIdr  = avg(last30, d => parseFloat(d.skincare?.idratazione) || null);
+  const avgLum  = avg(last30, d => parseFloat(d.skincare?.luminosita)  || null);
+  const avgFer  = avg(last30, d => parseFloat(d.skincare?.fermezza)    || null);
+  const avgIrr  = avg(last30, d => parseFloat(d.skincare?.irritazione) || null);
+  const avgUnt  = avg(last30, d => parseFloat(d.skincare?.untuosita)   || null);
+  const avgRug  = avg(last30, d => parseFloat(d.skincare?.rughe)       || null);
+
+  // Volume loss flags (frequenza ultimi 30 gg)
+  const ozeFreq = {};
+  last30.forEach(d => (d.skincare?.ozeFace || []).forEach(f => { ozeFreq[f] = (ozeFreq[f] || 0) + 1; }));
+  const ozeStr = Object.entries(ozeFreq).sort((a, b) => b[1] - a[1])
+    .map(([k, n]) => `${k} (${n}/${last30.length} giorni)`).join(', ') || 'nessun segnale';
+
+  // Concerns attivi (frequenza)
+  const concernFreq = {};
+  last30.forEach(d => (d.skincare?.concerns || []).forEach(c => { concernFreq[c] = (concernFreq[c] || 0) + 1; }));
+  const concernStr = Object.entries(concernFreq).sort((a, b) => b[1] - a[1])
+    .slice(0, 5).map(([k, n]) => `${k} (${n}gg)`).join(', ') || 'nessuna';
+
+  // Reazioni ai prodotti (ultime disponibili)
+  const lastReact = all.slice().reverse().find(d => d.skincare?.reactAM || d.skincare?.reactPM);
+  const reactAM = lastReact?.skincare?.reactAM || 'non registrata';
+  const reactPM = lastReact?.skincare?.reactPM || 'non registrata';
+
+  // Diario pelle (ultimi 3 giorni)
+  const diaryEntries = last7
+    .filter(d => d.skincare?.diary && d.skincare.diary.trim())
+    .slice(-3)
+    .map(d => `[${d.date}] ${d.skincare.diary.trim()}`)
+    .join('\n') || 'nessuna nota';
+
+  // Routine attuale (da CHECKLISTS hardcoded + checklist skincare-int)
+  const routineAM = [
+    'CeraVe Hydrating Cleanser (detersione AM)',
+    'Timeless Vitamin C 20% L-ascorbic (antiossidante)',
+    'LRP Toleriane Double Repair (idratante AM)',
+    'LRP Anthelios UVmune 400 SPF50+ (fotopreparazione)'
+  ].join(', ');
+  const routinePM = [
+    'Oil cleansing con Jojoba (1° step)',
+    'CeraVe Hydrating Cleanser (2° step)',
+    '"Buffet" Multi-Peptide + HA The Ordinary (peptidi)',
+    'Tretinoina 0,025% (solo autunno/inverno)',
+    'LRP Toleriane Double Repair (occlusivo finale)'
+  ].join(', ');
+  const routineBody = [
+    'CeraVe SA Cream corpo AM (esfoliazione chimica)',
+    'Olio di Jojoba corpo sera',
+    'Retinolo 1% corpo + Rosehip Oil (solo autunno/inverno)'
+  ].join(', ');
+
+  // Integratori checklist odierna
+  const intOggi = (CHECKLISTS['integratori'] || [])
+    .map(i => ({ ...i, checked: document.getElementById('ci-' + i.id)?.classList.contains('checked') }))
+    .filter(i => i.checked)
+    .map(i => i.label).join(', ') || 'nessuno assunto oggi';
+
+  // Sintomi rilevanti per la pelle
+  const symRelevant = ['Alopecia', 'Secchezza bocca', 'Stanchezza', 'Insonnia'];
+  const skinSymFreq = {};
+  last30.forEach(d => (d.symptoms || []).filter(s => symRelevant.includes(s))
+    .forEach(s => { skinSymFreq[s] = (skinSymFreq[s] || 0) + 1; }));
+  const skinSymStr = Object.entries(skinSymFreq).map(([k, n]) => `${k} (${n}gg)`).join(', ') || 'nessuno';
+
+  // Workout (rilevante per ossigenazione cutanea)
+  const workouts7 = last7.filter(d => d.workout?.type && d.workout.type !== '').length;
+
+  // Foto viso disponibile?
+  const hasPhoto = !!aiImageBase64;
+  if (hasPhoto) {
+    document.getElementById('lumPhotoRow').style.display = 'flex';
+    document.getElementById('lumPhotoThumb').src = document.getElementById('aiPhotoPreview')?.src || '';
+  }
+
+  // ── 2. COSTRUZIONE PROMPT ──────────────────────────────────
+
+  const systemPrompt = `Sei la Prof.ssa Elena Marchetti, dermatologa e specialista in endocrinologia metabolica con 30 anni di ricerca clinica sull'aging cutaneo in contesti di perdita di peso rapida, trattamenti GLP-1/GIP (semaglutide, tirzepatide), e nutraceutica evidence-based. Hai pubblicato su JAMA Dermatology, British Journal of Dermatology, Dermatology, Obesity Reviews. Sei nota per unire rigore scientifico a indicazioni pratiche e personalizzate.
+
+PRINCIPI METODOLOGICI:
+- Citi sempre la fonte scientifica (es. "Studio JAMA Derm 2024", "linee guida AAD 2023", "RCT Nutrients 2022")
+- Distingui chiaramente tra evidenza solida (A), promettente (B) e preliminare (C)
+- Quando affermi qualcosa sei concreta: dosaggi, timing, prodotti specifici, non vague indicazioni
+- Riconosci onestamente i limiti delle evidenze
+- Il tono è quello di una consulenza medica privata di alto livello — caldo, preciso, autorevole`;
+
+  const userPrompt = `Prof.ssa Marchetti, ho bisogno del suo protocollo integrato completo per la gestione cutanea durante il mio percorso con tirzepatide.
+
+━━ PROFILO PAZIENTE ━━
+Sesso: ${sesso === 'F' ? 'Donna' : 'Uomo'} | Età: ${eta || 'non specificata'} | Altezza: ${h || '?'} cm
+Peso iniziale: ${pesoInizio ?? '?'} kg → Peso attuale: ${pesoAttuale ?? '?'} kg
+Delta totale: ${deltaPeso !== null ? (deltaPeso > 0 ? '+' : '') + deltaPeso + ' kg' : 'n.d.'} | BMI attuale: ${pesoAttuale && h ? (pesoAttuale / ((h / 100) ** 2)).toFixed(1) : '?'}
+Tirzepatide dose attuale: ${dose ? dose + ' mg' : 'non specificata'} | Giorni di tracking: ${all.length}
+${lastMon ? `Composizione corporea (ultimo lunedì): grasso corporeo ${lastMon.bf ?? '?'}%, massa magra ${lastMon.massaMagra ?? '?'} kg, vita ${lastMon.vita ?? '?'} cm` : ''}
+
+━━ ESAMI EMATICI (più recenti disponibili) ━━
+Vitamina D: ${lab.vitd ?? 'non misurata'} ng/mL (target 40–60)
+TSH: ${lab.tsh ?? 'non misurato'} (range 0.4–4.0)
+HbA1c: ${lab.hba1c ?? 'non misurata'}%
+LDL: ${lab.ldl ?? 'non misurato'} | HDL: ${lab.hdl ?? 'non misurato'} | Trigliceridi: ${lab.trig ?? 'non misurati'}
+ALT/GPT: ${lab.alt ?? 'non misurata'} | Creatinina: ${lab.creat ?? 'non misurata'}
+Ferro/ferritina: non misurati
+
+━━ STATO CUTANEO (media ultimi 30 giorni, scala 1–10) ━━
+Idratazione: ${avgIdr ?? '?'}/10 | Luminosità: ${avgLum ?? '?'}/10 | Fermezza: ${avgFer ?? '?'}/10
+Irritazione: ${avgIrr ?? '?'}/10 (più è basso meglio) | Untuosità: ${avgUnt ?? '?'}/10 | Rughe visibili: ${avgRug ?? '?'}/10
+
+━━ VOLUME LOSS DA TIRZEPATIDE (frequenza 30 gg) ━━
+${ozeStr}
+
+━━ PREOCCUPAZIONI SEGNALATE ━━
+${concernStr}
+
+━━ SINTOMI SISTEMICI RILEVANTI PER LA PELLE ━━
+${skinSymStr}
+
+━━ ALLENAMENTO (ultimi 7 gg) ━━
+${workouts7}/7 giorni con attività fisica (rilevante per ossigenazione cutanea e turnover cellulare)
+
+━━ ROUTINE TOPICA ATTUALE ━━
+MATTINA: ${routineAM}
+SERA: ${routinePM}
+CORPO: ${routineBody}
+
+━━ INTEGRATORI ORALI OGGI ━━
+${intOggi}
+
+━━ REAZIONI AI PRODOTTI (più recenti) ━━
+Mattina: ${reactAM}
+Sera: ${reactPM}
+
+━━ DIARIO PELLE (ultime note) ━━
+${diaryEntries}
+
+━━ FOTO VISO ━━
+${hasPhoto ? 'Disponibile e allegata a questo messaggio. La includa nella valutazione visiva.' : 'Non allegata in questa sessione.'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RICHIESTA: Produca un protocollo integrato strutturato in questo formato ESATTO (usi le emoji come indicato):
+
+🔬 VALUTAZIONE CUTANEA OGGETTIVA
+[Analisi dei rating, correlazioni con i dati metabolici, interpretazione del volume loss. Se presente la foto la commenti. Citi evidenze su skin aging da perdita di peso rapida con GLP-1/GIP agonists]
+
+💊 PROTOCOLLO INTEGRATORI ORALI
+[Per ogni integratore: dose ottimale evidence-based, timing, forma preferibile, sinergie. Includa: collagene idrolizzato, vitamina C, vitamina D, zinco, omega-3, astaxantina, creatina, silicio organico, biotina — valutando ciascuno in base ai dati ematici e ai sintomi. Citi studi specifici per i principali]
+
+🧴 OTTIMIZZAZIONE ROUTINE TOPICA
+[Valuti la routine attuale punto per punto. Suggerisca aggiunte, sostituzioni, sequenza ottimale, timing stagionale. Focus su: barriera cutanea, densità dermica, lassità, volume loss. Includa ingredienti con evidenza solida: retinoli, peptidi, ceramidi, niacinamide, retinaldeide]
+
+🛡️ PROTOCOLLO ANTI-VOLUME LOSS
+[Strategie specifiche per attenuare il "Tirzepatide face": topici, massaggi, gua sha, integratori mirati, timing con il percorso di dimagrimento. Valuti se la velocità di perdita di peso attuale è compatibile con la preservazione del volume facciale]
+
+⚠️ ALERT E MONITORAGGIO
+[Valori ematici da misurare urgentemente se non disponibili, soglie di attenzione, segnali da portare al dermatologo, timing controlli]
+
+📅 PIANO AZIONE PROSSIME 4 SETTIMANE
+[Esattamente 5 azioni concrete e prioritizzate, con settimana di implementazione]`;
+
+  // ── 3. CHIAMATA API ────────────────────────────────────────
+
+  try {
+    const messages = [];
+    const userContent = [];
+
+    // Allega foto se disponibile
+    if (hasPhoto) {
+      userContent.push({
+        type: 'image',
+        source: { type: 'base64', media_type: aiImageType, data: aiImageBase64 }
+      });
+    }
+    userContent.push({ type: 'text', text: userPrompt });
+    messages.push({ role: 'user', content: userContent });
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2800,
+        system: systemPrompt,
+        messages
+      })
+    });
+
+    if (resp.status === 401) { showToast('Chiave API non valida', 'error'); openApikeyModal(); return; }
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error.message);
+
+    const text = (data.content?.[0]?.text || '').trim();
+    renderLuminareResult(text);
+    showToast('Protocollo Marchetti pronto ✓', 'success');
+
+  } catch (e) {
+    document.getElementById('lumResult').style.display = 'block';
+    document.getElementById('lumResult').innerHTML = `<div style="color:rgba(192,80,80,.9);font-size:0.83rem;padding:10px 0;">Errore: ${e.message}. Controlla la chiave API e riprova.</div>`;
+    showToast('Errore analisi', 'error');
+  } finally {
+    lumAnalysisRunning = false;
+    document.getElementById('lumBtn').disabled = false;
+    document.getElementById('lumLoading').style.display = 'none';
+  }
+}
+
+function renderLuminareResult(text) {
+  const el = document.getElementById('lumResult');
+
+  // Split per sezioni usando le emoji come separatori
+  const sectionDefs = [
+    { emoji: '🔬', label: 'Valutazione Cutanea Oggettiva', color: 'var(--teal)' },
+    { emoji: '💊', label: 'Protocollo Integratori Orali',  color: 'var(--gold)' },
+    { emoji: '🧴', label: 'Ottimizzazione Routine Topica', color: 'var(--violet)' },
+    { emoji: '🛡️', label: 'Protocollo Anti-Volume Loss',   color: 'var(--rose)' },
+    { emoji: '⚠️', label: 'Alert e Monitoraggio',          color: '#e8a050' },
+    { emoji: '📅', label: 'Piano Azione 4 Settimane',      color: 'var(--teal)' },
+  ];
+
+  // Parser sezioni
+  const parts = text.split(/(?=🔬|💊|🧴|🛡️|⚠️|📅)/u);
+  let html = '';
+
+  parts.forEach(part => {
+    if (!part.trim()) return;
+    const matchEmoji = part.match(/^(🔬|💊|🧴|🛡️|⚠️|📅)/u)?.[1];
+    const def = sectionDefs.find(s => s.emoji === matchEmoji);
+    if (!def) {
+      // Testo senza sezione riconosciuta — mostra comunque
+      if (part.trim()) {
+        html += `<div class="lum-section-body" style="border-radius:var(--rsm);margin-bottom:14px;">${formatLumText(part.trim())}</div>`;
+      }
+      return;
+    }
+
+    // Rimuovi la prima riga (titolo) e usa il resto come body
+    const lines = part.trim().split('\n');
+    const title = lines[0];
+    const body  = lines.slice(1).join('\n').trim();
+
+    html += `<div class="lum-section">
+      <div class="lum-section-head" style="color:${def.color};">
+        ${def.emoji} ${def.label}
+      </div>
+      <div class="lum-section-body">${formatLumText(body)}</div>
+    </div>`;
+  });
+
+  html += `<div class="lum-timestamp">
+    Protocollo generato · Prof.ssa E. Marchetti · ${new Date().toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' })}
+    <br>⚠️ A scopo informativo — non sostituisce la visita dermatologica
+  </div>`;
+
+  el.innerHTML = html;
+  el.style.display = 'block';
+}
+
+function formatLumText(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#E8D5A0;">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Evidenza scientifica inline [...]
+    .replace(/\[([^\]]+)\]/g, '<span class="lum-evidence" style="display:inline;padding:1px 6px;border-radius:3px;font-size:9px;margin-left:4px;">$1</span>')
+    // Bullets
+    .replace(/^[-•]\s+(.+)$/gm, '<div style="padding:3px 0 3px 12px;border-left:1.5px solid rgba(184,145,42,.25);margin:3px 0;">$1</div>')
+    // Numerati
+    .replace(/^(\d+)\.\s+(.+)$/gm, '<div style="padding:3px 0;"><span style="color:var(--gold);font-weight:600;margin-right:6px;">$1.</span>$2</div>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+// Aggiorna la thumb foto luminare quando si carica una foto nell'analisi viso
+const _origOnPhotoSelected = typeof onPhotoSelected === 'function' ? onPhotoSelected : null;
+// (patch applicata dopo il caricamento)
 
 // ── SUPABASE ──
 let sbClient = null;
@@ -1961,106 +2478,7 @@ function loadBaseSettings(){
   if(e&&document.getElementById('m_eta'))document.getElementById('m_eta').value=e;
 }
 
-// ── WATCH / NOTIFICATION SUMMARY ──
-async function requestNotificationPermission() {
-  if(!('Notification' in window)) return false;
-  if(Notification.permission === 'granted') return true;
-  const perm = await Notification.requestPermission();
-  return perm === 'granted';
-}
-
-function buildWatchSummary() {
-  const all = getAllDayData();
-  const today = all.find(d => d.date === dateKey(new Date())) || {};
-  const m = today.measurements || {};
-  const w = today.wellbeing || {};
-  const mj = today.mounjaro || {};
-
-  // Peso e delta
-  const peso = m.peso ? parseFloat(m.peso) : null;
-  let prevPeso = null;
-  for(let i=1;i<=30;i++){
-    const d=new Date();d.setDate(d.getDate()-i);
-    const p=localStorage.getItem('mj_day_'+dateKey(d));
-    if(p){const pd=JSON.parse(p);if(pd.measurements?.peso){prevPeso=parseFloat(pd.measurements.peso);break;}}
-  }
-  const deltaPeso = (peso && prevPeso) ? +(peso - prevPeso).toFixed(1) : null;
-
-  // BMI
-  const h = parseFloat(localStorage.getItem('mj_height') || '0');
-  const bmi = (peso && h) ? +(peso / ((h/100)*(h/100))).toFixed(1) : null;
-
-  // Composizione
-  const bf = m.grassoperc ? parseFloat(m.grassoperc) : null;
-  const leanMass = (peso && bf) ? +(peso - peso*bf/100).toFixed(1) : null;
-
-  // Goal
-  const goal = parseFloat(localStorage.getItem('mj_goal') || '0');
-  const toGoal = (peso && goal) ? +(peso - goal).toFixed(1) : null;
-
-  // Linee notifica
-  const lines = [];
-
-  if(peso) {
-    const deltaStr = deltaPeso !== null ? ` (${deltaPeso > 0 ? '+' : ''}${deltaPeso} kg)` : '';
-    lines.push(`⚖️ Peso: ${peso} kg${deltaStr}`);
-  }
-  if(bmi) lines.push(`📊 BMI: ${bmi}`);
-  if(leanMass) lines.push(`💪 Massa magra: ${leanMass} kg`);
-  if(bf) lines.push(`🔥 Grasso: ${bf.toFixed(1)}%`);
-  if(m.vita) lines.push(`📏 Vita: ${m.vita} cm`);
-  if(toGoal !== null) lines.push(`🎯 All'obiettivo: ${toGoal > 0 ? '+' : ''}${toGoal} kg`);
-  if(m.energia) lines.push(`⚡ Energia: ${m.energia}/10`);
-  if(w.umore) lines.push(`😊 Umore: ${w.umore}/10`);
-  if(mj.dose) lines.push(`💉 Dose: ${mj.dose} mg Tirz.`);
-
-  const body = lines.length ? lines.join('\n') : 'Nessun dato inserito per oggi. Apri l\'app e compila la routine!';
-
-  const dateLabel = new Date().toLocaleDateString('it-IT', {weekday:'long', day:'numeric', month:'long'});
-  return { title: `Mounjaro · ${dateLabel}`, body };
-}
-
-async function sendWatchSummary() {
-  const granted = await requestNotificationPermission();
-  if(!granted) {
-    showToast('Permesso notifiche negato. Abilitalo nelle impostazioni.', 'error');
-    return;
-  }
-  const { title, body } = buildWatchSummary();
-  try {
-    if('serviceWorker' in navigator) {
-      const reg = await navigator.serviceWorker.ready;
-      if(reg.active) {
-        // Usa il canale message → SW (funziona su GitHub Pages e telefono)
-        reg.active.postMessage({ type: 'SEND_NOW', title, body });
-        showToast('Riepilogo inviato al polso ✓', 'success');
-        return;
-      }
-      // Fallback: showNotification diretto
-      await reg.showNotification(title, { body, tag: 'mj-summary', vibrate: [100,50,100] });
-    } else {
-      new Notification(title, { body, tag: 'mj-summary' });
-    }
-    showToast('Riepilogo inviato ✓', 'success');
-  } catch(e) {
-    showToast('Errore: ' + e.message, 'error');
-  }
-}
-
-// ── REMINDER AUTOMATICO MATTUTINO ──
-function scheduleWatchReminder() {
-  const hour = parseInt(localStorage.getItem('mj_reminder_hour') || '8');
-  if('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(reg => {
-      if(reg.active) {
-        reg.active.postMessage({ type: 'SCHEDULE_REMINDER', hour, minute: 0 });
-      }
-    });
-  }
-}
-
-// Avvia reminder se permesso già concesso
-if(Notification.permission === 'granted') scheduleWatchReminder();
+// ── COMPOSIZIONE CORPOREA ──
 function calcBodyFat(sesso, vita, fianchi, collo, altezza) {
   // US Navy Formula
   if(!vita||!collo||!altezza) return null;
@@ -2511,6 +2929,264 @@ function showToast(msg,type='success'){
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
+// ══════════════════════════════════════════════════════
+// BRIDGE DATI — Mounjaro Tracker ↔ Health Monitor Pro
+// ══════════════════════════════════════════════════════
+
+// Campo mapping: HM healthData → MJ measurements
+const HM_TO_MJ = {
+  weight:    'peso',
+  systolic:  'press_sist',
+  diastolic: 'press_diast',
+  heartRate: 'bpm',
+  glucose:   'glicemia',
+  waist:     'vita',
+  temperature: 'temp',
+};
+
+// Campo mapping: MJ measurements → HM healthData
+const MJ_TO_HM = {
+  peso:       'weight',
+  press_sist: 'systolic',
+  press_diast:'diastolic',
+  bpm:        'heartRate',
+  glicemia:   'glucose',
+  vita:       'waist',
+  temp:       'temperature',
+};
+
+// ── Legge tutti i profili HM dal localStorage ──────────
+function readAllHMProfiles() {
+  const profiles = [];
+  try {
+    const raw = localStorage.getItem('hm_profiles');
+    if(raw) profiles.push(...JSON.parse(raw));
+  } catch(e) {}
+  // Fallback: profilo default
+  if(!profiles.length) profiles.push({ id:'default', name:'Principale' });
+  return profiles;
+}
+
+function readHMHealthData(profileId = null) {
+  const pid = profileId || localStorage.getItem('hm_active_profile') || 'default';
+  try {
+    const raw = localStorage.getItem(`hm_p_${pid}_healthData`);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function readHMBloodData(profileId = null) {
+  const pid = profileId || localStorage.getItem('hm_active_profile') || 'default';
+  try {
+    // blood analyses stored separately
+    const raw = localStorage.getItem(`hm_p_${pid}_blood`);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+// ── Scansiona differenze: HM → MJ ──────────────────────
+let _bridgePending = [];
+
+function scanBridge() {
+  const hmData = readHMHealthData();
+  if(!hmData.length) {
+    showToast('Nessun dato in Health Monitor trovato', 'error');
+    return;
+  }
+
+  const mjKeys = new Set(
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('mj_day_'))
+      .map(k => k.replace('mj_day_', ''))
+  );
+
+  _bridgePending = [];
+  let hmDaysRead = 0;
+
+  hmData.forEach(hmRow => {
+    if(!hmRow.date) return;
+    const dateStr = hmRow.date.split('T')[0]; // normalise to YYYY-MM-DD
+    hmDaysRead++;
+
+    // Legge record MJ del giorno (o crea struttura vuota)
+    let mjRec = null;
+    const mjRaw = localStorage.getItem('mj_day_' + dateStr);
+    if(mjRaw) { try { mjRec = JSON.parse(mjRaw); } catch(e) {} }
+
+    // Per ogni campo mappabile, verifica se MJ manca il valore
+    const fields = [];
+    Object.entries(HM_TO_MJ).forEach(([hmField, mjField]) => {
+      const hmVal = hmRow[hmField];
+      const mjVal = mjRec?.measurements?.[mjField];
+      if(hmVal != null && hmVal !== '' && (mjVal == null || mjVal === '')) {
+        fields.push({ hmField, mjField, value: hmVal });
+      }
+    });
+
+    if(fields.length) {
+      _bridgePending.push({ date: dateStr, mjRec, fields });
+    }
+  });
+
+  updateBridgeStatus(hmDaysRead);
+  renderBridgePreview();
+}
+
+function updateBridgeStatus(hmDays) {
+  const pill = document.getElementById('bridgeStatusPill');
+  if(!pill) return;
+  if(hmDays > 0) {
+    pill.style.background = 'var(--teal-pl)';
+    pill.style.color = 'var(--teal)';
+    pill.textContent = `${hmDays} giorni HM`;
+  } else {
+    pill.style.background = 'var(--rose-pl)';
+    pill.style.color = 'var(--rose)';
+    pill.textContent = 'HM vuoto';
+  }
+}
+
+function renderBridgePreview() {
+  const el = document.getElementById('bridgePreview');
+  const btn = document.getElementById('bridgeImportBtn');
+  if(!el || !btn) return;
+
+  if(!_bridgePending.length) {
+    el.style.display = 'block';
+    el.innerHTML = `<div style="font-size:11px;color:var(--teal);padding:8px 10px;background:var(--teal-pl);border-radius:8px;border:1px solid rgba(58,125,110,.2);">
+      ✓ Tutti i dati HM sono già presenti in Mounjaro Tracker
+    </div>`;
+    btn.style.display = 'none';
+    return;
+  }
+
+  const fieldLabels = {
+    peso:'Peso', press_sist:'Pressione sist.', press_diast:'Pressione diast.',
+    bpm:'BPM', glicemia:'Glicemia', vita:'Vita (cm)', temp:'Temperatura'
+  };
+
+  const rows = _bridgePending.slice(0, 8).map(p => {
+    const fStr = p.fields.map(f => `${fieldLabels[f.mjField] || f.mjField}: ${f.value}`).join(' · ');
+    const dt = new Date(p.date + 'T12:00:00').toLocaleDateString('it-IT', { day:'numeric', month:'short' });
+    return `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;display:flex;gap:8px;">
+      <span style="color:var(--ink3);min-width:48px;flex-shrink:0;">${dt}</span>
+      <span style="color:var(--ink2);">${fStr}</span>
+    </div>`;
+  }).join('');
+
+  const more = _bridgePending.length > 8 ? `<div style="font-size:10px;color:var(--ink3);padding-top:5px;">…e altri ${_bridgePending.length - 8} giorni</div>` : '';
+
+  el.style.display = 'block';
+  el.innerHTML = `<div style="background:var(--gold-pl);border:1px solid rgba(184,145,42,.2);border-radius:8px;padding:10px 12px;">
+    <div style="font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">
+      ${_bridgePending.length} giorni con dati mancanti in MJ
+    </div>
+    ${rows}${more}
+  </div>`;
+  btn.style.display = 'flex';
+}
+
+// ── Esegue importazione HM → MJ ────────────────────────
+function executeBridge() {
+  if(!_bridgePending.length) { showToast('Nessun dato da importare', 'error'); return; }
+
+  let imported = 0;
+  _bridgePending.forEach(p => {
+    let mjRec = p.mjRec;
+    if(!mjRec) {
+      mjRec = { date: p.date, checks:{}, measurements:{}, symptoms:[], skincare:{}, savedAt: new Date().toISOString() };
+    }
+    if(!mjRec.measurements) mjRec.measurements = {};
+
+    p.fields.forEach(f => {
+      mjRec.measurements[f.mjField] = String(f.value);
+    });
+    mjRec._bridgedFromHM = new Date().toISOString();
+    localStorage.setItem('mj_day_' + p.date, JSON.stringify(mjRec));
+    imported++;
+  });
+
+  _bridgePending = [];
+  showToast(`${imported} giorni importati da HM ✓`, 'success');
+  renderCalendar();
+  updateStats();
+  document.getElementById('bridgePreview').style.display = 'none';
+  document.getElementById('bridgeImportBtn').style.display = 'none';
+  // Aggiorna pill
+  const pill = document.getElementById('bridgeStatusPill');
+  if(pill) {
+    pill.style.background = 'var(--teal-pl)';
+    pill.style.color = 'var(--teal)';
+    pill.textContent = `${imported} importati ✓`;
+  }
+}
+
+// ── Esporta MJ → Health Monitor (scrive in hm_p_*_healthData) ──
+function exportToHealthMonitor() {
+  const pid = localStorage.getItem('hm_active_profile') || 'default';
+  const hmKey = `hm_p_${pid}_healthData`;
+  let hmData = [];
+  try {
+    const raw = localStorage.getItem(hmKey);
+    if(raw) hmData = JSON.parse(raw);
+  } catch(e) {}
+
+  // Index HM by date for fast lookup
+  const hmByDate = {};
+  hmData.forEach(r => { if(r.date) hmByDate[r.date.split('T')[0]] = r; });
+
+  const allMJ = getAllDayData();
+  let synced = 0;
+
+  allMJ.forEach(mj => {
+    if(!mj.date || !mj.measurements) return;
+    const m = mj.measurements;
+    const hSettings = (() => {
+      try { return JSON.parse(localStorage.getItem(`hm_p_${pid}_settings`) || '{}'); } catch(e) { return {}; }
+    })();
+    const h = parseFloat(localStorage.getItem('mj_height') || hSettings.height || 168) / 100;
+
+    const weight    = parseFloat(m.peso)       || null;
+    const systolic  = parseFloat(m.press_sist) || null;
+    const diastolic = parseFloat(m.press_diast)|| null;
+    const heartRate = parseFloat(m.bpm)        || null;
+    const glucose   = parseFloat(m.glicemia)   || null;
+    const waist     = parseFloat(m.vita)       || null;
+    const temperature = parseFloat(m.temp)     || null;
+    const bmi       = weight && h ? parseFloat((weight / (h * h)).toFixed(1)) : null;
+    const whr       = waist && h*100 ? parseFloat((waist / (h*100)).toFixed(3)) : null;
+
+    // Solo se c'è almeno un valore
+    const hasAny = [weight,systolic,diastolic,heartRate,glucose,waist,temperature].some(v => v != null);
+    if(!hasAny) return;
+
+    const existing = hmByDate[mj.date] || { date: mj.date + 'T08:00:00.000Z', id: 'mj_' + mj.date };
+    hmByDate[mj.date] = {
+      ...existing,
+      weight:      weight      ?? existing.weight,
+      systolic:    systolic    ?? existing.systolic,
+      diastolic:   diastolic   ?? existing.diastolic,
+      heartRate:   heartRate   ?? existing.heartRate,
+      glucose:     glucose     ?? existing.glucose,
+      waist:       waist       ?? existing.waist,
+      temperature: temperature ?? existing.temperature,
+      bmi:         bmi         ?? existing.bmi,
+      whr:         whr         ?? existing.whr,
+      _syncedFromMJ: new Date().toISOString(),
+    };
+    synced++;
+  });
+
+  // Write back to HM
+  const newHMData = Object.values(hmByDate).sort((a, b) => new Date(b.date) - new Date(a.date));
+  try {
+    localStorage.setItem(hmKey, JSON.stringify(newHMData));
+    showToast(`${synced} giorni inviati a Health Monitor ✓`, 'success');
+  } catch(e) {
+    showToast('Errore scrittura: ' + e.message, 'error');
+  }
+}
+
 init();
 
 // ── PWA SETUP ──
@@ -2551,7 +3227,28 @@ init();
 
   // Service Worker — cache-first per uso offline
   if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    const swCode = `
+const CACHE = 'mj-tracker-v1';
+const URLS = [self.location.href];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(URLS)));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))
+  ));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => cached || fetch(e.request))
+  );
+});`;
+    const swBlob = new Blob([swCode], {type:'text/javascript'});
+    const swUrl  = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(()=>{});
   }
 
   // ── INSTALL BANNER ──
