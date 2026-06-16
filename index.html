@@ -29,7 +29,6 @@
   --rose:    #C05050;
   --rose-pl: #F9ECEC;
   --violet:  #6B5B9E;
-  --violet-pl: rgba(107,91,158,.10);
   --border:  #DDD8CE;
   --radius:  14px;
   --rsm:     8px;
@@ -441,126 +440,67 @@ body {
 .ai-pill.warn { background:var(--rose-pl); color:var(--rose); border-color:rgba(192,80,80,.3); }
 .ai-pill.ok   { background:var(--teal-pl); color:var(--teal); border-color:rgba(58,125,110,.3); }
 
+/* ── SKIN CHAT ── */
+#skinChatSection { display:none; margin:0 12px 12px; }
+.chat-messages {
+  display:flex; flex-direction:column; gap:10px;
+  max-height:340px; overflow-y:auto;
+  padding:12px 14px;
+  background:var(--paper); border:1px solid var(--border);
+  border-radius:var(--rsm) var(--rsm) 0 0;
+  -webkit-overflow-scrolling:touch;
+}
+.chat-bubble {
+  max-width:88%; padding:10px 13px; border-radius:14px;
+  font-size:0.84rem; line-height:1.6; color:var(--ink2);
+}
+.chat-bubble.user {
+  align-self:flex-end;
+  background:var(--ink); color:var(--gold-lt);
+  border-radius:14px 14px 3px 14px;
+}
+.chat-bubble.ai {
+  align-self:flex-start;
+  background:var(--paper2); border:1px solid var(--border);
+  border-radius:14px 14px 14px 3px;
+}
+.chat-bubble.ai .bubble-label {
+  font-size:9px; color:var(--violet); text-transform:uppercase;
+  letter-spacing:.07em; font-weight:600; margin-bottom:4px;
+}
+.chat-bubble.ai.loading { color:var(--ink3); font-style:italic; }
+.chat-input-row {
+  display:flex; gap:0;
+  border:1px solid var(--border); border-top:none;
+  border-radius:0 0 var(--rsm) var(--rsm);
+  overflow:hidden; background:var(--paper2);
+}
+.chat-input-row textarea {
+  flex:1; padding:12px 14px; border:none; resize:none;
+  background:transparent; color:var(--ink);
+  font-family:'DM Sans',sans-serif; font-size:15px;
+  min-height:50px; max-height:120px;
+  outline:none;
+}
+.chat-send-btn {
+  width:52px; flex-shrink:0;
+  background:var(--ink); color:var(--gold-lt);
+  border:none; cursor:pointer; font-size:1.1rem;
+  transition:background .15s;
+}
+.chat-send-btn:active { background:#333; }
+.chat-send-btn:disabled { background:var(--paper3); color:var(--ink3); cursor:default; }
+.chat-quick-btns { display:flex; flex-wrap:wrap; gap:6px; padding:10px 14px 0; }
+.chat-quick-btn {
+  font-size:11px; padding:6px 12px; border-radius:20px;
+  border:1px solid var(--border); background:var(--paper);
+  color:var(--ink2); cursor:pointer; transition:all .15s;
+}
+.chat-quick-btn:active { background:var(--gold-pl); border-color:var(--gold); color:var(--gold); }
+
 /* scrollbar */
 ::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
-
-/* ── LUMINARE DELLA PELLE ── */
-.luminare-card {
-  margin:0 12px 12px;
-  background:linear-gradient(145deg,#1E1A14,#2a2218);
-  border:1px solid rgba(184,145,42,.25);
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:0 4px 24px rgba(30,26,20,0.22);
-}
-.luminare-header {
-  padding:16px 16px 12px;
-  border-bottom:1px solid rgba(184,145,42,.15);
-  display:flex; align-items:flex-start; gap:12px;
-}
-.luminare-avatar {
-  width:44px; height:44px; border-radius:50%; flex-shrink:0;
-  background:radial-gradient(circle at 35% 35%, #d4a853, #8b6520);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.3rem;
-  box-shadow:0 2px 10px rgba(184,145,42,.4);
-}
-.luminare-name {
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.05rem; font-weight:600; color:#E8D5A0;
-  line-height:1.2;
-}
-.luminare-title {
-  font-size:9px; color:rgba(232,213,160,.5);
-  text-transform:uppercase; letter-spacing:.1em; margin-top:2px;
-}
-.luminare-body { padding:14px 16px; }
-.luminare-intro {
-  font-size:11px; color:rgba(232,213,160,.55);
-  line-height:1.7; margin-bottom:14px;
-}
-.luminare-btn {
-  width:100%; padding:13px; border:none;
-  background:linear-gradient(135deg,rgba(184,145,42,.18),rgba(184,145,42,.08));
-  border:1px solid rgba(184,145,42,.35); border-radius:var(--rsm);
-  color:#E8D5A0; font-family:'DM Sans',sans-serif;
-  font-size:0.88rem; font-weight:600; cursor:pointer;
-  letter-spacing:.3px; transition:all .2s;
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  min-height:48px;
-}
-.luminare-btn:active { background:rgba(184,145,42,.28); transform:scale(.98); }
-.luminare-btn:disabled { opacity:.45; cursor:not-allowed; }
-.luminare-loading {
-  display:none; text-align:center; padding:20px 0;
-}
-.luminare-dots {
-  display:inline-flex; gap:5px; align-items:center;
-}
-.luminare-dot {
-  width:6px; height:6px; border-radius:50%;
-  background:#B8912A; opacity:.3;
-  animation:lumDot 1.4s infinite ease-in-out;
-}
-.luminare-dot:nth-child(2) { animation-delay:.2s; }
-.luminare-dot:nth-child(3) { animation-delay:.4s; }
-@keyframes lumDot { 0%,80%,100%{opacity:.3;transform:scale(1)} 40%{opacity:1;transform:scale(1.3)} }
-.luminare-result {
-  display:none; margin-top:14px;
-}
-.lum-section {
-  margin-bottom:14px;
-  border-radius:var(--rsm); overflow:hidden;
-  border:1px solid rgba(184,145,42,.12);
-}
-.lum-section-head {
-  padding:10px 13px;
-  background:rgba(184,145,42,.1);
-  font-family:'Cormorant Garamond',serif;
-  font-size:0.95rem; font-weight:600;
-  color:#E8D5A0; display:flex; align-items:center; gap:7px;
-}
-.lum-section-body {
-  padding:11px 13px;
-  background:rgba(30,26,20,.5);
-  font-size:0.82rem; color:rgba(232,213,160,.75);
-  line-height:1.75;
-}
-.lum-pill-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-.lum-pill {
-  font-size:10px; padding:4px 10px; border-radius:20px; font-weight:500;
-  background:rgba(184,145,42,.15); color:#E8D5A0;
-  border:1px solid rgba(184,145,42,.25);
-}
-.lum-pill.green { background:rgba(58,125,110,.2); color:#7ecfc2; border-color:rgba(58,125,110,.3); }
-.lum-pill.rose  { background:rgba(192,80,80,.15); color:#e8a0a0; border-color:rgba(192,80,80,.25); }
-.lum-evidence {
-  margin-top:8px; padding:8px 11px;
-  background:rgba(107,91,158,.12);
-  border-left:2px solid rgba(107,91,158,.5);
-  border-radius:0 var(--rsm) var(--rsm) 0;
-  font-size:10px; color:rgba(180,170,220,.7);
-  line-height:1.6; font-style:italic;
-}
-.lum-timestamp {
-  font-size:9px; color:rgba(232,213,160,.3);
-  text-align:center; margin-top:12px;
-  letter-spacing:.06em; text-transform:uppercase;
-}
-.luminare-photo-row {
-  display:flex; align-items:center; gap:10px;
-  padding:10px 0; margin-bottom:10px;
-  border-bottom:1px solid rgba(184,145,42,.1);
-}
-.lum-photo-thumb {
-  width:48px; height:48px; border-radius:8px; object-fit:cover;
-  border:1px solid rgba(184,145,42,.25); flex-shrink:0;
-}
-.lum-photo-label {
-  font-size:11px; color:rgba(232,213,160,.5); line-height:1.5;
-}
-
 
 /* ── DESKTOP ENHANCEMENTS ── */
 @media(min-width:600px) {
@@ -611,6 +551,100 @@ body {
 .sb-status.err { background:var(--rose-pl); color:var(--rose); border:1px solid rgba(192,80,80,.2); }
 .sb-status.off { background:var(--paper3); color:var(--ink3); border:1px solid var(--border); }
 .sb-dot { width:8px; height:8px; border-radius:50%; background:currentColor; flex-shrink:0; }
+
+
+/* ── GUARDAROBA / TAGLIE ── */
+.size-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.size-cell {
+  background:var(--paper); border:1px solid var(--border);
+  border-radius:var(--rsm); padding:12px; text-align:center;
+}
+.size-cell-label { font-size:9px; color:var(--ink3); text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px; }
+.size-cell-val { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold); line-height:1; }
+.size-cell-sub { font-size:10px; color:var(--ink3); margin-top:2px; }
+.size-next { font-size:11px; color:var(--teal); margin-top:6px; font-weight:500; }
+
+/* ── BARBA ── */
+.barba-step {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:10px 0; border-bottom:1px solid var(--border);
+}
+.barba-step:last-child { border-bottom:none; }
+.barba-step-num {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  background:var(--ink); color:var(--gold-lt);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:600;
+}
+.barba-step-body { flex:1; }
+.barba-step-title { font-size:0.87rem; font-weight:600; color:var(--ink); margin-bottom:3px; }
+.barba-step-desc { font-size:11px; color:var(--ink2); line-height:1.55; }
+.barba-step-prod { font-size:10px; color:var(--teal); margin-top:3px; font-style:italic; }
+
+/* ── ALERT PESO+PELLE ── */
+#skinWeightAlert { display:none; margin:0 12px 12px; }
+.alert-card {
+  border-radius:var(--rsm); padding:14px 16px;
+  border-left:4px solid var(--rose);
+  background:var(--rose-pl);
+}
+.alert-card-title { font-weight:600; color:var(--rose); font-size:0.9rem; margin-bottom:6px; }
+.alert-card-body { font-size:0.83rem; color:var(--ink2); line-height:1.6; }
+
+/* ── CARDIOVASCOLARE ── */
+.cardio-semaforo {
+  display:flex; align-items:center; gap:14px;
+  padding:14px; background:var(--paper); border:1px solid var(--border);
+  border-radius:var(--rsm); margin-bottom:12px;
+}
+.semaforo-dot {
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem;
+}
+.semaforo-green { background:var(--teal-pl); }
+.semaforo-yellow { background:var(--gold-pl); }
+.semaforo-red { background:var(--rose-pl); }
+
+
+/* ── PRODUCT MANAGER ── */
+.pm-list { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.pm-item {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; background:var(--paper);
+  border:1px solid var(--border); border-radius:var(--rsm);
+  transition:all .15s;
+}
+.pm-item.disabled { opacity:.45; }
+.pm-item-icon { font-size:1.1rem; flex-shrink:0; }
+.pm-item-body { flex:1; min-width:0; }
+.pm-item-name { font-size:0.87rem; font-weight:500; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pm-item-meta { font-size:10px; color:var(--ink3); margin-top:1px; }
+.pm-item-badge { font-size:9px; padding:2px 7px; border-radius:20px; background:var(--paper3); color:var(--ink3); flex-shrink:0; }
+.pm-item-badge.ok { background:var(--teal-pl); color:var(--teal); }
+.pm-item-badge.warn { background:var(--rose-pl); color:var(--rose); }
+.pm-item-badge.pend { background:var(--gold-pl); color:var(--gold); }
+.pm-toggle { width:36px; height:22px; border-radius:11px; background:var(--border); border:none; cursor:pointer;
+  position:relative; transition:background .2s; flex-shrink:0; }
+.pm-toggle.on { background:var(--teal); }
+.pm-toggle::after { content:''; position:absolute; top:3px; left:3px; width:16px; height:16px;
+  border-radius:50%; background:#fff; transition:transform .2s; }
+.pm-toggle.on::after { transform:translateX(14px); }
+.pm-eval-btn { font-size:10px; padding:4px 9px; border-radius:20px; border:1px solid var(--border);
+  background:var(--paper); color:var(--violet); cursor:pointer; flex-shrink:0; }
+.pm-eval-btn:active { background:rgba(107,91,158,.1); }
+.pm-add-row { display:flex; gap:8px; margin-top:6px; }
+.pm-add-input { flex:1; padding:10px 13px; border:1px solid var(--border); border-radius:var(--rsm);
+  background:var(--paper); color:var(--ink); font-family:'DM Sans',sans-serif; font-size:14px; }
+.pm-add-btn { padding:10px 14px; border-radius:var(--rsm); background:var(--ink); color:var(--gold-lt);
+  border:none; cursor:pointer; font-size:13px; font-weight:500; white-space:nowrap; }
+.pm-eval-card { margin-top:10px; padding:12px 14px; border-radius:var(--rsm);
+  background:var(--paper2); border:1px solid var(--border); font-size:0.83rem; line-height:1.7; color:var(--ink2); display:none; }
+.pm-eval-card.visible { display:block; }
+.pm-eval-verdict { font-weight:600; margin-bottom:6px; font-size:0.88rem; }
+.pm-eval-verdict.ok { color:var(--teal); }
+.pm-eval-verdict.warn { color:var(--rose); }
+.pm-eval-verdict.neutral { color:var(--gold); }
 
 </style>
 <body>
@@ -701,6 +735,18 @@ body {
     <div class="card">
       <div class="card-body">
         <div class="checklist" id="checklist-integratori"></div>
+
+        <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">⚙️ Gestisci integratori</div>
+        <div class="pm-list" id="pmIntList"></div>
+        <div class="pm-add-row">
+          <input class="pm-add-input" id="pmIntNewName" placeholder="Es: Berberina 500mg · cena">
+          <button class="pm-add-btn" onclick="pmAddItem('int','pmIntNewName')">+ Aggiungi</button>
+        </div>
+        <div class="pm-eval-card" id="pmIntEvalCard">
+          <div class="pm-eval-verdict" id="pmIntEvalVerdict"></div>
+          <div id="pmIntEvalBody"></div>
+        </div>
       </div>
     </div>
 
@@ -1080,37 +1126,6 @@ body {
         <button class="btn btn-secondary" onclick="exportCSV()">⬇ CSV</button>
         <button class="btn btn-ghost" onclick="openDriveModal('backup')">☁ Backup</button>
       </div>
-
-      <!-- BRIDGE HEALTH MONITOR -->
-      <div style="margin-top:4px;background:var(--paper2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-        <div style="padding:12px 14px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px;">
-            🔗 Health Monitor Pro
-          </div>
-          <div id="bridgeStatusPill" style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--paper3);color:var(--ink3);">
-            Non connesso
-          </div>
-        </div>
-        <div style="padding:12px 14px;">
-          <div style="font-size:11px;color:var(--ink3);line-height:1.6;margin-bottom:12px;">
-            Importa i vitali registrati in Health Monitor Pro — peso, pressione, glicemia, giro vita — nei giorni in cui non hai ancora inserito i dati qui.
-          </div>
-          <div id="bridgePreview" style="display:none;margin-bottom:10px;"></div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn-secondary" onclick="scanBridge()" style="flex:1;font-size:0.8rem;padding:10px;">
-              🔍 Scansiona
-            </button>
-            <button class="btn btn-ghost" id="bridgeImportBtn" onclick="executeBridge()" style="flex:1;font-size:0.8rem;padding:10px;display:none;">
-              ↓ Importa
-            </button>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:8px;">
-            <button class="btn btn-secondary" onclick="exportToHealthMonitor()" style="flex:1;font-size:0.8rem;padding:10px;">
-              ↑ Invia a HM
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
     <div id="reportContent">
       <div style="text-align:center;padding:50px 20px;color:var(--ink3);">
@@ -1126,56 +1141,6 @@ body {
 
     <div class="notice">🧴 Traccia lo stato della pelle ogni sera — il dimagrimento rapido richiede monitoraggio costante.</div>
 
-    <!-- ⚗️ LUMINARE DELLA PELLE -->
-    <div class="sec-header">
-      <div class="sec-title">⚗️ Protocollo Integrato</div>
-      <div class="sec-tag" style="background:rgba(184,145,42,.15);color:var(--gold);">Luminare</div>
-    </div>
-
-    <div class="luminare-card">
-      <div class="luminare-header">
-        <div class="luminare-avatar">🔬</div>
-        <div>
-          <div class="luminare-name">Prof.ssa Elena Marchetti</div>
-          <div class="luminare-title">Dermatologia · Endocrinologia Metabolica · Nutraceutica</div>
-          <div style="font-size:10px;color:rgba(184,145,42,.55);margin-top:5px;line-height:1.5;">
-            Analisi integrata pelle + corpo + micronutrienti<br>basata su evidenze scientifiche peer-reviewed
-          </div>
-        </div>
-      </div>
-      <div class="luminare-body">
-        <div class="luminare-intro">
-          La Prof.ssa Marchetti legge <em>tutti</em> i tuoi dati — composizione corporea, esami ematici, 
-          valutazione quotidiana della pelle, volume loss, reazioni ai prodotti — e integra la foto del viso 
-          se disponibile. Il protocollo che ricevi è calibrato sulle ultime evidenze in materia di 
-          skin aging da perdita di peso rapida e tirzepatide.
-        </div>
-
-        <!-- Foto opzionale (riusa la stessa dell'analisi viso) -->
-        <div class="luminare-photo-row" id="lumPhotoRow" style="display:none;">
-          <img id="lumPhotoThumb" class="lum-photo-thumb" src="" alt="foto viso">
-          <div class="lum-photo-label">Foto inclusa nell'analisi ✓<br><span style="color:rgba(184,145,42,.4);">stessa immagine dell'Analisi Viso</span></div>
-        </div>
-
-        <button class="luminare-btn" id="lumBtn" onclick="generateLuminareProtocol()">
-          <span>⚗️</span> Genera Protocollo Integrato
-        </button>
-
-        <div class="luminare-loading" id="lumLoading">
-          <div class="luminare-dots">
-            <div class="luminare-dot"></div>
-            <div class="luminare-dot"></div>
-            <div class="luminare-dot"></div>
-          </div>
-          <div style="font-size:11px;color:rgba(232,213,160,.45);margin-top:10px;letter-spacing:.04em;">
-            La Prof.ssa Marchetti sta elaborando il tuo profilo completo…
-          </div>
-        </div>
-
-        <div class="luminare-result" id="lumResult"></div>
-      </div>
-    </div>
-
     <!-- ✨ AI FACE ANALYSIS -->
     <div class="sec-header">
       <div class="sec-title">✨ Analisi Viso AI</div>
@@ -1184,7 +1149,7 @@ body {
     <div class="card">
       <div class="card-body">
         <div style="font-size:11px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">
-          Fotografa il viso in buona luce naturale. L'AI analizza idratazione, tono, rughe, lassità e volume loss da tirzepatide — e suggerisce aggiustamenti alla routine.
+          Fotografa il viso in buona luce naturale. L'AI analizza idratazione, tono, rughe, lassità e volume loss da tirzepatide — e <strong style="color:var(--ink2);">confronta con le analisi precedenti</strong> per evidenziare miglioramenti o peggioramenti nel tempo.
         </div>
 
         <!-- Photo area -->
@@ -1227,6 +1192,33 @@ body {
         </div>
       </div>
     </div>
+    <!-- ══ SKIN CHAT ══ -->
+    <section id="skinChatSection">
+      <div class="sec-header" style="padding-top:8px;">
+        <div class="sec-title">💬 Consulta la Dermatologa AI</div>
+        <div class="sec-tag" style="background:rgba(107,91,158,.12);color:var(--violet);">Chat</div>
+      </div>
+      <div style="margin:0 12px;">
+        <div class="chat-quick-btns" id="chatQuickBtns">
+          <button class="chat-quick-btn" onclick="sendQuick(this)">Cosa evitare con tirzepatide?</button>
+          <button class="chat-quick-btn" onclick="sendQuick(this)">Consigli per il volume loss</button>
+          <button class="chat-quick-btn" onclick="sendQuick(this)">Routine mattina ottimale</button>
+          <button class="chat-quick-btn" onclick="sendQuick(this)">Quando aggiungere il retinolo?</button>
+          <button class="chat-quick-btn" onclick="sendQuick(this)">Perché la pelle è più secca?</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-row">
+          <textarea id="chatInput" placeholder="Chiedi alla dermatologa AI..." rows="1"
+            oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+          <button class="chat-send-btn" id="chatSendBtn" onclick="sendChat()">↑</button>
+        </div>
+        <div style="font-size:10px;color:var(--ink3);text-align:center;padding:8px 0 0;line-height:1.5;">
+          La chat conosce la tua analisi viso e lo storico 🔒
+        </div>
+      </div>
+    </section>
+
     <div class="sec-header">
       <div class="sec-title">🔍 Stato Pelle</div>
       <div class="sec-tag tag-pm">Sera</div>
@@ -1350,6 +1342,18 @@ body {
       <div class="card-body">
         <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">Monitora gli integratori chiave per la pelle durante il dimagrimento con tirzepatide.</div>
         <div class="checklist" id="checklist-skincare-int"></div>
+
+        <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">⚙️ Gestisci prodotti skincare</div>
+        <div class="pm-list" id="pmSkList"></div>
+        <div class="pm-add-row">
+          <input class="pm-add-input" id="pmSkNewName" placeholder="Es: Niacinamide 10% · sera">
+          <button class="pm-add-btn" onclick="pmAddItem('sk','pmSkNewName')">+ Aggiungi</button>
+        </div>
+        <div class="pm-eval-card" id="pmSkEvalCard">
+          <div class="pm-eval-verdict" id="pmSkEvalVerdict"></div>
+          <div id="pmSkEvalBody"></div>
+        </div>
       </div>
     </div>
 
@@ -1368,6 +1372,302 @@ body {
 
   </div><!-- /panel-skincare -->
 
+
+  <!-- ══ PANEL: GUARDAROBA ══ -->
+  <div class="panel" id="panel-guardaroba">
+
+    <div class="notice">👔 Le taglie si aggiornano automaticamente con le misure del lunedì.</div>
+
+    <!-- Taglie correnti -->
+    <div class="sec-header">
+      <div class="sec-title">👕 Taglie Attuali</div>
+      <div class="sec-tag tag-wk">Live</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="sizeCurrentGrid">
+        <div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">
+          Inserisci le misurazioni per calcolare le taglie.
+        </div>
+      </div>
+    </div>
+
+    <!-- Trend taglie -->
+    <div class="sec-header">
+      <div class="sec-title">📉 Progressione Taglie</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="sizeTrendContent">
+        <div style="text-align:center;padding:16px;color:var(--ink3);font-size:12px;">
+          Servono almeno 2 misurazioni del lunedì.
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat guardaroba AI -->
+    <div class="sec-header">
+      <div class="sec-title">🤖 Consulta AI Taglie</div>
+      <div class="sec-tag" style="background:rgba(107,91,158,.12);color:var(--violet);">Chat</div>
+    </div>
+    <div style="margin:0 12px 12px;">
+      <div class="chat-quick-btns" style="padding:0 0 10px;">
+        <button class="chat-quick-btn" onclick="sendWardrobeQuick(this)">Taglia pantaloni corrente?</button>
+        <button class="chat-quick-btn" onclick="sendWardrobeQuick(this)">Quando cambio taglia camicia?</button>
+        <button class="chat-quick-btn" onclick="sendWardrobeQuick(this)">Consigli acquisti durante dimagrimento</button>
+        <button class="chat-quick-btn" onclick="sendWardrobeQuick(this)">Taglie EU vs UK vs US?</button>
+      </div>
+      <div class="chat-messages" id="wardrobeChatMessages" style="max-height:280px;"></div>
+      <div class="chat-input-row">
+        <textarea id="wardrobeChatInput" placeholder="Chiedi sulle taglie o il guardaroba..." rows="1"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendWardrobeChat();}"></textarea>
+        <button class="chat-send-btn" id="wardrobeSendBtn" onclick="sendWardrobeChat()">↑</button>
+      </div>
+    </div>
+
+  </div><!-- /panel-guardaroba -->
+
+  <!-- ══ PANEL: BARBA ══ -->
+  <div class="panel" id="panel-barba">
+
+    <div class="notice">🪒 Routine pre e post barba pensata per pelle grassa in trattamento con tirzepatide.</div>
+
+    <!-- Analisi foto zona barba -->
+    <div class="sec-header">
+      <div class="sec-title">📸 Analisi Zona Barba AI</div>
+      <div class="sec-tag" style="background:rgba(107,91,158,.12);color:var(--violet);">Claude</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:12px;line-height:1.6;">
+          Fotografa la zona barba (guance, mento, collo) per ricevere consigli personalizzati su irritazione, ingrown hair e routine di rasatura.
+        </div>
+        <div id="barbPhotoArea" style="position:relative;width:100%;aspect-ratio:4/3;border-radius:var(--rsm);overflow:hidden;background:var(--paper3);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;cursor:pointer;margin-bottom:12px;" onclick="document.getElementById('barbPhotoInput').click()">
+          <div style="font-size:2.5rem;opacity:.4;">🪒</div>
+          <div style="font-size:12px;color:var(--ink3);text-align:center;padding:0 20px;line-height:1.5;">Tocca per fotografare<br>zona barba</div>
+          <img id="barbPhotoPreview" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        </div>
+        <input type="file" id="barbPhotoInput" accept="image/*" capture="user" style="display:none" onchange="onBarbPhotoSelected(this)">
+        <button class="btn btn-primary" id="barbAnalyzeBtn" onclick="analyzeBarbaWithAI()" style="gap:8px;">
+          <span>🔬</span> Analizza zona barba
+        </button>
+        <div id="barbLoadingArea" style="display:none;margin-top:14px;text-align:center;padding:20px 0;">
+          <div style="font-size:1.8rem;animation:spin 1.5s linear infinite;display:inline-block;">⟳</div>
+          <div style="font-size:12px;color:var(--ink3);margin-top:8px;">Claude sta analizzando...</div>
+        </div>
+        <div id="barbResultArea" style="display:none;margin-top:14px;">
+          <div style="height:1px;background:var(--border);margin-bottom:14px;"></div>
+          <div id="barbResultContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat barba -->
+    <div id="barbChatSection" style="display:none;margin:0 12px 12px;">
+      <div class="sec-header" style="padding:8px 0 6px;">
+        <div class="sec-title">💬 Consulta AI Barba</div>
+      </div>
+      <div class="chat-quick-btns" style="padding:0 0 10px;">
+        <button class="chat-quick-btn" onclick="sendBarbQuick(this)">Migliore rasoio per pelle grassa?</button>
+        <button class="chat-quick-btn" onclick="sendBarbQuick(this)">Come evitare i peli incarniti?</button>
+        <button class="chat-quick-btn" onclick="sendBarbQuick(this)">Aftershave con tirzepatide?</button>
+        <button class="chat-quick-btn" onclick="sendBarbQuick(this)">Pre-shave oil: serve davvero?</button>
+      </div>
+      <div class="chat-messages" id="barbChatMessages" style="max-height:280px;"></div>
+      <div class="chat-input-row">
+        <textarea id="barbChatInput" placeholder="Chiedi sulla routine barba..." rows="1"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendBarbChat();}"></textarea>
+        <button class="chat-send-btn" id="barbSendBtn" onclick="sendBarbChat()">↑</button>
+      </div>
+    </div>
+
+    <!-- Routine Pre-Barba -->
+    <div class="sec-header">
+      <div class="sec-title">🌅 Pre-Barba · Mattina</div>
+      <div class="sec-tag tag-am">Prima</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="barba-step">
+          <div class="barba-step-num">1</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Detergente delicato</div>
+            <div class="barba-step-desc">Lava il viso con acqua tiepida e detergente non aggressivo per rimuovere sebo e residui notturni. Ammorbidisce il pelo.</div>
+            <div class="barba-step-prod">→ CeraVe Hydrating Cleanser (già in routine)</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">2</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Scrub pre-rasatura (2x settimana)</div>
+            <div class="barba-step-desc">Esfoliazione delicata per sollevare i peli e rimuovere cellule morte. Riduce peli incarniti.</div>
+            <div class="barba-step-prod">→ Scrub chimico con AHA (non nella stessa mattina del sole intenso)</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">3</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Pre-shave oil o gel idratante</div>
+            <div class="barba-step-desc">Su pelle grassa preferire gel trasparente o pre-shave leggero, non olio pesante. Crea barriera lubrificante.</div>
+            <div class="barba-step-prod">→ Nivea Sensitive Shaving Gel / Proraso Green</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">4</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Rasatura — direzione del pelo</div>
+            <div class="barba-step-desc">Prima passata nel verso del pelo. Solo se necessario: seconda passata contropelo. Evita più di 2 passate sulla stessa zona.</div>
+            <div class="barba-step-prod">→ Lama fresca ogni 5-7 utilizzi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Routine Post-Barba -->
+    <div class="sec-header">
+      <div class="sec-title">🌄 Post-Barba · Subito dopo</div>
+      <div class="sec-tag tag-am">Dopo</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="barba-step">
+          <div class="barba-step-num">1</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Risciacquo con acqua fredda</div>
+            <div class="barba-step-desc">Chiude i pori e riduce il rossore post-rasatura. Fondamentale su pelle con tendenza irritativa.</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">2</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Aftershave lenitivo — no alcol</div>
+            <div class="barba-step-desc">Evitare aftershave alcolici: irritano e possono peggiorare rossori e secchezza post-tirzepatide. Preferire balsami con pantenolo o allantoin.</div>
+            <div class="barba-step-prod">→ Nivea Men Sensitive Post Shave Balm / La Roche-Posay Cicaplast B5</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">3</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">Idratante leggero</div>
+            <div class="barba-step-desc">Su pelle grassa usare texture gel o lozione, non crema ricca. La rasatura rimuove parte del film idrolipidico.</div>
+            <div class="barba-step-prod">→ CeraVe PM Facial Moisturising Lotion (già in routine)</div>
+          </div>
+        </div>
+        <div class="barba-step">
+          <div class="barba-step-num">4</div>
+          <div class="barba-step-body">
+            <div class="barba-step-title">SPF — sempre se esci</div>
+            <div class="barba-step-desc">La pelle rasata è più sensibile alle UV. Applica SPF50+ anche sulla zona barba.</div>
+            <div class="barba-step-prod">→ LRP Anthelios SPF50+ (già in routine)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diario barba -->
+    <div class="sec-header">
+      <div class="sec-title">📝 Note Rasatura</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="input-group" style="margin-bottom:0">
+          <label>Reazioni, prodotti usati, note</label>
+          <textarea id="barba_diary" placeholder="Es: rossore sulla guance sx, cambiata lama, Proraso tollerato bene..." style="min-height:80px"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-barba -->
+
+  <!-- ══ PANEL: SALUTE ══ -->
+  <div class="panel" id="panel-salute">
+
+    <!-- Alert peso+pelle (mostrato anche in skincare) -->
+    <div id="saluteWeightSkinAlert" style="display:none;padding:12px 12px 0;">
+      <div class="alert-card">
+        <div class="alert-card-title">⚠️ Alert: Perdita rapida + Pelle in stress</div>
+        <div class="alert-card-body" id="saluteAlertBody"></div>
+      </div>
+    </div>
+
+    <!-- Indice cardiovascolare -->
+    <div class="sec-header">
+      <div class="sec-title">❤️ Rischio Cardiovascolare</div>
+      <div class="sec-tag" style="background:var(--rose-pl);color:var(--rose);">WHtR</div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div id="cardioRiskContent">
+          <div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">
+            Inserisci vita e altezza nelle Misurazioni per calcolare il rischio.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Correlazioni -->
+    <div class="sec-header">
+      <div class="sec-title">📊 Correlazioni Salute</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="correlationsContent">
+        <div style="text-align:center;padding:16px;color:var(--ink3);font-size:12px;">
+          Servono almeno 7 giorni di dati.
+        </div>
+      </div>
+    </div>
+
+    <!-- Reminder integratori -->
+    <div class="sec-header">
+      <div class="sec-title">💊 Reminder Integratori</div>
+      <div class="sec-tag tag-am">Smart</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="supplementReminders">
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">
+          Basato su dose Mounjaro e giorno della settimana.
+        </div>
+        <div id="reminderList"></div>
+      </div>
+    </div>
+
+    <!-- Suggerimenti prodotti volume loss -->
+    <div class="sec-header">
+      <div class="sec-title">🧴 Prodotti · Volume Loss</div>
+      <div class="sec-tag" style="background:var(--rose-pl);color:var(--rose);">Tirzepatide</div>
+    </div>
+    <div class="card">
+      <div class="card-body" id="volumeLossProducts">
+        <div style="font-size:11px;color:var(--ink3);margin-bottom:12px;line-height:1.5;">
+          Consigli contestuali basati sui flag volume loss attivi e sul ritmo di dimagrimento.
+        </div>
+        <div id="vlProductList"></div>
+      </div>
+    </div>
+
+    <!-- Chat salute AI -->
+    <div class="sec-header">
+      <div class="sec-title">🤖 Consulta AI Salute</div>
+      <div class="sec-tag" style="background:rgba(107,91,158,.12);color:var(--violet);">Chat</div>
+    </div>
+    <div style="margin:0 12px 12px;">
+      <div class="chat-quick-btns" style="padding:0 0 10px;">
+        <button class="chat-quick-btn" onclick="sendHealthQuick(this)">Rischio cardiovascolare attuale?</button>
+        <button class="chat-quick-btn" onclick="sendHealthQuick(this)">Integratori prioritari oggi?</button>
+        <button class="chat-quick-btn" onclick="sendHealthQuick(this)">Sonno e dimagrimento: come migliorare?</button>
+        <button class="chat-quick-btn" onclick="sendHealthQuick(this)">Volume loss: cosa fare adesso?</button>
+      </div>
+      <div class="chat-messages" id="healthChatMessages" style="max-height:280px;"></div>
+      <div class="chat-input-row">
+        <textarea id="healthChatInput" placeholder="Chiedi sulla tua salute generale..." rows="1"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendHealthChat();}"></textarea>
+        <button class="chat-send-btn" id="healthSendBtn" onclick="sendHealthChat()">↑</button>
+      </div>
+    </div>
+
+  </div><!-- /panel-salute -->
+
 </div><!-- /app -->
 
 <!-- SAVE BAR -->
@@ -1379,13 +1679,10 @@ body {
   </div>
 </div>
 
-<!-- TAB BAR -->
-<div style="position:fixed;bottom:58px;left:0;right:0;text-align:center;z-index:99;pointer-events:none;">
-  <span style="font-size:9px;color:rgba(184,145,42,.35);font-family:'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;">
-    v2.0 · agg. 01 giu 2026
-  </span>
-</div>
+<!-- VERSION -->
+<div style="text-align:center;padding:2px 0 0;background:var(--paper2);border-top:1px solid var(--border);font-size:9px;color:var(--ink3);letter-spacing:.05em;">Mounjaro Tracker &middot; aggiornato il <strong>16 giugno 2026</strong> · v1.4</div>
 
+<!-- TAB BAR -->
 <nav class="tab-bar">
   <button class="tab-item active" onclick="switchTab('daily',this)">
     <span class="t-icon">📅</span>
@@ -1414,6 +1711,18 @@ body {
   <button class="tab-item" onclick="switchTab('report',this)">
     <span class="t-icon">📊</span>
     <span class="t-label">Report</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('guardaroba',this);renderSizes();">
+    <span class="t-icon">👔</span>
+    <span class="t-label">Taglie</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('barba',this)">
+    <span class="t-icon">🪒</span>
+    <span class="t-label">Barba</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('salute',this);renderSalutePanel();">
+    <span class="t-icon">❤️</span>
+    <span class="t-label">Salute</span>
   </button>
 </nav>
 
@@ -1596,13 +1905,30 @@ function onPhotoSelected(input) {
     preview.style.display = 'block';
     area.style.border = '2px solid var(--gold)';
     document.getElementById('aiResultArea').style.display = 'none';
-    // Aggiorna thumbnail luminare
-    const thumb = document.getElementById('lumPhotoThumb');
-    const row   = document.getElementById('lumPhotoRow');
-    if (thumb) thumb.src = e.target.result;
-    if (row)   row.style.display = 'flex';
   };
   reader.readAsDataURL(file);
+}
+
+// ── SKIN AI HISTORY ──
+function getSkinAIHistory() {
+  try { return JSON.parse(localStorage.getItem('mj_skin_ai_history') || '[]'); } catch(e) { return []; }
+}
+function saveSkinAIEntry(entry) {
+  const hist = getSkinAIHistory();
+  hist.push(entry);
+  // Keep max 20 entries
+  if(hist.length > 20) hist.splice(0, hist.length - 20);
+  localStorage.setItem('mj_skin_ai_history', JSON.stringify(hist));
+}
+function getCurrentSkinRatings() {
+  return {
+    idratazione: parseInt(document.getElementById('sk_idratazione')?.value || 5),
+    luminosita:  parseInt(document.getElementById('sk_luminosita')?.value || 5),
+    fermezza:    parseInt(document.getElementById('sk_fermezza')?.value || 5),
+    irritazione: parseInt(document.getElementById('sk_irritazione')?.value || 1),
+    untuosita:   parseInt(document.getElementById('sk_untuosita')?.value || 5),
+    rughe:       parseInt(document.getElementById('sk_rughe')?.value || 5),
+  };
 }
 
 async function analyzeWithAI() {
@@ -1613,14 +1939,59 @@ async function analyzeWithAI() {
   const activeCtx = [...document.querySelectorAll('#aiContextChips .chip.skin-active')]
     .map(e => e.dataset.ctx).join(', ');
 
+  // Load skin AI history for comparison
+  const hist = getSkinAIHistory();
+  const currentRatings = getCurrentSkinRatings();
+
+  // Build historical context string
+  let historicalContext = '';
+  if(hist.length > 0) {
+    const recent = hist.slice(-5); // last 5 analyses
+    historicalContext = `\n\nSTORICO ANALISI PRECEDENTI (${hist.length} totali, mostro le ultime ${recent.length}):\n`;
+    recent.forEach((h, i) => {
+      const dtLabel = new Date(h.date).toLocaleDateString('it-IT', {day:'numeric', month:'short', year:'numeric'});
+      historicalContext += `\n[${dtLabel}]\n`;
+      if(h.ratings) {
+        historicalContext += `Rating pelle: Idratazione=${h.ratings.idratazione}/10, Luminosità=${h.ratings.luminosita}/10, Fermezza=${h.ratings.fermezza}/10, Irritazione=${h.ratings.irritazione}/10, Untuosità=${h.ratings.untuosita}/10, Rughe=${h.ratings.rughe}/10\n`;
+      }
+      if(h.result?.stato_generale) historicalContext += `Stato: ${h.result.stato_generale}\n`;
+      if(h.result?.trend) historicalContext += `Trend precedente: ${h.result.trend}\n`;
+      if(h.result?.criticita?.length) historicalContext += `Criticità: ${h.result.criticita.join('; ')}\n`;
+    });
+
+    // Calculate rating deltas vs oldest in history
+    const oldest = hist[0];
+    if(oldest.ratings) {
+      const deltas = {};
+      Object.keys(currentRatings).forEach(k => {
+        if(oldest.ratings[k] != null) deltas[k] = currentRatings[k] - oldest.ratings[k];
+      });
+      historicalContext += `\nDELTA RATING da prima analisi (${new Date(oldest.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'})}):\n`;
+      Object.entries(deltas).forEach(([k, v]) => {
+        const arrow = v > 0 ? '↑' : v < 0 ? '↓' : '=';
+        const good = (k === 'irritazione' || k === 'rughe' || k === 'untuosita') ? v < 0 : v > 0;
+        historicalContext += `${k}: ${v > 0 ? '+' : ''}${v} ${arrow} ${good ? '(miglioramento)' : v === 0 ? '(stabile)' : '(peggioramento)'}\n`;
+      });
+    }
+  }
+
+  const currentRatingsStr = `Rating odierni (scala 1-10): Idratazione=${currentRatings.idratazione}, Luminosità=${currentRatings.luminosita}, Fermezza=${currentRatings.fermezza}, Irritazione=${currentRatings.irritazione}, Untuosità=${currentRatings.untuosita}, Rughe=${currentRatings.rughe}`;
+
+  const hasHistory = hist.length > 0;
+
   const prompt = `Sei un dermatologo esperto in skincare anti-age. Analizza questa foto del viso e fornisci una valutazione dettagliata in italiano.
 
-Contesto del paziente: ${activeCtx || 'donna adulta'}.
+Contesto del paziente: ${activeCtx || 'adulto'}.
+${currentRatingsStr}${historicalContext}
+
+${hasHistory ? 'IMPORTANTE: Hai accesso allo storico delle analisi precedenti. Devi OBBLIGATORIAMENTE fare un confronto esplicito con le analisi passate: indica se la pelle è migliorata, peggiorata o stabile rispetto alla/e analisi precedente/i, e su quali aspetti specifici.' : ''}
 
 Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa struttura esatta:
 {
-  "stato_generale": "frase di 1-2 righe sullo stato globale della pelle",
-  "osservazioni": ["osservazione 1", "osservazione 2", "osservazione 3"],
+  "stato_generale": "frase di 1-2 righe sullo stato globale della pelle oggi",
+  ${hasHistory ? '"trend": "1-2 frasi sul trend rispetto alle analisi precedenti: cosa è migliorato, cosa è peggiorato, cosa è stabile",' : ''}
+  ${hasHistory ? '"confronto_dettagliato": ["differenza specifica 1 rispetto a prima", "differenza specifica 2", "differenza specifica 3"],' : ''}
+  "osservazioni": ["osservazione 1 dalla foto", "osservazione 2", "osservazione 3"],
   "criticita": ["criticità 1", "criticità 2"],
   "punti_forza": ["punto forza 1", "punto forza 2"],
   "suggerimenti_routine": ["suggerimento 1", "suggerimento 2", "suggerimento 3"],
@@ -1644,7 +2015,7 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        max_tokens: 1200,
         messages: [{
           role: 'user',
           content: [
@@ -1661,7 +2032,15 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
     const raw = data.content?.map(i => i.text || '').join('');
     const clean = raw.replace(/```json|```/g, '').trim();
     const result = JSON.parse(clean);
-    renderAIResult(result);
+
+    // Save this analysis to history
+    saveSkinAIEntry({
+      date: new Date().toISOString(),
+      ratings: currentRatings,
+      result: { stato_generale: result.stato_generale, trend: result.trend, criticita: result.criticita }
+    });
+
+    renderAIResult(result, currentRatings, hist);
     showToast('Analisi completata ✓', 'success');
   } catch(err) {
     showToast('Errore analisi', 'error');
@@ -1673,20 +2052,72 @@ Rispondi SOLO con un oggetto JSON valido (nessun testo prima o dopo), con questa
   }
 }
 
-function renderAIResult(r) {
+function renderAIResult(r, currentRatings, hist) {
   const el = document.getElementById('aiResultContent');
+  const hasHistory = hist && hist.length > 0;
+
+  // Build rating delta mini-chart vs previous analysis
+  let ratingDeltaHtml = '';
+  if(hasHistory && hist.length > 0) {
+    const prev = hist[hist.length - 1]; // most recent previous
+    if(prev.ratings) {
+      const ratingLabels = {idratazione:'Idrat.',luminosita:'Lumin.',fermezza:'Ferme.',irritazione:'Irrit.',untuosita:'Untuo.',rughe:'Rughe'};
+      const items = Object.entries(currentRatings).map(([k, v]) => {
+        const pv = prev.ratings[k];
+        if(pv == null) return null;
+        const delta = v - pv;
+        const isNegativeGood = (k === 'irritazione' || k === 'rughe' || k === 'untuosita');
+        const improved = isNegativeGood ? delta < 0 : delta > 0;
+        const worsened = isNegativeGood ? delta > 0 : delta < 0;
+        const col = delta === 0 ? 'var(--ink3)' : improved ? 'var(--teal)' : 'var(--rose)';
+        const arrow = delta > 0 ? '↑' : delta < 0 ? '↓' : '=';
+        return `<div style="text-align:center;padding:6px 4px;">
+          <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;">${ratingLabels[k]}</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink);line-height:1;">${v}</div>
+          <div style="font-size:11px;color:${col};font-weight:600;">${delta === 0 ? '—' : (delta > 0 ? '+' : '') + delta + ' ' + arrow}</div>
+        </div>`;
+      }).filter(Boolean);
+
+      if(items.length) {
+        const prevDate = new Date(prev.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'});
+        ratingDeltaHtml = `<div style="margin-bottom:14px;padding:12px 10px;background:var(--paper3);border-radius:10px;border:1px solid var(--border);">
+          <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:8px;">📊 Rating vs analisi del ${prevDate}</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:2px;">${items.join('')}</div>
+        </div>`;
+      }
+    }
+  }
+
+  // Trend block
+  const trendHtml = r.trend ? `<div style="margin-bottom:14px;padding:12px 14px;background:${r.trend.includes('miglio') ? 'var(--teal-pl)' : r.trend.includes('peggior') ? 'var(--rose-pl)' : 'var(--gold-pl)'};border-radius:10px;border:1px solid rgba(0,0,0,0.07);">
+    <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:5px;">📈 Trend vs analisi precedenti</div>
+    <div style="font-size:0.85rem;color:var(--ink2);line-height:1.6;">${r.trend}</div>
+  </div>` : '';
+
+  // Comparison details
+  const confrontoHtml = r.confronto_dettagliato?.length ? `<div class="ai-section">
+    <div class="ai-section-title">🔄 Confronto con analisi precedenti</div>
+    <div class="ai-section-body">${r.confronto_dettagliato.map(o=>`• ${o}`).join('<br>')}</div>
+  </div>` : '';
+
   el.innerHTML = `
+    ${ratingDeltaHtml}
+
+    ${trendHtml}
+
     <div class="ai-section">
-      <div class="ai-section-title">🌿 Stato generale</div>
+      <div class="ai-section-title">🌿 Stato generale oggi</div>
       <div class="ai-section-body">${r.stato_generale || ''}</div>
     </div>
+
+    ${confrontoHtml}
 
     ${r.priorita ? `<div class="notice" style="margin:0 0 14px;border-color:var(--rose);background:var(--rose-pl);color:var(--rose);">
       ⚡ <strong>Priorità:</strong> ${r.priorita}
     </div>` : ''}
 
     ${r.osservazioni?.length ? `<div class="ai-section">
-      <div class="ai-section-title">🔍 Osservazioni</div>
+      <div class="ai-section-title">🔍 Osservazioni dalla foto</div>
       <div class="ai-section-body">${r.osservazioni.map(o=>`• ${o}`).join('<br>')}</div>
     </div>` : ''}
 
@@ -1715,231 +2146,93 @@ function renderAIResult(r) {
       <div class="ai-section-title">🚫 Da evitare ora</div>
       <div class="ai-pill-row">${r.ingredienti_da_evitare.map(i=>`<span class="ai-pill warn">${i}</span>`).join('')}</div>
     </div>` : ''}
+
+    ${hasHistory ? `<div style="font-size:10px;color:var(--ink3);text-align:center;margin-top:6px;">Analisi #${hist.length + 1} · storico: ${hist.length} precedenti</div>` : '<div style="font-size:10px;color:var(--ink3);text-align:center;margin-top:6px;">Prima analisi salvata — il confronto sarà disponibile dalla prossima</div>'}
   `;
   document.getElementById('aiResultArea').style.display = 'block';
+  // Launch chat
+  initSkinChat(r, currentRatings, hist);
 }
 
-// ══════════════════════════════════════════════════════
-// LUMINARE DELLA PELLE — Prof.ssa Elena Marchetti
-// ══════════════════════════════════════════════════════
-let lumAnalysisRunning = false;
+// ── SKIN CHAT ──
+let skinChatHistory = [];
+let skinChatContext = null;
 
-async function generateLuminareProtocol() {
-  if (lumAnalysisRunning) return;
+function initSkinChat(analysisResult, currentRatings, hist) {
+  skinChatContext = { analysisResult, currentRatings, hist };
+  skinChatHistory = [];
+  document.getElementById('chatMessages').innerHTML = '';
+  document.getElementById('skinChatSection').style.display = 'block';
+  const intro = (hist && hist.length > 1)
+    ? 'Ciao! Ho analizzato il tuo viso e confrontato con le analisi precedenti. Cosa vuoi approfondire?'
+    : 'Ciao! Ho completato l\'analisi del tuo viso. Sono qui per rispondere a qualsiasi domanda sulla tua skincare.';
+  appendChatBubble('ai', intro);
+  setTimeout(() => document.getElementById('skinChatSection').scrollIntoView({behavior:'smooth', block:'start'}), 300);
+}
+
+function appendChatBubble(role, text, isLoading=false) {
+  const el = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-bubble ' + role + (isLoading ? ' loading' : '');
+  if(role === 'ai') {
+    div.innerHTML = '<div class="bubble-label">Dermatologa AI</div>' + text.replace(/\n/g, '<br>');
+  } else {
+    div.textContent = text;
+  }
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  return div;
+}
+
+function sendQuick(btn) {
+  document.getElementById('chatInput').value = btn.textContent;
+  sendChat();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
   const apiKey = getApiKey();
-  if (!apiKey) { openApikeyModal(); return; }
+  if(!apiKey) { openApikeyModal(); return; }
 
-  lumAnalysisRunning = true;
-  document.getElementById('lumBtn').disabled = true;
-  document.getElementById('lumLoading').style.display = 'block';
-  document.getElementById('lumResult').style.display = 'none';
+  appendChatBubble('user', msg);
+  skinChatHistory.push({ role: 'user', content: msg });
+  input.value = '';
+  input.style.height = 'auto';
 
-  // ── 1. RACCOLTA DATI COMPLETA ──────────────────────────────
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  const loadBubble = appendChatBubble('ai', '...', true);
 
-  const all = getAllDayData();
-  const h   = parseFloat(localStorage.getItem('mj_height') || '0');
-  const sesso = localStorage.getItem('mj_sesso') || 'F';
-  const eta   = localStorage.getItem('mj_eta') || '';
-  const last30 = all.slice(-30);
-  const last7  = all.slice(-7);
+  const ctx = skinChatContext || {};
+  const ar = ctx.analysisResult || {};
+  const cr = ctx.currentRatings || {};
+  const hist = ctx.hist || [];
 
-  // Peso e composizione
-  const pesi = all.filter(d => d.measurements?.peso).map(d => parseFloat(d.measurements.peso));
-  const pesoAttuale = pesi.length ? pesi[pesi.length - 1] : null;
-  const pesoInizio  = pesi.length ? pesi[0] : null;
-  const deltaPeso   = pesoAttuale && pesoInizio ? +(pesoAttuale - pesoInizio).toFixed(1) : null;
-  const mondays = getMondayData();
-  const lastMon = mondays.length ? mondays[mondays.length - 1] : null;
+  let systemPrompt = 'Sei una dermatologa esperta in skincare anti-age e protocolli per persone in terapia con tirzepatide (Mounjaro). Rispondi sempre in italiano, in modo diretto e pratico. Tono professionale ma accessibile. Max 4-5 frasi salvo istruzioni dettagliate.\n\n';
+  systemPrompt += 'CONTESTO ANALISI VISO:\n';
+  systemPrompt += '- Stato generale: ' + (ar.stato_generale || 'non disponibile') + '\n';
+  systemPrompt += '- Trend: ' + (ar.trend || 'prima analisi') + '\n';
+  systemPrompt += '- Criticita: ' + ((ar.criticita||[]).join(', ') || 'nessuna') + '\n';
+  systemPrompt += '- Punti forza: ' + ((ar.punti_forza||[]).join(', ') || 'non specificati') + '\n';
+  systemPrompt += '- Priorita urgente: ' + (ar.priorita || 'non specificata') + '\n';
+  systemPrompt += '- Ingredienti consigliati: ' + ((ar.ingredienti_consigliati||[]).join(', ') || 'non specificati') + '\n';
+  systemPrompt += '- Da evitare: ' + ((ar.ingredienti_da_evitare||[]).join(', ') || 'nessuno') + '\n\n';
+  systemPrompt += 'RATING PELLE OGGI (1-10):\n';
+  systemPrompt += 'Idratazione:' + cr.idratazione + ' Luminosita:' + cr.luminosita + ' Fermezza:' + cr.fermezza + ' Irritazione:' + cr.irritazione + ' Untuosita:' + cr.untuosita + ' Rughe:' + cr.rughe + '\n';
 
-  // Dose tirzepatide
-  const lastDoseEntry = all.slice().reverse().find(d => d.mounjaro?.dose);
-  const dose = lastDoseEntry?.mounjaro?.dose || null;
-
-  // Esami ematici più recenti
-  const lastLab = all.slice().reverse().find(d =>
-    d.measurements?.hba1c || d.measurements?.vitd || d.measurements?.tsh ||
-    d.measurements?.ldl   || d.measurements?.zinco || d.measurements?.colest
-  );
-  const lab = lastLab?.measurements || {};
-
-  // Skin ratings — media ultimi 30 gg
-  const avg = (arr, fn) => {
-    const v = arr.map(fn).filter(x => x !== null && !isNaN(x) && x > 0);
-    return v.length ? +(v.reduce((a, b) => a + b) / v.length).toFixed(1) : null;
-  };
-  const avgIdr  = avg(last30, d => parseFloat(d.skincare?.idratazione) || null);
-  const avgLum  = avg(last30, d => parseFloat(d.skincare?.luminosita)  || null);
-  const avgFer  = avg(last30, d => parseFloat(d.skincare?.fermezza)    || null);
-  const avgIrr  = avg(last30, d => parseFloat(d.skincare?.irritazione) || null);
-  const avgUnt  = avg(last30, d => parseFloat(d.skincare?.untuosita)   || null);
-  const avgRug  = avg(last30, d => parseFloat(d.skincare?.rughe)       || null);
-
-  // Volume loss flags (frequenza ultimi 30 gg)
-  const ozeFreq = {};
-  last30.forEach(d => (d.skincare?.ozeFace || []).forEach(f => { ozeFreq[f] = (ozeFreq[f] || 0) + 1; }));
-  const ozeStr = Object.entries(ozeFreq).sort((a, b) => b[1] - a[1])
-    .map(([k, n]) => `${k} (${n}/${last30.length} giorni)`).join(', ') || 'nessun segnale';
-
-  // Concerns attivi (frequenza)
-  const concernFreq = {};
-  last30.forEach(d => (d.skincare?.concerns || []).forEach(c => { concernFreq[c] = (concernFreq[c] || 0) + 1; }));
-  const concernStr = Object.entries(concernFreq).sort((a, b) => b[1] - a[1])
-    .slice(0, 5).map(([k, n]) => `${k} (${n}gg)`).join(', ') || 'nessuna';
-
-  // Reazioni ai prodotti (ultime disponibili)
-  const lastReact = all.slice().reverse().find(d => d.skincare?.reactAM || d.skincare?.reactPM);
-  const reactAM = lastReact?.skincare?.reactAM || 'non registrata';
-  const reactPM = lastReact?.skincare?.reactPM || 'non registrata';
-
-  // Diario pelle (ultimi 3 giorni)
-  const diaryEntries = last7
-    .filter(d => d.skincare?.diary && d.skincare.diary.trim())
-    .slice(-3)
-    .map(d => `[${d.date}] ${d.skincare.diary.trim()}`)
-    .join('\n') || 'nessuna nota';
-
-  // Routine attuale (da CHECKLISTS hardcoded + checklist skincare-int)
-  const routineAM = [
-    'CeraVe Hydrating Cleanser (detersione AM)',
-    'Timeless Vitamin C 20% L-ascorbic (antiossidante)',
-    'LRP Toleriane Double Repair (idratante AM)',
-    'LRP Anthelios UVmune 400 SPF50+ (fotopreparazione)'
-  ].join(', ');
-  const routinePM = [
-    'Oil cleansing con Jojoba (1° step)',
-    'CeraVe Hydrating Cleanser (2° step)',
-    '"Buffet" Multi-Peptide + HA The Ordinary (peptidi)',
-    'Tretinoina 0,025% (solo autunno/inverno)',
-    'LRP Toleriane Double Repair (occlusivo finale)'
-  ].join(', ');
-  const routineBody = [
-    'CeraVe SA Cream corpo AM (esfoliazione chimica)',
-    'Olio di Jojoba corpo sera',
-    'Retinolo 1% corpo + Rosehip Oil (solo autunno/inverno)'
-  ].join(', ');
-
-  // Integratori checklist odierna
-  const intOggi = (CHECKLISTS['integratori'] || [])
-    .map(i => ({ ...i, checked: document.getElementById('ci-' + i.id)?.classList.contains('checked') }))
-    .filter(i => i.checked)
-    .map(i => i.label).join(', ') || 'nessuno assunto oggi';
-
-  // Sintomi rilevanti per la pelle
-  const symRelevant = ['Alopecia', 'Secchezza bocca', 'Stanchezza', 'Insonnia'];
-  const skinSymFreq = {};
-  last30.forEach(d => (d.symptoms || []).filter(s => symRelevant.includes(s))
-    .forEach(s => { skinSymFreq[s] = (skinSymFreq[s] || 0) + 1; }));
-  const skinSymStr = Object.entries(skinSymFreq).map(([k, n]) => `${k} (${n}gg)`).join(', ') || 'nessuno';
-
-  // Workout (rilevante per ossigenazione cutanea)
-  const workouts7 = last7.filter(d => d.workout?.type && d.workout.type !== '').length;
-
-  // Foto viso disponibile?
-  const hasPhoto = !!aiImageBase64;
-  if (hasPhoto) {
-    document.getElementById('lumPhotoRow').style.display = 'flex';
-    document.getElementById('lumPhotoThumb').src = document.getElementById('aiPhotoPreview')?.src || '';
+  if(hist.length > 0) {
+    systemPrompt += '\nSTORICO (' + hist.length + ' analisi):\n';
+    hist.slice(-3).forEach(function(h) {
+      var d = new Date(h.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'});
+      systemPrompt += '[' + d + '] ' + (h.result && h.result.stato_generale || '') + '\n';
+    });
   }
 
-  // ── 2. COSTRUZIONE PROMPT ──────────────────────────────────
-
-  const systemPrompt = `Sei la Prof.ssa Elena Marchetti, dermatologa e specialista in endocrinologia metabolica con 30 anni di ricerca clinica sull'aging cutaneo in contesti di perdita di peso rapida, trattamenti GLP-1/GIP (semaglutide, tirzepatide), e nutraceutica evidence-based. Hai pubblicato su JAMA Dermatology, British Journal of Dermatology, Dermatology, Obesity Reviews. Sei nota per unire rigore scientifico a indicazioni pratiche e personalizzate.
-
-PRINCIPI METODOLOGICI:
-- Citi sempre la fonte scientifica (es. "Studio JAMA Derm 2024", "linee guida AAD 2023", "RCT Nutrients 2022")
-- Distingui chiaramente tra evidenza solida (A), promettente (B) e preliminare (C)
-- Quando affermi qualcosa sei concreta: dosaggi, timing, prodotti specifici, non vague indicazioni
-- Riconosci onestamente i limiti delle evidenze
-- Il tono è quello di una consulenza medica privata di alto livello — caldo, preciso, autorevole`;
-
-  const userPrompt = `Prof.ssa Marchetti, ho bisogno del suo protocollo integrato completo per la gestione cutanea durante il mio percorso con tirzepatide.
-
-━━ PROFILO PAZIENTE ━━
-Sesso: ${sesso === 'F' ? 'Donna' : 'Uomo'} | Età: ${eta || 'non specificata'} | Altezza: ${h || '?'} cm
-Peso iniziale: ${pesoInizio ?? '?'} kg → Peso attuale: ${pesoAttuale ?? '?'} kg
-Delta totale: ${deltaPeso !== null ? (deltaPeso > 0 ? '+' : '') + deltaPeso + ' kg' : 'n.d.'} | BMI attuale: ${pesoAttuale && h ? (pesoAttuale / ((h / 100) ** 2)).toFixed(1) : '?'}
-Tirzepatide dose attuale: ${dose ? dose + ' mg' : 'non specificata'} | Giorni di tracking: ${all.length}
-${lastMon ? `Composizione corporea (ultimo lunedì): grasso corporeo ${lastMon.bf ?? '?'}%, massa magra ${lastMon.massaMagra ?? '?'} kg, vita ${lastMon.vita ?? '?'} cm` : ''}
-
-━━ ESAMI EMATICI (più recenti disponibili) ━━
-Vitamina D: ${lab.vitd ?? 'non misurata'} ng/mL (target 40–60)
-TSH: ${lab.tsh ?? 'non misurato'} (range 0.4–4.0)
-HbA1c: ${lab.hba1c ?? 'non misurata'}%
-LDL: ${lab.ldl ?? 'non misurato'} | HDL: ${lab.hdl ?? 'non misurato'} | Trigliceridi: ${lab.trig ?? 'non misurati'}
-ALT/GPT: ${lab.alt ?? 'non misurata'} | Creatinina: ${lab.creat ?? 'non misurata'}
-Ferro/ferritina: non misurati
-
-━━ STATO CUTANEO (media ultimi 30 giorni, scala 1–10) ━━
-Idratazione: ${avgIdr ?? '?'}/10 | Luminosità: ${avgLum ?? '?'}/10 | Fermezza: ${avgFer ?? '?'}/10
-Irritazione: ${avgIrr ?? '?'}/10 (più è basso meglio) | Untuosità: ${avgUnt ?? '?'}/10 | Rughe visibili: ${avgRug ?? '?'}/10
-
-━━ VOLUME LOSS DA TIRZEPATIDE (frequenza 30 gg) ━━
-${ozeStr}
-
-━━ PREOCCUPAZIONI SEGNALATE ━━
-${concernStr}
-
-━━ SINTOMI SISTEMICI RILEVANTI PER LA PELLE ━━
-${skinSymStr}
-
-━━ ALLENAMENTO (ultimi 7 gg) ━━
-${workouts7}/7 giorni con attività fisica (rilevante per ossigenazione cutanea e turnover cellulare)
-
-━━ ROUTINE TOPICA ATTUALE ━━
-MATTINA: ${routineAM}
-SERA: ${routinePM}
-CORPO: ${routineBody}
-
-━━ INTEGRATORI ORALI OGGI ━━
-${intOggi}
-
-━━ REAZIONI AI PRODOTTI (più recenti) ━━
-Mattina: ${reactAM}
-Sera: ${reactPM}
-
-━━ DIARIO PELLE (ultime note) ━━
-${diaryEntries}
-
-━━ FOTO VISO ━━
-${hasPhoto ? 'Disponibile e allegata a questo messaggio. La includa nella valutazione visiva.' : 'Non allegata in questa sessione.'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-RICHIESTA: Produca un protocollo integrato strutturato in questo formato ESATTO (usi le emoji come indicato):
-
-🔬 VALUTAZIONE CUTANEA OGGETTIVA
-[Analisi dei rating, correlazioni con i dati metabolici, interpretazione del volume loss. Se presente la foto la commenti. Citi evidenze su skin aging da perdita di peso rapida con GLP-1/GIP agonists]
-
-💊 PROTOCOLLO INTEGRATORI ORALI
-[Per ogni integratore: dose ottimale evidence-based, timing, forma preferibile, sinergie. Includa: collagene idrolizzato, vitamina C, vitamina D, zinco, omega-3, astaxantina, creatina, silicio organico, biotina — valutando ciascuno in base ai dati ematici e ai sintomi. Citi studi specifici per i principali]
-
-🧴 OTTIMIZZAZIONE ROUTINE TOPICA
-[Valuti la routine attuale punto per punto. Suggerisca aggiunte, sostituzioni, sequenza ottimale, timing stagionale. Focus su: barriera cutanea, densità dermica, lassità, volume loss. Includa ingredienti con evidenza solida: retinoli, peptidi, ceramidi, niacinamide, retinaldeide]
-
-🛡️ PROTOCOLLO ANTI-VOLUME LOSS
-[Strategie specifiche per attenuare il "Tirzepatide face": topici, massaggi, gua sha, integratori mirati, timing con il percorso di dimagrimento. Valuti se la velocità di perdita di peso attuale è compatibile con la preservazione del volume facciale]
-
-⚠️ ALERT E MONITORAGGIO
-[Valori ematici da misurare urgentemente se non disponibili, soglie di attenzione, segnali da portare al dermatologo, timing controlli]
-
-📅 PIANO AZIONE PROSSIME 4 SETTIMANE
-[Esattamente 5 azioni concrete e prioritizzate, con settimana di implementazione]`;
-
-  // ── 3. CHIAMATA API ────────────────────────────────────────
+  systemPrompt += '\nRispondi tenendo conto di questo contesto. Se suggerisci prodotti indica ingredienti attivi. Se menzioni tempistiche sii preciso.';
 
   try {
-    const messages = [];
-    const userContent = [];
-
-    // Allega foto se disponibile
-    if (hasPhoto) {
-      userContent.push({
-        type: 'image',
-        source: { type: 'base64', media_type: aiImageType, data: aiImageBase64 }
-      });
-    }
-    userContent.push({ type: 'text', text: userPrompt });
-    messages.push({ role: 'user', content: userContent });
-
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -1950,100 +2243,433 @@ RICHIESTA: Produca un protocollo integrato strutturato in questo formato ESATTO 
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 2800,
+        max_tokens: 600,
         system: systemPrompt,
-        messages
+        messages: skinChatHistory
       })
     });
-
-    if (resp.status === 401) { showToast('Chiave API non valida', 'error'); openApikeyModal(); return; }
     const data = await resp.json();
-    if (data.error) throw new Error(data.error.message);
-
-    const text = (data.content?.[0]?.text || '').trim();
-    renderLuminareResult(text);
-    showToast('Protocollo Marchetti pronto ✓', 'success');
-
-  } catch (e) {
-    document.getElementById('lumResult').style.display = 'block';
-    document.getElementById('lumResult').innerHTML = `<div style="color:rgba(192,80,80,.9);font-size:0.83rem;padding:10px 0;">Errore: ${e.message}. Controlla la chiave API e riprova.</div>`;
-    showToast('Errore analisi', 'error');
+    const reply = (data.content || []).map(function(i){return i.text||'';}).join('') || 'Errore nella risposta.';
+    skinChatHistory.push({ role: 'assistant', content: reply });
+    loadBubble.classList.remove('loading');
+    loadBubble.innerHTML = '<div class="bubble-label">Dermatologa AI</div>' + reply.replace(/\n/g, '<br>');
+    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+  } catch(err) {
+    loadBubble.innerHTML = '<div class="bubble-label">Dermatologa AI</div>Errore di connessione. Riprova.';
+    loadBubble.classList.remove('loading');
   } finally {
-    lumAnalysisRunning = false;
-    document.getElementById('lumBtn').disabled = false;
-    document.getElementById('lumLoading').style.display = 'none';
+    btn.disabled = false;
   }
 }
 
-function renderLuminareResult(text) {
-  const el = document.getElementById('lumResult');
 
-  // Split per sezioni usando le emoji come separatori
-  const sectionDefs = [
-    { emoji: '🔬', label: 'Valutazione Cutanea Oggettiva', color: 'var(--teal)' },
-    { emoji: '💊', label: 'Protocollo Integratori Orali',  color: 'var(--gold)' },
-    { emoji: '🧴', label: 'Ottimizzazione Routine Topica', color: 'var(--violet)' },
-    { emoji: '🛡️', label: 'Protocollo Anti-Volume Loss',   color: 'var(--rose)' },
-    { emoji: '⚠️', label: 'Alert e Monitoraggio',          color: '#e8a050' },
-    { emoji: '📅', label: 'Piano Azione 4 Settimane',      color: 'var(--teal)' },
-  ];
+// ══════════════════════════════════════════════════════════
+// SIZES — Guardaroba
+// ══════════════════════════════════════════════════════════
+function calcSizes(vita_cm, fianchi_cm, torace_cm, collo_cm, altezza_cm) {
+  const s = {};
+  if(vita_cm) {
+    const waistIn = Math.round(vita_cm / 2.54);
+    s.pantaloni_eu = Math.round(vita_cm + 16);
+    s.pantaloni_us = waistIn + 'W';
+    s.inseam = altezza_cm ? Math.round((altezza_cm * 0.47) / 2.54) + 'L' : '32L';
+  }
+  if(collo_cm) {
+    const col = (collo_cm / 2.54).toFixed(1);
+    s.camicia_eu = collo_cm <= 37 ? 'S' : collo_cm <= 39 ? 'M' : collo_cm <= 41 ? 'L' : collo_cm <= 43 ? 'XL' : 'XXL';
+    s.camicia_collar = collo_cm + 'cm / ' + col + '"';
+  } else if(torace_cm) {
+    s.camicia_eu = torace_cm < 90 ? 'S' : torace_cm < 98 ? 'M' : torace_cm < 106 ? 'L' : torace_cm < 114 ? 'XL' : 'XXL';
+  }
+  if(torace_cm) {
+    s.tshirt = torace_cm < 88 ? 'S' : torace_cm < 96 ? 'M' : torace_cm < 104 ? 'L' : torace_cm < 112 ? 'XL' : 'XXL';
+    s.torace_cm = torace_cm;
+    s.giacca_it = Math.round(torace_cm / 2) * 2;
+    s.giacca_uk = s.giacca_it - 10;
+  }
+  return s;
+}
 
-  // Parser sezioni
-  const parts = text.split(/(?=🔬|💊|🧴|🛡️|⚠️|📅)/u);
-  let html = '';
-
-  parts.forEach(part => {
-    if (!part.trim()) return;
-    const matchEmoji = part.match(/^(🔬|💊|🧴|🛡️|⚠️|📅)/u)?.[1];
-    const def = sectionDefs.find(s => s.emoji === matchEmoji);
-    if (!def) {
-      // Testo senza sezione riconosciuta — mostra comunque
-      if (part.trim()) {
-        html += `<div class="lum-section-body" style="border-radius:var(--rsm);margin-bottom:14px;">${formatLumText(part.trim())}</div>`;
+function getLatestMeasurements() {
+  let latest = null;
+  try {
+    for(let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if(!key || !key.startsWith('mj_day_')) continue;
+      const d = JSON.parse(localStorage.getItem(key) || 'null');
+      if(!d) continue;
+      if(d.vita || d.torace || d.collo || d.fianchi || d.peso) {
+        if(!latest || key > latest.key) latest = { key, d };
       }
-      return;
     }
+  } catch(e) {}
+  return latest ? latest.d : null;
+}
 
-    // Rimuovi la prima riga (titolo) e usa il resto come body
-    const lines = part.trim().split('\n');
-    const title = lines[0];
-    const body  = lines.slice(1).join('\n').trim();
+function getAllMeasurementHistory() {
+  const hist = [];
+  try {
+    for(let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if(!key || !key.startsWith('mj_day_')) continue;
+      const d = JSON.parse(localStorage.getItem(key) || 'null');
+      if(d && (d.vita || d.peso)) hist.push({ date: key.replace('mj_day_',''), d });
+    }
+  } catch(e) {}
+  hist.sort((a,b) => a.date.localeCompare(b.date));
+  return hist;
+}
 
-    html += `<div class="lum-section">
-      <div class="lum-section-head" style="color:${def.color};">
-        ${def.emoji} ${def.label}
-      </div>
-      <div class="lum-section-body">${formatLumText(body)}</div>
-    </div>`;
+function renderSizes() {
+  const data = getLatestMeasurements();
+  const grid = document.getElementById('sizeCurrentGrid');
+  const trend = document.getElementById('sizeTrendContent');
+  if(!grid) return;
+  if(!data) { grid.innerHTML = '<div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">Inserisci le misurazioni per calcolare le taglie.</div>'; return; }
+
+  const vita=parseFloat(data.vita)||0, fianchi=parseFloat(data.fianchi)||0, torace=parseFloat(data.torace)||0;
+  const collo=parseFloat(data.collo)||0, altezza=parseFloat(data.altezza)||0, peso=parseFloat(data.peso)||0;
+  const s = calcSizes(vita, fianchi, torace, collo, altezza);
+
+  let html = '<div class="size-grid">';
+  if(s.pantaloni_eu) html += '<div class="size-cell"><div class="size-cell-label">Pantaloni EU/IT</div><div class="size-cell-val">'+s.pantaloni_eu+'</div><div class="size-cell-sub">US: '+s.pantaloni_us+' '+s.inseam+'</div></div>';
+  if(s.camicia_eu)   html += '<div class="size-cell"><div class="size-cell-label">Camicia</div><div class="size-cell-val">'+s.camicia_eu+'</div><div class="size-cell-sub">'+(s.camicia_collar||'')+'</div></div>';
+  if(s.tshirt)       html += '<div class="size-cell"><div class="size-cell-label">T-Shirt</div><div class="size-cell-val">'+s.tshirt+'</div><div class="size-cell-sub">Torace: '+s.torace_cm+'cm</div></div>';
+  if(s.giacca_it)    html += '<div class="size-cell"><div class="size-cell-label">Giacca IT</div><div class="size-cell-val">'+s.giacca_it+'</div><div class="size-cell-sub">UK: '+s.giacca_uk+'</div></div>';
+  html += '</div>';
+  if(vita && peso) {
+    const kgNext = Math.max(1, Math.round(((vita % 4 === 0 ? 4 : vita % 4) / 2) * 3));
+    html += '<div class="size-next">Prossima taglia pantaloni: circa -' + kgNext + ' kg</div>';
+  }
+  grid.innerHTML = html;
+
+  const hist = getAllMeasurementHistory();
+  if(!trend) return;
+  if(hist.length < 2) { trend.innerHTML = '<div style="text-align:center;padding:16px;color:var(--ink3);font-size:12px;">Servono almeno 2 misurazioni.</div>'; return; }
+  let thtml = '<div style="overflow-x:auto"><table style="width:100%;font-size:11px;border-collapse:collapse">';
+  thtml += '<tr style="color:var(--ink3);font-size:10px"><th style="text-align:left;padding:4px 6px">Data</th><th style="padding:4px 6px">Vita</th><th style="padding:4px 6px">Pant.</th><th style="padding:4px 6px">Shirt</th><th style="padding:4px 6px">Peso</th></tr>';
+  hist.slice(-6).reverse().forEach(function(h) {
+    const hs = calcSizes(parseFloat(h.d.vita)||0,parseFloat(h.d.fianchi)||0,parseFloat(h.d.torace)||0,parseFloat(h.d.collo)||0,parseFloat(h.d.altezza)||0);
+    const dt = new Date(h.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'});
+    thtml += '<tr style="border-top:1px solid var(--border)"><td style="padding:5px 6px;color:var(--ink3)">'+dt+'</td><td style="padding:5px 6px;text-align:center">'+(h.d.vita||'–')+'cm</td><td style="padding:5px 6px;text-align:center;font-weight:600">'+(hs.pantaloni_eu||'–')+'</td><td style="padding:5px 6px;text-align:center">'+(hs.camicia_eu||'–')+'</td><td style="padding:5px 6px;text-align:center">'+(h.d.peso||'–')+'kg</td></tr>';
   });
+  thtml += '</table></div>';
+  trend.innerHTML = thtml;
+}
 
-  html += `<div class="lum-timestamp">
-    Protocollo generato · Prof.ssa E. Marchetti · ${new Date().toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' })}
-    <br>⚠️ A scopo informativo — non sostituisce la visita dermatologica
-  </div>`;
+// ══════════════════════════════════════════════════════════
+// SHARED CHAT BUBBLE HELPER
+// ══════════════════════════════════════════════════════════
+function appendChatBubbleTo(containerId, role, text, isLoading) {
+  const el = document.getElementById(containerId);
+  if(!el) { var dummy = document.createElement('div'); return dummy; }
+  const div = document.createElement('div');
+  div.className = 'chat-bubble ' + role + (isLoading ? ' loading' : '');
+  const label = containerId.includes('wardrobe') ? 'Consulente Taglie AI'
+               : containerId.includes('barb')    ? 'Dermatologo AI'
+               : containerId.includes('health')  ? 'Medico AI'
+               : 'Dermatologa AI';
+  if(role === 'ai') {
+    div.innerHTML = '<div class="bubble-label">' + label + '</div>' + text.replace(/\n/g,'<br>');
+  } else {
+    div.textContent = text;
+  }
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+  return div;
+}
 
+// ══════════════════════════════════════════════════════════
+// WARDROBE CHAT
+// ══════════════════════════════════════════════════════════
+var wardrobeChatHistory = [];
+
+function sendWardrobeQuick(btn) { document.getElementById('wardrobeChatInput').value = btn.textContent; sendWardrobeChat(); }
+
+async function sendWardrobeChat() {
+  var input = document.getElementById('wardrobeChatInput');
+  var msg = input.value.trim(); if(!msg) return;
+  var apiKey = getApiKey(); if(!apiKey) { openApikeyModal(); return; }
+  appendChatBubbleTo('wardrobeChatMessages','user',msg);
+  wardrobeChatHistory.push({ role:'user', content:msg });
+  input.value = ''; input.style.height = 'auto';
+  var btn = document.getElementById('wardrobeSendBtn'); btn.disabled = true;
+  var lb = appendChatBubbleTo('wardrobeChatMessages','ai','...', true);
+  var data = getLatestMeasurements() || {};
+  var s = calcSizes(parseFloat(data.vita)||0,parseFloat(data.fianchi)||0,parseFloat(data.torace)||0,parseFloat(data.collo)||0,parseFloat(data.altezza)||0);
+  var sys = 'Sei un consulente di moda esperto. Rispondi in italiano, pratico. Max 4 frasi.\nMISURAZIONI: Vita:'+(data.vita||'?')+'cm Torace:'+(data.torace||'?')+'cm Collo:'+(data.collo||'?')+'cm Altezza:'+(data.altezza||'?')+'cm Peso:'+(data.peso||'?')+'kg\nTAGLIE: Pantaloni EU:'+(s.pantaloni_eu||'?')+' Camicia:'+(s.camicia_eu||'?')+' T-shirt:'+(s.tshirt||'?')+' Giacca IT:'+(s.giacca_it||'?')+'\nIl paziente sta dimagrendo ~1kg/sett con tirzepatide.';
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:sys,messages:wardrobeChatHistory})});
+    var d = await resp.json();
+    var reply = (d.content||[]).map(function(i){return i.text||'';}).join('') || 'Errore.';
+    wardrobeChatHistory.push({ role:'assistant', content:reply });
+    lb.classList.remove('loading');
+    lb.innerHTML = '<div class="bubble-label">Consulente Taglie AI</div>' + reply.replace(/\n/g,'<br>');
+    document.getElementById('wardrobeChatMessages').scrollTop = 99999;
+  } catch(e) { lb.innerHTML = '<div class="bubble-label">Consulente Taglie AI</div>Errore. Riprova.'; lb.classList.remove('loading'); }
+  finally { btn.disabled = false; }
+}
+
+// ══════════════════════════════════════════════════════════
+// BARBA AI
+// ══════════════════════════════════════════════════════════
+var barbImageBase64 = null, barbImageType = 'image/jpeg';
+var barbChatHistory = [], barbAnalysisResult = null;
+
+function onBarbPhotoSelected(input) {
+  var file = input.files[0]; if(!file) return;
+  barbImageType = file.type || 'image/jpeg';
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    barbImageBase64 = e.target.result.split(',')[1];
+    var preview = document.getElementById('barbPhotoPreview');
+    preview.src = e.target.result; preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function analyzeBarbaWithAI() {
+  var apiKey = getApiKey(); if(!apiKey) { openApikeyModal(); return; }
+  if(!barbImageBase64) { showToast('Carica prima una foto','error'); return; }
+  document.getElementById('barbLoadingArea').style.display = 'block';
+  document.getElementById('barbResultArea').style.display = 'none';
+  document.getElementById('barbAnalyzeBtn').disabled = true;
+  var prompt = 'Sei un dermatologo esperto in skincare maschile. Analizza questa foto della zona barba in italiano.\nPaziente: pelle grassa/mista, tirzepatide+metformina, routine: CeraVe Hydrating Cleanser, Timeless Vit.C 20%, CeraVe PM, LRP Anthelios SPF50+, Anua TXA sera.\nRispondi SOLO con JSON:\n{"stato_generale":"1-2 frasi","tipo_pelo":"descrizione","criticita":["criticita"],"punti_forza":["forza"],"tecnica_rasatura":"consiglio","prodotti_consigliati":["prod + ingrediente"],"prodotti_evitare":["da evitare"],"frequenza_consigliata":"frequenza","priorita":"cosa fare subito"}';
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:700,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:barbImageType,data:barbImageBase64}},{type:'text',text:prompt}]}]})});
+    var data = await resp.json();
+    var raw = (data.content||[]).map(function(i){return i.text||'';}).join('');
+    var r = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    barbAnalysisResult = r;
+    renderBarbResult(r);
+    initBarbChat(r);
+    showToast('Analisi zona barba completata','success');
+  } catch(e) {
+    document.getElementById('barbResultContent').innerHTML = '<div style="color:var(--rose);font-size:12px;padding:10px 0">Errore analisi. Riprova.</div>';
+    document.getElementById('barbResultArea').style.display = 'block';
+  } finally {
+    document.getElementById('barbLoadingArea').style.display = 'none';
+    document.getElementById('barbAnalyzeBtn').disabled = false;
+  }
+}
+
+function renderBarbResult(r) {
+  var el = document.getElementById('barbResultContent');
+  el.innerHTML = '<div class="ai-section"><div class="ai-section-title">Stato zona barba</div><div class="ai-section-body">'+(r.stato_generale||'')+'</div></div>'
+    +(r.tipo_pelo?'<div class="ai-section"><div class="ai-section-title">Tipo pelo</div><div class="ai-section-body">'+r.tipo_pelo+'</div></div>':'')
+    +(r.priorita?'<div class="notice" style="margin:0 0 14px;border-color:var(--rose);background:var(--rose-pl);color:var(--rose);"><strong>Priorita:</strong> '+r.priorita+'</div>':'')
+    +(r.tecnica_rasatura?'<div class="ai-section"><div class="ai-section-title">Tecnica consigliata</div><div class="ai-section-body">'+r.tecnica_rasatura+'</div></div>':'')
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">'
+    +(r.punti_forza&&r.punti_forza.length?'<div><div class="ai-section-title" style="font-size:.85rem">Punti forza</div>'+r.punti_forza.map(function(p){return '<div class="ai-pill ok" style="margin-bottom:5px;display:block">'+p+'</div>';}).join('')+'</div>':'')
+    +(r.criticita&&r.criticita.length?'<div><div class="ai-section-title" style="font-size:.85rem">Criticita</div>'+r.criticita.map(function(c){return '<div class="ai-pill warn" style="margin-bottom:5px;display:block">'+c+'</div>';}).join('')+'</div>':'')
+    +'</div>'
+    +(r.prodotti_consigliati&&r.prodotti_consigliati.length?'<div class="ai-section"><div class="ai-section-title">Prodotti consigliati</div><div class="ai-pill-row">'+r.prodotti_consigliati.map(function(p){return '<span class="ai-pill">'+p+'</span>';}).join('')+'</div></div>':'')
+    +(r.prodotti_evitare&&r.prodotti_evitare.length?'<div class="ai-section"><div class="ai-section-title">Da evitare</div><div class="ai-pill-row">'+r.prodotti_evitare.map(function(p){return '<span class="ai-pill warn">'+p+'</span>';}).join('')+'</div></div>':'')
+    +(r.frequenza_consigliata?'<div class="ai-section"><div class="ai-section-title">Frequenza rasatura</div><div class="ai-section-body">'+r.frequenza_consigliata+'</div></div>':'');
+  document.getElementById('barbResultArea').style.display = 'block';
+}
+
+function initBarbChat(r) {
+  barbChatHistory = [];
+  document.getElementById('barbChatMessages').innerHTML = '';
+  document.getElementById('barbChatSection').style.display = 'block';
+  appendChatBubbleTo('barbChatMessages','ai','Ho analizzato la zona barba. Puoi chiedermi consigli su prodotti, tecnica di rasatura o gestione di irritazioni.');
+}
+
+function sendBarbQuick(btn) { document.getElementById('barbChatInput').value = btn.textContent; sendBarbChat(); }
+
+async function sendBarbChat() {
+  var input = document.getElementById('barbChatInput');
+  var msg = input.value.trim(); if(!msg) return;
+  var apiKey = getApiKey(); if(!apiKey) { openApikeyModal(); return; }
+  appendChatBubbleTo('barbChatMessages','user',msg);
+  barbChatHistory.push({ role:'user', content:msg });
+  input.value = ''; input.style.height = 'auto';
+  var btn = document.getElementById('barbSendBtn'); btn.disabled = true;
+  var lb = appendChatBubbleTo('barbChatMessages','ai','...', true);
+  var r = barbAnalysisResult || {};
+  var sys = 'Sei un dermatologo esperto in rasatura maschile. Rispondi in italiano, breve (max 4 frasi).\nANALISI BARBA: Stato:'+(r.stato_generale||'?')+' Criticita:'+(r.criticita||[]).join(',')+' Prodotti consigliati:'+(r.prodotti_consigliati||[]).join(',')+' Da evitare:'+(r.prodotti_evitare||[]).join(',')+'\nPaziente: pelle grassa, tirzepatide.';
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:sys,messages:barbChatHistory})});
+    var d = await resp.json();
+    var reply = (d.content||[]).map(function(i){return i.text||'';}).join('') || 'Errore.';
+    barbChatHistory.push({ role:'assistant', content:reply });
+    lb.classList.remove('loading'); lb.innerHTML = '<div class="bubble-label">Dermatologo AI</div>' + reply.replace(/\n/g,'<br>');
+    document.getElementById('barbChatMessages').scrollTop = 99999;
+  } catch(e) { lb.innerHTML='<div class="bubble-label">Dermatologo AI</div>Errore. Riprova.'; lb.classList.remove('loading'); }
+  finally { btn.disabled = false; }
+}
+
+// ══════════════════════════════════════════════════════════
+// SALUTE PANEL — cardiovascolare, correlazioni, reminder, volume loss
+// ══════════════════════════════════════════════════════════
+var healthChatHistory = [];
+
+function renderSalutePanel() {
+  renderCardioRisk();
+  renderCorrelations();
+  renderSupplementReminders();
+  renderVolumeLossProducts();
+  checkWeightSkinAlert();
+}
+
+function renderCardioRisk() {
+  var el = document.getElementById('cardioRiskContent'); if(!el) return;
+  var data = getLatestMeasurements() || {};
+  var vita = parseFloat(data.vita)||0, altezza = parseFloat(data.altezza)||0;
+  if(!vita || !altezza) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">Inserisci vita e altezza nelle Misurazioni.</div>'; return; }
+  var whtr = vita / altezza;
+  var risk = whtr < 0.4 ? 'Sottopeso' : whtr < 0.5 ? 'Ottimale' : whtr < 0.6 ? 'Aumentato' : 'Alto';
+  var riskCol = whtr < 0.4 ? 'var(--gold)' : whtr < 0.5 ? 'var(--teal)' : whtr < 0.6 ? 'var(--gold)' : 'var(--rose)';
+  var dotClass = whtr < 0.5 ? 'semaforo-green' : whtr < 0.6 ? 'semaforo-yellow' : 'semaforo-red';
+  var advice = whtr < 0.5 ? 'Ottimo. Continua cosi. WHtR < 0.5 = basso rischio CV.' : whtr < 0.6 ? 'Moderato. Obiettivo: portare la vita sotto '+Math.round(altezza*0.5)+'cm (-'+Math.round(vita - altezza*0.5)+'cm).' : 'Rischio elevato. Priorita: riduzione circonferenza vita. Obiettivo < '+Math.round(altezza*0.5)+'cm.';
+  var hist = getAllMeasurementHistory();
+  var trend = '';
+  if(hist.length >= 2) {
+    var first = parseFloat(hist[0].d.vita)||0;
+    var diff = (vita - first).toFixed(1);
+    trend = diff < 0 ? ' (migliorato: '+diff+'cm da inizio)' : diff > 0 ? ' (peggiorato: +'+diff+'cm)' : ' (stabile)';
+  }
+  el.innerHTML = '<div class="cardio-semaforo"><div class="semaforo-dot '+dotClass+'"><span style="font-size:1.4rem">'+(whtr<0.5?'✅':whtr<0.6?'⚠️':'🔴')+'</span></div><div><div style="font-size:0.85rem;font-weight:600;color:'+riskCol+'">Rischio '+risk+trend+'</div><div style="font-size:11px;color:var(--ink3);margin-top:2px;">WHtR: <strong>'+whtr.toFixed(3)+'</strong> | Vita: '+vita+'cm | Altezza: '+altezza+'cm</div><div style="font-size:11px;color:var(--ink2);margin-top:5px;line-height:1.5;">'+advice+'</div></div></div>';
+}
+
+function renderCorrelations() {
+  var el = document.getElementById('correlationsContent'); if(!el) return;
+  var hist = getAllMeasurementHistory();
+  if(hist.length < 5) { el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--ink3);font-size:12px;">Servono almeno 5 giorni di dati.</div>'; return; }
+  var pesi = hist.map(function(h){return parseFloat(h.d.peso)||0;}).filter(Boolean);
+  var energie = hist.map(function(h){return parseInt(h.d.energia)||0;}).filter(Boolean);
+  var sonni = hist.map(function(h){return parseInt(h.d.sonno)||0;}).filter(Boolean);
+  var html = '<div style="font-size:11px;color:var(--ink2);line-height:1.8;">';
+  if(pesi.length >= 2) {
+    var wLoss = (pesi[0] - pesi[pesi.length-1]).toFixed(1);
+    var wPerWeek = (wLoss / (hist.length / 7)).toFixed(2);
+    html += '<div><span style="color:var(--teal);font-weight:600">Perdita peso:</span> -'+wLoss+'kg totali (media '+wPerWeek+'kg/sett)</div>';
+    if(wPerWeek > 1.5) html += '<div style="color:var(--rose)">Ritmo molto rapido: monitorare fermezza pelle e massa muscolare</div>';
+  }
+  if(energie.length >= 3) {
+    var avgE = (energie.reduce(function(a,b){return a+b;},0)/energie.length).toFixed(1);
+    html += '<div><span style="color:var(--teal);font-weight:600">Energia media:</span> '+avgE+'/10</div>';
+  }
+  if(sonni.length >= 3) {
+    var avgS = (sonni.reduce(function(a,b){return a+b;},0)/sonni.length).toFixed(1);
+    html += '<div><span style="color:var(--teal);font-weight:600">Sonno medio:</span> '+avgS+'/10</div>';
+    if(avgS < 5 && energie.length >= 3) {
+      var avgE2 = (energie.reduce(function(a,b){return a+b;},0)/energie.length);
+      if(avgE2 < 6) html += '<div style="color:var(--rose)">Correlazione rilevata: basso sonno + bassa energia. Considera magnesio bisglicin. sera e igiene del sonno.</div>';
+    }
+  }
+  html += '</div>';
   el.innerHTML = html;
-  el.style.display = 'block';
 }
 
-function formatLumText(text) {
-  if (!text) return '';
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#E8D5A0;">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Evidenza scientifica inline [...]
-    .replace(/\[([^\]]+)\]/g, '<span class="lum-evidence" style="display:inline;padding:1px 6px;border-radius:3px;font-size:9px;margin-left:4px;">$1</span>')
-    // Bullets
-    .replace(/^[-•]\s+(.+)$/gm, '<div style="padding:3px 0 3px 12px;border-left:1.5px solid rgba(184,145,42,.25);margin:3px 0;">$1</div>')
-    // Numerati
-    .replace(/^(\d+)\.\s+(.+)$/gm, '<div style="padding:3px 0;"><span style="color:var(--gold);font-weight:600;margin-right:6px;">$1.</span>$2</div>')
-    .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>');
+function renderSupplementReminders() {
+  var el = document.getElementById('reminderList'); if(!el) return;
+  var today = new Date();
+  var dow = today.getDay(); // 0=Sun
+  var latest = getLatestMeasurements() || {};
+  var doseDay = latest.injGiorno || '';
+  var reminders = [
+    { name:'Creatina 10g', timing:'mattina (con colazione)', every:'daily', note:'Stabile in ogni giorno, anche senza allenamento' },
+    { name:'Whey Isolate', timing:'post-allenamento o colazione', every:'daily', note:'Priorita giorni allenamento' },
+    { name:'Magnesio Bisglicin.', timing:'sera, 1h prima del sonno', every:'daily', note:'Migliora qualita sonno' },
+    { name:'Omega-3', timing:'pranzo (con cibo grasso)', every:'daily', note:'Assorbe meglio con grassi alimentari' },
+    { name:'D3+K2', timing:'mattina (con colazione)', every:'daily', note:'Liposolubile: sempre con cibo' },
+    { name:'Collagene', timing:'mattina a digiuno o post-workout', every:'daily', note:'Efficace anche tra i pasti' },
+    { name:'Astaxantina 12mg', timing:'pranzo', every:'daily', note:'Liposolubile: con pasto' },
+    { name:'Licopene 20mg', timing:'pranzo', every:'daily', note:'Liposolubile: con pasto grasso' },
+    { name:'Serenoa Repens', timing:'sera con cena', every:'daily', note:'Pasti regolari migliorano assorbimento' },
+  ];
+  var html = '';
+  reminders.forEach(function(r) {
+    html += '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px"></div><div><div style="font-size:0.85rem;font-weight:500;color:var(--ink)">'+r.name+'</div><div style="font-size:11px;color:var(--gold);font-weight:500">'+r.timing+'</div><div style="font-size:10px;color:var(--ink3);margin-top:1px">'+r.note+'</div></div></div>';
+  });
+  el.innerHTML = html || '<div style="color:var(--ink3);font-size:12px">Nessun integratore configurato.</div>';
 }
 
-// Aggiorna la thumb foto luminare quando si carica una foto nell'analisi viso
-const _origOnPhotoSelected = typeof onPhotoSelected === 'function' ? onPhotoSelected : null;
-// (patch applicata dopo il caricamento)
+function renderVolumeLossProducts() {
+  var el = document.getElementById('vlProductList'); if(!el) return;
+  var hist = getAllMeasurementHistory();
+  var weeklyRate = 0;
+  if(hist.length >= 2) {
+    var pesi = hist.map(function(h){return parseFloat(h.d.peso)||0;}).filter(Boolean);
+    if(pesi.length >= 2) weeklyRate = (pesi[0]-pesi[pesi.length-1]) / (hist.length/7);
+  }
+  var products = [];
+  products.push({ priority:'alta', category:'Topico viso', name:'Peptidi (Buffet, Matrixyl)', note:'Stimolano collagene I e III. Gia in routine sera — ottimale.', badge:'In uso' });
+  products.push({ priority:'alta', category:'Integratore', name:'Collagene idrolizzato tipo I+III (10-15g/die)', note:'Riduce perdita dermale durante dimagrimento rapido. Assumi a digiuno.', badge:'Essenziale' });
+  if(weeklyRate > 0.8) {
+    products.push({ priority:'urgente', category:'Topico viso', name:'Retinolo/Tretinoin 0.025% (autunno)', note:'Stimola turnover cutaneo post-dimagrimento. Attualmente sospeso per estate — riprendi a settembre.', badge:'Stagionale' });
+    products.push({ priority:'urgente', category:'Integratore', name:'Vitamina C liposomiale 500-1000mg', note:'Co-fattore sintesi collagene. Potenzia effetto della Timeless Vit.C topica.', badge:'Aggiungi' });
+  }
+  products.push({ priority:'media', category:'Topico', name:'Acido ialuronico topico (HA 3 pesi molecolari)', note:'Idratazione profonda. Compatibile con routine attuale (applicare prima del moisturizer).', badge:'Opzionale' });
+  products.push({ priority:'media', category:'Integratore', name:'Astaxantina 12mg (gia in stack)', note:'Antiossidante potente — protegge dall elastina durante il dimagrimento. Gia assunto, ottimo.', badge:'In uso' });
+
+  var html = '';
+  var priorityColors = { urgente:'var(--rose)', alta:'var(--gold)', media:'var(--teal)' };
+  products.forEach(function(p) {
+    html += '<div style="padding:10px 0;border-bottom:1px solid var(--border)">';
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">';
+    html += '<span style="font-size:9px;padding:2px 7px;border-radius:20px;background:'+(p.priority==='urgente'?'var(--rose-pl)':p.priority==='alta'?'var(--gold-pl)':'var(--teal-pl)')+';color:'+priorityColors[p.priority]+';font-weight:600;text-transform:uppercase">'+p.priority+'</span>';
+    html += '<span style="font-size:9px;color:var(--ink3)">'+p.category+'</span>';
+    html += '<span style="margin-left:auto;font-size:9px;padding:2px 7px;border-radius:20px;background:var(--paper3);color:var(--ink3)">'+p.badge+'</span>';
+    html += '</div>';
+    html += '<div style="font-size:0.85rem;font-weight:500;color:var(--ink);margin-bottom:3px">'+p.name+'</div>';
+    html += '<div style="font-size:11px;color:var(--ink2);line-height:1.5">'+p.note+'</div>';
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function checkWeightSkinAlert() {
+  var hist = getAllMeasurementHistory();
+  var skinHist = getSkinAIHistory ? getSkinAIHistory() : [];
+  if(hist.length < 2) return;
+  var recent = hist.slice(-2);
+  var weightDiff = parseFloat(recent[0].d.peso||0) - parseFloat(recent[recent.length-1].d.peso||0);
+  // Check if >1kg in recent period
+  var rapidLoss = Math.abs(weightDiff) > 1;
+  // Check skin ratings
+  var lastSkin = skinHist.length > 0 ? skinHist[skinHist.length-1] : null;
+  var skinStress = lastSkin && lastSkin.ratings && (lastSkin.ratings.fermezza < 5 || lastSkin.ratings.irritazione > 6);
+  if(rapidLoss && skinStress) {
+    var alertEl = document.getElementById('saluteWeightSkinAlert') || document.getElementById('skinWeightAlert');
+    if(alertEl) {
+      alertEl.style.display = 'block';
+      var body = alertEl.querySelector('.alert-card-body') || document.getElementById('saluteAlertBody');
+      if(body) body.innerHTML = 'Perdita di '+Math.abs(weightDiff).toFixed(1)+'kg rilevata + rating pelle in calo. Rischio volume loss accelerato. Priorita: aumentare collagene, peptidi e idratazione topica. Valuta di ridurre la dose Mounjaro con il medico.';
+    }
+  }
+}
+
+function sendHealthQuick(btn) { document.getElementById('healthChatInput').value = btn.textContent; sendHealthChat(); }
+
+async function sendHealthChat() {
+  var input = document.getElementById('healthChatInput');
+  var msg = input.value.trim(); if(!msg) return;
+  var apiKey = getApiKey(); if(!apiKey) { openApikeyModal(); return; }
+  appendChatBubbleTo('healthChatMessages','user',msg);
+  healthChatHistory.push({ role:'user', content:msg });
+  input.value = ''; input.style.height = 'auto';
+  var btn = document.getElementById('healthSendBtn'); btn.disabled = true;
+  var lb = appendChatBubbleTo('healthChatMessages','ai','...', true);
+  var data = getLatestMeasurements() || {};
+  var hist = getAllMeasurementHistory();
+  var wl = hist.length >= 2 ? (parseFloat(hist[0].d.peso||0)-parseFloat(hist[hist.length-1].d.peso||0)).toFixed(1) : '?';
+  var vita = parseFloat(data.vita)||0, altezza = parseFloat(data.altezza)||0;
+  var whtr = (vita && altezza) ? (vita/altezza).toFixed(2) : '?';
+  var sys = 'Sei un medico internista esperto in endocrinologia. Rispondi in italiano, pratico, basato su evidenze. Max 5 frasi.\nDATE PAZIENTE: Peso:'+data.peso+'kg Vita:'+vita+'cm Altezza:'+altezza+'cm WHtR:'+whtr+' Perdita totale:'+wl+'kg\nTerapia: tirzepatide+metformina. Stack: creatina 10g, whey isolate, collagene, magnesio bisglicin., D3+K2, omega-3, astaxantina 12mg, licopene 20mg, serenoa repens.';
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:sys,messages:healthChatHistory})});
+    var d = await resp.json();
+    var reply = (d.content||[]).map(function(i){return i.text||'';}).join('') || 'Errore.';
+    healthChatHistory.push({ role:'assistant', content:reply });
+    lb.classList.remove('loading'); lb.innerHTML = '<div class="bubble-label">Medico AI</div>' + reply.replace(/\n/g,'<br>');
+    document.getElementById('healthChatMessages').scrollTop = 99999;
+  } catch(e) { lb.innerHTML='<div class="bubble-label">Medico AI</div>Errore. Riprova.'; lb.classList.remove('loading'); }
+  finally { btn.disabled = false; }
+}
+
 
 // ── SUPABASE ──
 let sbClient = null;
@@ -2157,9 +2783,245 @@ async function sbLoadDay(date) {
 // ── INIT ──
 function init() {
   initSupabase();
-  renderChecklists(); renderSymptoms(); renderSkinConcerns(); renderDrugs();
+  renderChecklists(); renderSymptoms(); renderSkinConcerns(); renderDrugs(); pmInitAll();
   updateDateDisplay(); loadDay(); renderCalendar(); loadBaseSettings();
   checkApiKeyOnLoad();
+  // init new panels
+  try { renderSizes(); } catch(e) {}
+  try { renderSalutePanel(); } catch(e) {}
+}
+
+
+// ══════════════════════════════════════════════════════════
+// PRODUCT MANAGER — integratori & skincare
+// ══════════════════════════════════════════════════════════
+const PM_ICONS = {
+  int: ['💊','🧬','🫐','🌿','🐟','☀️','🧪','💪','🫁','🍵'],
+  sk:  ['🧴','✨','💧','🌸','🧼','🍊','🌿','💎','🫧','🪷']
+};
+
+function pmGetStore(type) {
+  const key = type === 'int' ? 'mj_pm_int' : 'mj_pm_sk';
+  try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch(e) { return null; }
+}
+
+function pmSaveStore(type, data) {
+  const key = type === 'int' ? 'mj_pm_int' : 'mj_pm_sk';
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function pmGetOrInit(type) {
+  let store = pmGetStore(type);
+  if(!store) {
+    // Seed from CHECKLISTS
+    const sourceKey = type === 'int' ? 'integratori' : 'skincare-int';
+    const items = (CHECKLISTS[sourceKey] || []).map((it, i) => ({
+      id: it.id,
+      name: it.label,
+      badge: it.badge,
+      active: true,
+      icon: PM_ICONS[type][i % PM_ICONS[type].length],
+      aiVerdict: null, // null | 'ok' | 'warn' | 'neutral'
+      aiNote: null,
+      addedAt: new Date().toISOString()
+    }));
+    store = { items };
+    pmSaveStore(type, store);
+  }
+  return store;
+}
+
+function pmRender(type) {
+  const store = pmGetOrInit(type);
+  const listEl = document.getElementById(type === 'int' ? 'pmIntList' : 'pmSkList');
+  if(!listEl) return;
+  listEl.innerHTML = '';
+
+  store.items.forEach((item, idx) => {
+    const verdictClass = item.aiVerdict || '';
+    const verdictLabel = item.aiVerdict === 'ok' ? '✓ Approvato' : item.aiVerdict === 'warn' ? '✗ Sconsigliato' : item.aiVerdict === 'neutral' ? '~ Da valutare' : '? Non valutato';
+    const div = document.createElement('div');
+    div.className = 'pm-item' + (item.active ? '' : ' disabled');
+    div.innerHTML = `
+      <div class="pm-item-icon">${item.icon}</div>
+      <div class="pm-item-body">
+        <div class="pm-item-name">${item.name}</div>
+        <div class="pm-item-meta">${item.badge || ''}${item.aiNote ? ' · ' + item.aiNote.substring(0,50) + '…' : ''}</div>
+      </div>
+      <span class="pm-item-badge ${verdictClass}">${item.aiVerdict ? verdictLabel : item.badge || ''}</span>
+      <button class="pm-eval-btn" onclick="pmEvaluate('${type}',${idx})" title="Valuta con AI">🔬</button>
+      <button class="pm-toggle ${item.active ? 'on' : ''}" onclick="pmToggleItem('${type}',${idx})" title="${item.active ? 'Disattiva' : 'Attiva'}"></button>
+    `;
+    listEl.appendChild(div);
+  });
+
+  // Sync checklists to show only active items
+  pmSyncChecklists(type, store);
+}
+
+function pmSyncChecklists(type, store) {
+  // Update the daily checklist to only show active items
+  const checkKey = type === 'int' ? 'integratori' : 'skincare-int';
+  const activeItems = store.items.filter(i => i.active).map(i => ({
+    id: i.id || 'pm_' + Math.random().toString(36).slice(2),
+    label: i.name,
+    badge: i.badge || ''
+  }));
+  CHECKLISTS[checkKey] = activeItems;
+  renderChecklists();
+}
+
+function pmToggleItem(type, idx) {
+  const store = pmGetOrInit(type);
+  store.items[idx].active = !store.items[idx].active;
+  pmSaveStore(type, store);
+  pmRender(type);
+}
+
+function pmAddItem(type, inputId) {
+  const input = document.getElementById(inputId);
+  const name = input.value.trim();
+  if(!name) { showToast('Scrivi il nome del prodotto', 'error'); return; }
+
+  const store = pmGetOrInit(type);
+  const icons = PM_ICONS[type];
+  const newItem = {
+    id: 'pm_' + Date.now(),
+    name: name,
+    badge: '',
+    active: true,
+    icon: icons[store.items.length % icons.length],
+    aiVerdict: null,
+    aiNote: null,
+    addedAt: new Date().toISOString()
+  };
+  store.items.push(newItem);
+  pmSaveStore(type, store);
+  input.value = '';
+  pmRender(type);
+
+  // Auto-evaluate new item
+  pmEvaluate(type, store.items.length - 1);
+  showToast('Aggiunto · valutazione AI in corso…', 'success');
+}
+
+async function pmEvaluate(type, idx) {
+  const apiKey = getApiKey();
+  if(!apiKey) { openApikeyModal(); return; }
+
+  const store = pmGetOrInit(type);
+  const item = store.items[idx];
+  const cardId = type === 'int' ? 'pmIntEvalCard' : 'pmSkEvalCard';
+  const verdictId = type === 'int' ? 'pmIntEvalVerdict' : 'pmSkEvalVerdict';
+  const bodyId = type === 'int' ? 'pmIntEvalBody' : 'pmSkEvalBody';
+
+  const card = document.getElementById(cardId);
+  const verdictEl = document.getElementById(verdictId);
+  const bodyEl = document.getElementById(bodyId);
+
+  card.classList.add('visible');
+  verdictEl.className = 'pm-eval-verdict';
+  verdictEl.textContent = '⏳ Analisi in corso…';
+  bodyEl.innerHTML = '';
+  card.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  // Build context
+  const allActive = store.items.filter(i => i.active && i.id !== item.id).map(i => i.name).join(', ');
+  const isInt = type === 'int';
+
+  const prompt = isInt
+    ? `Sei un farmacista e nutrizionista esperto. Il paziente sta assumendo tirzepatide (Mounjaro) per dimagrimento + metformina, ed è in un protocollo di perdita peso con preservazione muscolare.
+
+Prodotti attualmente attivi: ${allActive || 'nessuno'}.
+
+Il paziente vuole ${item.active ? 'continuare a usare' : 'aggiungere'}: "${item.name}".
+
+Valuta su base scientifica se questo integratore è:
+- APPROVATO: evidenze solide, utile nel contesto tirzepatide/dimagrimento
+- SCONSIGLIATO: rischi, interazioni con metformina/tirzepatide, o evidenze insufficienti
+- DA VALUTARE: evidenze miste o dipende dalla dose
+
+Rispondi SOLO con JSON valido:
+{
+  "verdict": "ok" | "warn" | "neutral",
+  "verdict_label": "frase breve (max 8 parole)",
+  "motivazione": "2-3 frasi scientifiche concise",
+  "interazioni": "eventuali interazioni con tirzepatide/metformina o altri attivi listati (null se nessuna)",
+  "alternativa": "prodotto alternativo migliore se verdict=warn (null altrimenti)",
+  "dose_consigliata": "dose e timing ottimale se verdict=ok/neutral (null se warn)"
+}`
+    : `Sei una dermatologa esperta in skincare. Il paziente ha pelle grassa/mista, è in terapia con tirzepatide (Mounjaro) e segue questa routine confermata: Jojoba oil cleansing → CeraVe Hydrating Cleanser (mattina/sera) → Timeless Vitamin C 20% (mattina) → CeraVe PM Moisturiser → LRP Anthelios SPF50+ (mattina) → Anua TXA+Niacinamide (sera) → The Ordinary Buffet peptides (sera). Tretinoin 0.025% solo autunno/inverno.
+
+Prodotti skincare attualmente attivi: ${allActive || 'nessuno'}.
+
+Il paziente vuole ${item.active ? 'tenere' : 'aggiungere'}: "${item.name}".
+
+Valuta se questo prodotto è:
+- APPROVATO: compatibile con la routine, evidenze valide, nessun conflitto
+- SCONSIGLIATO: conflitti (es. Vitamina C + peptidi la mattina), irritazione, ridondanza
+- DA VALUTARE: dipende da stagione/contesto
+
+Rispondi SOLO con JSON valido:
+{
+  "verdict": "ok" | "warn" | "neutral",
+  "verdict_label": "frase breve (max 8 parole)",
+  "motivazione": "2-3 frasi concise",
+  "conflitti": "conflitti con altri prodotti in routine (null se nessuno)",
+  "alternativa": "prodotto alternativo se warn (null altrimenti)",
+  "quando_usare": "momento ottimale di applicazione (null se warn)"
+}`;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 600,
+        messages: [{ role:'user', content: prompt }]
+      })
+    });
+
+    const data = await resp.json();
+    const raw = (data.content || []).map(i => i.text || '').join('');
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const r = JSON.parse(clean);
+
+    // Save verdict to store
+    store.items[idx].aiVerdict = r.verdict;
+    store.items[idx].aiNote = r.verdict_label;
+    pmSaveStore(type, store);
+    pmRender(type);
+
+    // Show evaluation card
+    const vClass = r.verdict === 'ok' ? 'ok' : r.verdict === 'warn' ? 'warn' : 'neutral';
+    const vEmoji = r.verdict === 'ok' ? '✅' : r.verdict === 'warn' ? '⛔' : '⚠️';
+    verdictEl.className = 'pm-eval-verdict ' + vClass;
+    verdictEl.textContent = vEmoji + ' ' + r.verdict_label;
+
+    let html = '<div style="margin-bottom:8px;">' + (r.motivazione || '') + '</div>';
+    const extra = r.interazioni || r.conflitti;
+    if(extra) html += '<div style="margin-bottom:6px;"><strong>⚠️ Attenzione:</strong> ' + extra + '</div>';
+    if(r.alternativa) html += '<div style="margin-bottom:6px;"><strong>💡 Alternativa:</strong> ' + r.alternativa + '</div>';
+    const timing = r.dose_consigliata || r.quando_usare;
+    if(timing) html += '<div><strong>🕐 Timing:</strong> ' + timing + '</div>';
+    bodyEl.innerHTML = html;
+
+  } catch(err) {
+    verdictEl.textContent = 'Errore valutazione';
+    verdictEl.className = 'pm-eval-verdict warn';
+    bodyEl.innerHTML = 'Impossibile contattare l\'AI. Riprova.';
+  }
+}
+
+function pmInitAll() {
+  pmRender('int');
+  pmRender('sk');
 }
 
 function renderChecklists() {
@@ -2315,7 +3177,7 @@ function collectData() {
     mounjaro:{dose:v('mounjaroDose'),site:v('injSite'),notes:v('injNotes')},
     workout:{type:v('workoutType'),dur:v('workoutDur'),notes:v('workoutNotes')},
     wellbeing:{umore:v('m_umore'),motivazione:v('m_motivazione'),stress:v('m_stress')},
-    diary:v('diaryNote'), savedAt:new Date().toISOString(),
+    diary:v('diaryNote'), barbaDiary:v('barba_diary'), savedAt:new Date().toISOString(),
     skincare: {
       idratazione: getSkinRating('sk_idratazione'),
       luminosita:  getSkinRating('sk_luminosita'),
@@ -2382,7 +3244,7 @@ async function loadDay() {
     if(data.wellbeing.motivazione) document.getElementById('motivVal').textContent=data.wellbeing.motivazione;
     if(data.wellbeing.stress) document.getElementById('stressVal').textContent=data.wellbeing.stress;
   }
-  sv('diaryNote',data.diary);
+  sv('diaryNote',data.diary); sv('barba_diary',data.barbaDiary);
   if(data.skincare) {
     const sk=data.skincare;
     setSkinRating('sk_idratazione','skIdrVal',sk.idratazione);
@@ -2405,7 +3267,7 @@ function clearForm() {
   document.querySelectorAll('.check-box').forEach(e=>e.innerHTML='');
   document.querySelectorAll('.chip').forEach(e=>e.classList.remove('active'));
   drugs=[];renderDrugs();
-  ['waterInput','proteinInput','foodNotes','symptomsNotes','injNotes','workoutNotes','workoutDur','diaryNote','m_noteesami','sk_oze_note','sk_react_am','sk_react_pm','sk_diary'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['waterInput','proteinInput','foodNotes','symptomsNotes','injNotes','workoutNotes','workoutDur','diaryNote','m_noteesami','sk_oze_note','sk_react_am','sk_react_pm','sk_diary','barba_diary'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
   ['sk_idratazione','sk_luminosita','sk_fermezza','sk_untuosita','sk_rughe'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=5;});
   const irr=document.getElementById('sk_irritazione');if(irr)irr.value=1;
   ['skIdrVal','skLumVal','skFerVal','skUntVal','skRughVal'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=5;});
@@ -2572,9 +3434,30 @@ function getMondayData() {
   });
 }
 
-function renderBodyComp() {
-  const rows=getMondayData();
+async function syncAllFromSupabase() {
+  if(!sbClient) return;
+  try {
+    const { data, error } = await sbClient.from('tracker_days').select('date, data');
+    if(error || !data) return;
+    data.forEach(row => {
+      if(row.date && row.data) {
+        const key = 'mj_day_' + row.date;
+        const local = localStorage.getItem(key);
+        // Update localStorage if Supabase has newer/different data
+        const sbJson = JSON.stringify(row.data);
+        if(!local || local !== sbJson) {
+          localStorage.setItem(key, sbJson);
+        }
+      }
+    });
+  } catch(e) { console.warn('Supabase full sync failed:', e.message); }
+}
+
+async function renderBodyComp() {
   const el=document.getElementById('bodyCompTable');
+  el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">⏳ Sincronizzazione in corso...</div>';
+  await syncAllFromSupabase();
+  const rows=getMondayData();
   if(!rows.length){
     el.innerHTML='<div style="text-align:center;padding:20px;color:var(--ink3);font-size:12px;">Nessun lunedì con misurazioni trovato.<br><span style="font-size:10px;display:block;margin-top:4px;">Inserisci vita, fianchi e collo ogni lunedì mattina.</span></div>';
     return;
@@ -2927,264 +3810,6 @@ function closeDriveModal(){document.getElementById('driveModal').classList.remov
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';
   setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-// ══════════════════════════════════════════════════════
-// BRIDGE DATI — Mounjaro Tracker ↔ Health Monitor Pro
-// ══════════════════════════════════════════════════════
-
-// Campo mapping: HM healthData → MJ measurements
-const HM_TO_MJ = {
-  weight:    'peso',
-  systolic:  'press_sist',
-  diastolic: 'press_diast',
-  heartRate: 'bpm',
-  glucose:   'glicemia',
-  waist:     'vita',
-  temperature: 'temp',
-};
-
-// Campo mapping: MJ measurements → HM healthData
-const MJ_TO_HM = {
-  peso:       'weight',
-  press_sist: 'systolic',
-  press_diast:'diastolic',
-  bpm:        'heartRate',
-  glicemia:   'glucose',
-  vita:       'waist',
-  temp:       'temperature',
-};
-
-// ── Legge tutti i profili HM dal localStorage ──────────
-function readAllHMProfiles() {
-  const profiles = [];
-  try {
-    const raw = localStorage.getItem('hm_profiles');
-    if(raw) profiles.push(...JSON.parse(raw));
-  } catch(e) {}
-  // Fallback: profilo default
-  if(!profiles.length) profiles.push({ id:'default', name:'Principale' });
-  return profiles;
-}
-
-function readHMHealthData(profileId = null) {
-  const pid = profileId || localStorage.getItem('hm_active_profile') || 'default';
-  try {
-    const raw = localStorage.getItem(`hm_p_${pid}_healthData`);
-    return raw ? JSON.parse(raw) : [];
-  } catch(e) { return []; }
-}
-
-function readHMBloodData(profileId = null) {
-  const pid = profileId || localStorage.getItem('hm_active_profile') || 'default';
-  try {
-    // blood analyses stored separately
-    const raw = localStorage.getItem(`hm_p_${pid}_blood`);
-    return raw ? JSON.parse(raw) : [];
-  } catch(e) { return []; }
-}
-
-// ── Scansiona differenze: HM → MJ ──────────────────────
-let _bridgePending = [];
-
-function scanBridge() {
-  const hmData = readHMHealthData();
-  if(!hmData.length) {
-    showToast('Nessun dato in Health Monitor trovato', 'error');
-    return;
-  }
-
-  const mjKeys = new Set(
-    Object.keys(localStorage)
-      .filter(k => k.startsWith('mj_day_'))
-      .map(k => k.replace('mj_day_', ''))
-  );
-
-  _bridgePending = [];
-  let hmDaysRead = 0;
-
-  hmData.forEach(hmRow => {
-    if(!hmRow.date) return;
-    const dateStr = hmRow.date.split('T')[0]; // normalise to YYYY-MM-DD
-    hmDaysRead++;
-
-    // Legge record MJ del giorno (o crea struttura vuota)
-    let mjRec = null;
-    const mjRaw = localStorage.getItem('mj_day_' + dateStr);
-    if(mjRaw) { try { mjRec = JSON.parse(mjRaw); } catch(e) {} }
-
-    // Per ogni campo mappabile, verifica se MJ manca il valore
-    const fields = [];
-    Object.entries(HM_TO_MJ).forEach(([hmField, mjField]) => {
-      const hmVal = hmRow[hmField];
-      const mjVal = mjRec?.measurements?.[mjField];
-      if(hmVal != null && hmVal !== '' && (mjVal == null || mjVal === '')) {
-        fields.push({ hmField, mjField, value: hmVal });
-      }
-    });
-
-    if(fields.length) {
-      _bridgePending.push({ date: dateStr, mjRec, fields });
-    }
-  });
-
-  updateBridgeStatus(hmDaysRead);
-  renderBridgePreview();
-}
-
-function updateBridgeStatus(hmDays) {
-  const pill = document.getElementById('bridgeStatusPill');
-  if(!pill) return;
-  if(hmDays > 0) {
-    pill.style.background = 'var(--teal-pl)';
-    pill.style.color = 'var(--teal)';
-    pill.textContent = `${hmDays} giorni HM`;
-  } else {
-    pill.style.background = 'var(--rose-pl)';
-    pill.style.color = 'var(--rose)';
-    pill.textContent = 'HM vuoto';
-  }
-}
-
-function renderBridgePreview() {
-  const el = document.getElementById('bridgePreview');
-  const btn = document.getElementById('bridgeImportBtn');
-  if(!el || !btn) return;
-
-  if(!_bridgePending.length) {
-    el.style.display = 'block';
-    el.innerHTML = `<div style="font-size:11px;color:var(--teal);padding:8px 10px;background:var(--teal-pl);border-radius:8px;border:1px solid rgba(58,125,110,.2);">
-      ✓ Tutti i dati HM sono già presenti in Mounjaro Tracker
-    </div>`;
-    btn.style.display = 'none';
-    return;
-  }
-
-  const fieldLabels = {
-    peso:'Peso', press_sist:'Pressione sist.', press_diast:'Pressione diast.',
-    bpm:'BPM', glicemia:'Glicemia', vita:'Vita (cm)', temp:'Temperatura'
-  };
-
-  const rows = _bridgePending.slice(0, 8).map(p => {
-    const fStr = p.fields.map(f => `${fieldLabels[f.mjField] || f.mjField}: ${f.value}`).join(' · ');
-    const dt = new Date(p.date + 'T12:00:00').toLocaleDateString('it-IT', { day:'numeric', month:'short' });
-    return `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;display:flex;gap:8px;">
-      <span style="color:var(--ink3);min-width:48px;flex-shrink:0;">${dt}</span>
-      <span style="color:var(--ink2);">${fStr}</span>
-    </div>`;
-  }).join('');
-
-  const more = _bridgePending.length > 8 ? `<div style="font-size:10px;color:var(--ink3);padding-top:5px;">…e altri ${_bridgePending.length - 8} giorni</div>` : '';
-
-  el.style.display = 'block';
-  el.innerHTML = `<div style="background:var(--gold-pl);border:1px solid rgba(184,145,42,.2);border-radius:8px;padding:10px 12px;">
-    <div style="font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">
-      ${_bridgePending.length} giorni con dati mancanti in MJ
-    </div>
-    ${rows}${more}
-  </div>`;
-  btn.style.display = 'flex';
-}
-
-// ── Esegue importazione HM → MJ ────────────────────────
-function executeBridge() {
-  if(!_bridgePending.length) { showToast('Nessun dato da importare', 'error'); return; }
-
-  let imported = 0;
-  _bridgePending.forEach(p => {
-    let mjRec = p.mjRec;
-    if(!mjRec) {
-      mjRec = { date: p.date, checks:{}, measurements:{}, symptoms:[], skincare:{}, savedAt: new Date().toISOString() };
-    }
-    if(!mjRec.measurements) mjRec.measurements = {};
-
-    p.fields.forEach(f => {
-      mjRec.measurements[f.mjField] = String(f.value);
-    });
-    mjRec._bridgedFromHM = new Date().toISOString();
-    localStorage.setItem('mj_day_' + p.date, JSON.stringify(mjRec));
-    imported++;
-  });
-
-  _bridgePending = [];
-  showToast(`${imported} giorni importati da HM ✓`, 'success');
-  renderCalendar();
-  updateStats();
-  document.getElementById('bridgePreview').style.display = 'none';
-  document.getElementById('bridgeImportBtn').style.display = 'none';
-  // Aggiorna pill
-  const pill = document.getElementById('bridgeStatusPill');
-  if(pill) {
-    pill.style.background = 'var(--teal-pl)';
-    pill.style.color = 'var(--teal)';
-    pill.textContent = `${imported} importati ✓`;
-  }
-}
-
-// ── Esporta MJ → Health Monitor (scrive in hm_p_*_healthData) ──
-function exportToHealthMonitor() {
-  const pid = localStorage.getItem('hm_active_profile') || 'default';
-  const hmKey = `hm_p_${pid}_healthData`;
-  let hmData = [];
-  try {
-    const raw = localStorage.getItem(hmKey);
-    if(raw) hmData = JSON.parse(raw);
-  } catch(e) {}
-
-  // Index HM by date for fast lookup
-  const hmByDate = {};
-  hmData.forEach(r => { if(r.date) hmByDate[r.date.split('T')[0]] = r; });
-
-  const allMJ = getAllDayData();
-  let synced = 0;
-
-  allMJ.forEach(mj => {
-    if(!mj.date || !mj.measurements) return;
-    const m = mj.measurements;
-    const hSettings = (() => {
-      try { return JSON.parse(localStorage.getItem(`hm_p_${pid}_settings`) || '{}'); } catch(e) { return {}; }
-    })();
-    const h = parseFloat(localStorage.getItem('mj_height') || hSettings.height || 168) / 100;
-
-    const weight    = parseFloat(m.peso)       || null;
-    const systolic  = parseFloat(m.press_sist) || null;
-    const diastolic = parseFloat(m.press_diast)|| null;
-    const heartRate = parseFloat(m.bpm)        || null;
-    const glucose   = parseFloat(m.glicemia)   || null;
-    const waist     = parseFloat(m.vita)       || null;
-    const temperature = parseFloat(m.temp)     || null;
-    const bmi       = weight && h ? parseFloat((weight / (h * h)).toFixed(1)) : null;
-    const whr       = waist && h*100 ? parseFloat((waist / (h*100)).toFixed(3)) : null;
-
-    // Solo se c'è almeno un valore
-    const hasAny = [weight,systolic,diastolic,heartRate,glucose,waist,temperature].some(v => v != null);
-    if(!hasAny) return;
-
-    const existing = hmByDate[mj.date] || { date: mj.date + 'T08:00:00.000Z', id: 'mj_' + mj.date };
-    hmByDate[mj.date] = {
-      ...existing,
-      weight:      weight      ?? existing.weight,
-      systolic:    systolic    ?? existing.systolic,
-      diastolic:   diastolic   ?? existing.diastolic,
-      heartRate:   heartRate   ?? existing.heartRate,
-      glucose:     glucose     ?? existing.glucose,
-      waist:       waist       ?? existing.waist,
-      temperature: temperature ?? existing.temperature,
-      bmi:         bmi         ?? existing.bmi,
-      whr:         whr         ?? existing.whr,
-      _syncedFromMJ: new Date().toISOString(),
-    };
-    synced++;
-  });
-
-  // Write back to HM
-  const newHMData = Object.values(hmByDate).sort((a, b) => new Date(b.date) - new Date(a.date));
-  try {
-    localStorage.setItem(hmKey, JSON.stringify(newHMData));
-    showToast(`${synced} giorni inviati a Health Monitor ✓`, 'success');
-  } catch(e) {
-    showToast('Errore scrittura: ' + e.message, 'error');
-  }
 }
 
 init();
